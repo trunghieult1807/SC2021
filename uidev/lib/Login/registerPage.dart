@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uidev/Helpers/customDialog.dart';
+import 'package:uidev/Login/Helpers/customDialog.dart';
 import 'package:uidev/Login/loginPage.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 

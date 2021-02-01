@@ -1,37 +1,16 @@
-import 'package:uidev/models/collection.dart';
-import 'package:uidev/models/popular_product.dart';
+import 'package:uidev/Main/collection.dart';
 import 'package:flutter/material.dart';
 
 Color appThemeColor = Color(0xFF08090C);
 const Color appRecentColor = Color(0xFFE4E5E5);
 
-var popularProductList = [
-  PopularProduct(
-    name: "iPhone 11 (128 GB)",
-    price: "₹ 65,000",
-    imgUrl: "assets/product/iphone.png",
-  ),
-  PopularProduct(
-    name: "Apple Watch (S6)",
-    price: "₹ 35,000",
-    imgUrl: "assets/product/apple_watch.png",
-  ),
-  PopularProduct(
-    name: "Oneplus 8 (256 GB)",
-    price: "₹ 38,499",
-    imgUrl: "assets/product/oneplus.png",
-  ),
-  PopularProduct(
-    name: "Apple MacBook Air",
-    price: "₹ 83,990",
-    imgUrl: "assets/product/macbookair.png",
-  ),
-  PopularProduct(
-    name: "AMD Ryzen 3600X",
-    price: "₹ 16,375",
-    imgUrl: "assets/product/amd.png",
-  ),
-];
+const int purple = 0xff3c1361;
+const int red = 0xffff2525;
+const int brightYellow = 0xffffe03d;
+const int midYellow = 0xffffd03d;
+const int yellow = 0xffffc03d;
+const int silver = 0xfff2f5fc;
+const int darkSilver = 0xffe7eefb;
 
 var slideShowList = [
   "https://images-eu.ssl-images-amazon.com/images/G/31/img20/Wireless/Xiaomi/Redmi_9Power/LP/D19338206_WLM_Redmi_9Power_Launch__PC.gif",

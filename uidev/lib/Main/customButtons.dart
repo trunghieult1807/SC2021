@@ -1,4 +1,4 @@
-import 'package:uidev/Helpers/textStyles.dart';
+import 'package:uidev/Main/textStyles.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {

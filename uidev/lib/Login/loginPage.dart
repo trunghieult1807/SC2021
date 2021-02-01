@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uidev/homePage.dart';
+import 'package:uidev/homePageController.dart';
 import 'package:uidev/Login/registerPage.dart';
-import 'package:uidev/Helpers/customDialog.dart';
+import 'package:uidev/Login/Helpers/customDialog.dart';
 
 //import 'package:uidev/Externnal Login/googleSignIn.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             PageRouteBuilder(
-                              pageBuilder: (c, a1, a2) => HomePage(),
+                              pageBuilder: (c, a1, a2) => HomePageController(),
                               transitionsBuilder: (c, anim, a2, child) =>
                                   FadeTransition(opacity: anim, child: child),
                               transitionDuration: Duration(milliseconds: 500),
