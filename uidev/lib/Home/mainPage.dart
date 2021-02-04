@@ -10,12 +10,12 @@ import 'package:uidev/Main/textStyles.dart';
 //import 'package:uidev/Externnal Login/googleSignIn.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 
-class HomePage extends StatefulWidget {
+class MainPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

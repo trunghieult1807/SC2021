@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uidev/Login/loginPage.dart';
+import 'package:uidev/Plan/theme/light_colors.dart';
 import 'package:uidev/homePageController.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +17,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        textTheme: Theme.of(context).textTheme.apply(
+            bodyColor: LightColors.kDarkBlue,
+            displayColor: LightColors.kDarkBlue,
+            fontFamily: 'Poppins'
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
     );
