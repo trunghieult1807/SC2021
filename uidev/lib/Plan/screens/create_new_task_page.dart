@@ -4,8 +4,14 @@ import 'package:uidev/Plan/widgets/top_container.dart';
 import 'package:uidev/Plan/widgets/back_button.dart';
 import 'package:uidev/Plan/widgets/my_text_field.dart';
 import 'package:uidev/Plan/screens/home_page.dart';
+import 'package:flutter/cupertino.dart';
 
-class CreateNewTaskPage extends StatelessWidget {
+class CreateNewTaskPage extends StatefulWidget {
+  @override
+  _CreateNewTaskPageState createState() => _CreateNewTaskPageState();
+}
+
+class _CreateNewTaskPageState extends State<CreateNewTaskPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -55,12 +61,13 @@ class CreateNewTaskPage extends StatelessWidget {
                                   icon: downwardIcon,
                                 ),
                               ),
-                              PlanPage.calendarIcon(),
                             ],
                           )
                         ],
                       ),
                     ),
+
+
                     MyTextField(
                       label: 'Description',
                       minLines: 3,

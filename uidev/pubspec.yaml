@@ -41,7 +41,9 @@ dependencies:
   shared_preferences: ^0.5.8
   percent_indicator: ^2.1.3
   colorful_safe_area: ^0.2.1
-  calendar_strip: ^1.0.7
+  date_picker_timeline: ^1.2.1
+  flutter_cupertino_date_picker: ^1.0.26+2
+
 #  firebase_auth: ^0.18.4+1
 #  firebase_dynamic_links: ^0.5.1
 #  cloud_firestore: ^0.14.4
