@@ -4,7 +4,7 @@ import 'package:date_picker_timeline/extra/style.dart';
 import 'package:date_picker_timeline/gestures/tap.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:uidev/Plan/Calendar/date.dart';
+import 'package:uidev/Plan/Calendar/dateWidgetCustom.dart';
 
 // ignore: must_be_immutable
 class DatePickerCustom extends StatefulWidget {

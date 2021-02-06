@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Plan/Calendar/datePicker.dart';
+import 'package:uidev/Plan/Calendar/horizontalCalendar.dart';
 import 'package:uidev/Plan/dates_list.dart';
+import 'package:uidev/Plan/screens/addTaskPage.dart';
 import 'package:uidev/Plan/theme/light_colors.dart';
 import 'package:uidev/Plan/widgets/task_container.dart';
-import 'package:uidev/Plan/screens/create_new_task_page.dart';
 import 'package:uidev/Plan/widgets/back_button.dart';
 import 'package:intl/intl.dart';
 
@@ -78,7 +78,7 @@ class _CalendarPageState extends State<CalendarPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CreateNewTaskPage(),
+                              builder: (context) => AddTaskPage(),
                             ),
                           );
                         },

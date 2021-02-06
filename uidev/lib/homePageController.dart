@@ -12,12 +12,11 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:uidev/Main/textStyles.dart';
 import 'package:uidev/Home/mainPage.dart';
 import 'package:uidev/Home/dashBoard.dart';
-import 'package:uidev/Home/notificationPage.dart';
-import 'package:uidev/Plan/screens/home_page.dart';
+import 'package:uidev/Home/planPage.dart';
+import 'package:uidev/Plan/screens/addTaskPage.dart';
 import 'package:uidev/Plan/theme/light_colors.dart';
 import 'package:uidev/NavBotBar/nav_bar.dart';
 import 'Color/flutter_circle_color_picker.dart';
-import 'Home/clockPage.dart';
 import 'Home/profilePage.dart';
 import 'NavBotBar/modal.dart';
 
@@ -30,12 +29,12 @@ class _HomePageControllerState extends State<HomePageController> {
   int selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
     //CircleColorPicker(),
+
     PlanPage(),
     MainPage(),
-    TaskPage(),
+    //TaskPage(),
+    Profile(),
     DashBoardPage(),
-    //ClockPage(),
-    //NotificationPage(),
   ];
 
   @override

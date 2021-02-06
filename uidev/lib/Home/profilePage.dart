@@ -1,157 +1,352 @@
-import 'dart:math';
-
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
-import 'package:uidev/Main/constants.dart';
+import 'package:uidev/Plan/theme/light_colors.dart';
 
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 70,
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
+      body: ColorfulSafeArea(
+        color: LightColors.kDarkYellow,
+        child: Container(
+          color: LightColors.kLightYellow,
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 10),
+                width: MediaQuery.of(context).size.width,
+                height: 300,
+                decoration: BoxDecoration(
+                  color: LightColors.kDarkYellow,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                  ),
+                ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      "My Profile",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4
-                          .apply(color: Colors.white),
-                    ),
                     SizedBox(
                       height: 15,
                     ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
+                    Container(
+                      //padding: const EdgeInsets.only(left: 130),
                       child: Container(
+                        height: 105,
+                        width: 105,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: LightColors.kDarkYellow,
+                          borderRadius: BorderRadius.circular(52.5),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(
-                              height: 15.0,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: AssetImage('assets/profile.png'),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '@trunghieult1807',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w300),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 35),
+                      child: Text(
+                        'Hieu Le',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              color: LightColors.kDarkYellow,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: LightColors.kDarkYellow,
+                                  spreadRadius: 1,
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15.0),
-                              child: Row(
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Column(
                                 children: <Widget>[
-                                  CircleAvatar(
-                                    backgroundColor: appRecentColor,
-                                    backgroundImage: AssetImage(
-                                      'assets/profile.png',
-                                    ),
+                                  Icon(
+                                    Icons.photo_camera,
+                                    color: Colors.black,
                                   ),
                                   SizedBox(
-                                    width: 15.0,
+                                    height: 3,
                                   ),
                                   Text(
-                                    "Hieu",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline4
-                                        .apply(
-                                            color: Colors.blueGrey,
-                                            fontWeightDelta: 2),
+                                    'Camera',
+                                    style: TextStyle(color: Colors.black),
                                   ),
-                                  Spacer(),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.menu,
-                                      color: Colors.red,
-                                    ),
-                                    onPressed: () {},
-                                  )
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15.0),
-                              child: RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "3191",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4
-                                          .apply(
-                                              color: Colors.blueGrey,
-                                              fontWeightDelta: 2),
-                                    ),
-                                    TextSpan(
-                                      text: "Travelers points",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText2
-                                          .apply(color: Colors.blueGrey),
-                                    )
-                                  ],
+                          ),
+                          Container(
+                            height: 60,
+                            width: 70,
+                            decoration: BoxDecoration(
+                              color: LightColors.kDarkYellow,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: LightColors.kDarkYellow,
+                                  spreadRadius: 1,
                                 ),
-                              ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(25.0),
-                              color: Colors.red,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.5),
+                              child: Column(
                                 children: <Widget>[
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "My next OKR",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4
-                                          .apply(color: Colors.white),
-                                    ),
+                                  Icon(
+                                    Icons.fingerprint,
+                                    color: Colors.black,
                                   ),
-                                  Spacer(),
-                                  Text(
-                                    "30",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline4
-                                        .apply(color: Colors.white),
+                                  SizedBox(
+                                    height: 3,
                                   ),
                                   Text(
-                                    "Mar",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        .apply(color: Colors.white),
-                                  )
+                                    'Security',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ],
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                          Container(
+                            height: 60,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              color: LightColors.kDarkYellow,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: LightColors.kDarkYellow,
+                                  spreadRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.phone,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text(
+                                    'Phone',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 60,
+                            width: 70,
+                            decoration: BoxDecoration(
+                              color: LightColors.kDarkYellow,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: LightColors.kDarkYellow,
+                                  spreadRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Column(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.settings,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text(
+                                    'Settings',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          height: 60,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: LightColors.kDarkYellow,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.dashboard,
+                                color: Colors.black,
+                              ),
+                              Text(
+                                'Dashboard',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 60,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: LightColors.kDarkYellow,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.people, color: Colors.black),
+                              Text(
+                                'Invite',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 60,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: LightColors.kDarkYellow,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.support,
+                                color: Colors.black,
+                              ),
+                              Text(
+                                'Support',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          height: 60,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: LightColors.kDarkYellow,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.language,
+                                color: Colors.black,
+                              ),
+                              Text(
+                                'Language',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 60,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: LightColors.kDarkYellow,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.question_answer,
+                                color: Colors.black,
+                              ),
+                              Text(
+                                'Questions',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 60,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            color: LightColors.kDarkYellow,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.visibility,
+                                color: Colors.black,
+                              ),
+                              Text(
+                                'Visibility',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
