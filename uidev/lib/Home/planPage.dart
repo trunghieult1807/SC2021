@@ -1,12 +1,13 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
-import 'package:uidev/Main/textStyles.dart';
-import 'package:uidev/Plan/screens/calendar_page.dart';
-import 'package:uidev/Plan/theme/light_colors.dart';
+import 'package:uidev/ContactUs/contactUs.dart';
+import 'package:uidev/Setting/setting.dart';
+import 'package:uidev/Task/screens/calendar_page.dart';
+import 'package:uidev/Task/theme/light_colors.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:uidev/Plan/widgets/task_column.dart';
-import 'package:uidev/Plan/widgets/active_project_card.dart';
-import 'package:uidev/Plan/widgets/top_container.dart';
+import 'package:uidev/Task/widgets/task_column.dart';
+import 'package:uidev/Task/widgets/active_project_card.dart';
+import 'package:uidev/Task/widgets/top_container.dart';
 import 'package:animated_drawer/views/animated_drawer.dart';
 
 class PlanPage extends StatelessWidget {
@@ -78,10 +79,10 @@ class PlanPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 5),
-                Text("Hello,", style: regularTxtStyle),
+                Text("Hello,"),
                 Text(
                   "Hieu Le",
-                  style: medBoldStyle,
+                  style: TextStyle(fontWeight: FontWeight.bold,),
                 ),
                 const SizedBox(height: 15),
                 Container(
@@ -94,7 +95,7 @@ class PlanPage extends StatelessWidget {
                   onTap: () {},
                   child: Text(
                     "Home Screen",
-                    style: smallTxtStyle.copyWith(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(0, 0, 0, 0.60),
                     ),
@@ -105,7 +106,7 @@ class PlanPage extends StatelessWidget {
                   onTap: () {},
                   child: Text(
                     "Notification",
-                    style: smallTxtStyle.copyWith(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(0, 0, 0, 0.60),
                     ),
@@ -116,7 +117,7 @@ class PlanPage extends StatelessWidget {
                   onTap: () {},
                   child: Text(
                     "Dash Board",
-                    style: smallTxtStyle.copyWith(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(0, 0, 0, 0.60),
                     ),
@@ -127,7 +128,7 @@ class PlanPage extends StatelessWidget {
                   onTap: () {},
                   child: Text(
                     "Account",
-                    style: smallTxtStyle.copyWith(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(0, 0, 0, 0.60),
                     ),
@@ -135,10 +136,17 @@ class PlanPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SettingsPage()),
+                    );
+                  },
                   child: Text(
                     "Settings",
-                    style: smallTxtStyle.copyWith(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(0, 0, 0, 0.60),
                     ),
@@ -146,10 +154,17 @@ class PlanPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ContactUsPage()),
+                    );
+                  },
                   child: Text(
-                    "Support",
-                    style: smallTxtStyle.copyWith(
+                    "Contact Us",
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(0, 0, 0, 0.60),
                     ),
@@ -169,7 +184,7 @@ class PlanPage extends StatelessWidget {
                   color: Colors.black26,
                   child: Text(
                     "Log Out",
-                    style: smallTxtStyle.copyWith(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),

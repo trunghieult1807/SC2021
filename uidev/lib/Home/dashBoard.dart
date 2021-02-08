@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sparkline/flutter_sparkline.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:uidev/Task/theme/light_colors.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override
@@ -8,293 +8,251 @@ class DashBoardPage extends StatefulWidget {
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
-  final List<List<double>> charts = [
-    [ 0.0, 0.3, 0.7, 0.6, 0.55, 0.8, 1.2, 1.3, 1.35, 0.9, 1.5, 1.7, 1.8, 1.7, 1.2, 0.8, 1.9, 2.0, 2.2, 1.9, 2.2, 2.1, 2.0, 2.3, 2.4, 2.45, 2.6, 3.6, 2.6, 2.7, 2.9, 2.8, 3.4],
-    [ 0.0, 0.3, 0.7, 0.6, 0.55, 0.8, 1.2, 1.3, 1.35, 0.9, 1.5, 1.7, 1.8, 1.7, 1.2, 0.8, 1.9, 2.0, 2.2, 1.9, 2.2, 2.1, 2.0, 2.3, 2.4, 2.45, 2.6, 3.6, 2.6, 2.7, 2.9, 2.8, 3.4, 0.0, 0.3, 0.7, 0.6, 0.55, 0.8, 1.2, 1.3, 1.35, 0.9, 1.5, 1.7, 1.8, 1.7, 1.2, 0.8, 1.9, 2.0, 2.2, 1.9, 2.2, 2.1, 2.0, 2.3, 2.4, 2.45, 2.6, 3.6, 2.6, 2.7, 2.9, 2.8, 3.4,],
-    [ 0.0, 0.3, 0.7, 0.6, 0.55, 0.8, 1.2, 1.3, 1.35, 0.9, 1.5, 1.7, 1.8, 1.7, 1.2, 0.8, 1.9, 2.0, 2.2, 1.9, 2.2, 2.1, 2.0, 2.3, 2.4, 2.45, 2.6, 3.6, 2.6, 2.7, 2.9, 2.8, 3.4, 0.0, 0.3, 0.7, 0.6, 0.55, 0.8, 1.2, 1.3, 1.35, 0.9, 1.5, 1.7, 1.8, 1.7, 1.2, 0.8, 1.9, 2.0, 2.2, 1.9, 2.2, 2.1, 2.0, 2.3, 2.4, 2.45, 2.6, 3.6, 2.6, 2.7, 2.9, 2.8, 3.4, 0.0, 0.3, 0.7, 0.6, 0.55, 0.8, 1.2, 1.3, 1.35, 0.9, 1.5, 1.7, 1.8, 1.7, 1.2, 0.8, 1.9, 2.0, 2.2, 1.9, 2.2, 2.1, 2.0, 2.3, 2.4, 2.45, 2.6, 3.6, 2.6, 2.7, 2.9, 2.8, 3.4],
-  ];
-
-  static final List<String> chartDropdownItems = [
-    'Last 7 days',
-    'Last month',
-    'Last year'
-  ];
-  String actualDropdown = chartDropdownItems[0];
-  int actualChart = 0;
-
   @override
   Widget build(BuildContext context) {
+    var data = [
+      CompletedTask('Jan', 30, LightColors.kRed),
+      CompletedTask('Feb', 42, LightColors.kBlue),
+      CompletedTask('Mar', 54, LightColors.kRed),
+      CompletedTask('Apr', 20, LightColors.kBlue),
+      CompletedTask('May', 76, LightColors.kRed),
+      CompletedTask('Jun', 35, LightColors.kBlue),
+      CompletedTask('Jul', 30, LightColors.kRed),
+      CompletedTask('Aug', 42, LightColors.kBlue),
+      CompletedTask('Sep', 54, LightColors.kRed),
+      CompletedTask('Oct', 20, LightColors.kBlue),
+      CompletedTask('Nov', 76, LightColors.kRed),
+      CompletedTask('Dec', 35, LightColors.kBlue),
+    ];
+
+    var series = [
+      new charts.Series(
+          id: 'Clicks',
+          domainFn: (CompletedTask clickData, _) => clickData.month,
+          measureFn: (CompletedTask clickData, _) => clickData.clicks,
+          colorFn: (CompletedTask clickData, _) => clickData.color,
+          data: data)
+    ];
+
+    var chart = new charts.BarChart(series,
+        animate: true, animationDuration: Duration(milliseconds: 1500));
+
+    var chartWidget = Padding(
+      padding: EdgeInsets.all(32.0),
+      child: SizedBox(height: 180.0, child: chart),
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        elevation: 2.0,
-        backgroundColor: Colors.white,
-        title: Text('Dashboard',
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w700,
-                fontSize: 30.0)),
-        actions: <Widget>[
-          Container(
-            margin: EdgeInsets.only(right: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+      backgroundColor: LightColors.kLightYellow,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              20,
+              20,
+              20,
+              0,
             ),
-          ),
-        ],
-      ),
-      body: StaggeredGridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12.0,
-        mainAxisSpacing: 12.0,
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        children: <Widget>[
-          _buildTile(
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      'Dashboard',
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.7),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32.0,
+                      ),
+                    ),
+                    CircleAvatar(
+                      //radius: 50,
+                      backgroundImage: AssetImage('assets/profile.png'),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  height: 350.0,
+                  decoration: BoxDecoration(
+                      color: LightColors.kDarkYellow,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            offset: Offset(0.0, 0.3),
+                            blurRadius: 15.0)
+                      ]),
+                  child: Column(
                     children: <Widget>[
-                      Text(
-                        'Total Tasks',
-                        style: TextStyle(
-                          color: Colors.blueAccent,
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 25.0, vertical: 25.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  '236',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Completed Tasks',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14.0,
+                                  ),
+                                )
+                              ],
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.show_chart),
+                              onPressed: () {},
+                              color: Colors.white,
+                              iconSize: 30.0,
+                            )
+                          ],
                         ),
                       ),
-                      Text(
-                        '24',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 34.0,
-                        ),
-                      ),
+                      chartWidget
                     ],
                   ),
-                  Material(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(24.0),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Icon(Icons.timeline,
-                            color: Colors.white, size: 30.0),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          _buildTile(
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Material(
-                    color: Colors.teal,
-                    shape: CircleBorder(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Icon(
-                        Icons.settings_applications,
-                        color: Colors.white,
-                        size: 30.0,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 16.0),
-                  ),
-                  Text(
-                    'General',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 24.0),
-                  ),
-                  Text(
-                    'Images, Videos',
-                    style: TextStyle(color: Colors.black45),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          _buildTile(
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Material(
-                    color: Colors.amber,
-                    shape: CircleBorder(),
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Icon(Icons.notifications,
-                          color: Colors.white, size: 30.0),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 16.0),
-                  ),
-                  Text(
-                    'Alerts',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 24.0),
-                  ),
-                  Text(
-                    'All ',
-                    style: TextStyle(color: Colors.black45),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          _buildTile(
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Recent Activity',
+                  style: TextStyle(
+                      color: Colors.black.withOpacity(0.7),
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: Row(
                         children: <Widget>[
-                          Text(
-                            'Objectives',
-                            style: TextStyle(color: Colors.green),
+                          Material(
+                            borderRadius: BorderRadius.circular(100.0),
+                            color: Colors.purple.withOpacity(0.1),
+                            child: Padding(
+                              padding: EdgeInsets.all(15.0),
+                              child: Text(
+                                'PPL',
+                                style: TextStyle(
+                                    color: Colors.purple,
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ),
-                          Text(
-                            '85%',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 34.0,
+                          SizedBox(width: 25.0),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Edit OKR',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Reset deadline',
+                                  style: TextStyle(
+                                      color: Colors.black.withOpacity(0.8),
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ],
                             ),
                           ),
                         ],
                       ),
-                      DropdownButton(
-                        isDense: true,
-                        value: actualDropdown,
-                        onChanged: (String value) => setState(
-                          () {
-                            actualDropdown = value;
-                            actualChart = chartDropdownItems
-                                .indexOf(value);
-                          },
-                        ),
-                        items: chartDropdownItems.map(
-                          (String title) {
-                            return DropdownMenuItem(
-                              value: title,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Divider(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: Row(
+                        children: <Widget>[
+                          Material(
+                            borderRadius: BorderRadius.circular(100.0),
+                            color: Colors.orange.withOpacity(0.1),
+                            child: Padding(
+                              padding: EdgeInsets.all(15.0),
                               child: Text(
-                                title,
+                                'DSA',
                                 style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14.0,
-                                ),
+                                    color: Colors.orange,
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            );
-                          },
-                        ).toList(),
-                      )
-                    ],
-                  ),
-                  Padding(padding: EdgeInsets.only(bottom: 4.0)),
-                  Sparkline(
-                    data: charts[actualChart],
-                    lineWidth: 5.0,
-                    lineColor: Colors.greenAccent,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          _buildTile(
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        'Goals',
-                        style: TextStyle(color: Colors.redAccent),
-                      ),
-                      Text(
-                        '173',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 34.0),
-                      )
-                    ],
-                  ),
-                  Material(
-
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(24.0),
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child:
-                            Icon(Icons.golf_course, color: Colors.white, size: 30.0),
+                            ),
+                          ),
+                          SizedBox(width: 25.0),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Key result',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Add new task',
+                                  style: TextStyle(
+                                      color: Colors.black.withOpacity(0.8),
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+              ],
             ),
-            //onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ShopItemsPage())),
-          )
-        ],
-        staggeredTiles: [
-          StaggeredTile.extent(2, 110.0),
-          StaggeredTile.extent(1, 180.0),
-          StaggeredTile.extent(1, 180.0),
-          StaggeredTile.extent(2, 220.0),
-          StaggeredTile.extent(2, 120.0),
-        ],
+          ),
+        ),
       ),
     );
   }
+}
 
-  Widget _buildTile(Widget child, {Function() onTap}) {
-    return Material(
-      elevation: 14.0,
-      borderRadius: BorderRadius.circular(12.0),
-      shadowColor: Color(0x802196F3),
-      child: InkWell(
-          // Do onTap() if it isn't null, otherwise do print()
-          onTap: onTap != null
-              ? () => onTap()
-              : () {
-                  print('Not set yet');
-                },
-          child: child),
-    );
-  }
+class CompletedTask {
+  final String month;
+  final int clicks;
+  final charts.Color color;
+
+  CompletedTask(this.month, this.clicks, Color color)
+      : this.color = new charts.Color(
+            r: color.red, g: color.green, b: color.blue, a: color.alpha);
 }

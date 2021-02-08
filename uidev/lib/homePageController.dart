@@ -1,20 +1,8 @@
-import 'package:uidev/Main/constants.dart';
-import 'package:uidev/Home/taskPage.dart';
-import 'package:uidev/Login/loginPage.dart';
-import 'package:uidev/Login/registerPage.dart';
-import 'package:uidev/Main/customButtons.dart';
-import 'package:uidev/Main/popularProduct.dart';
-import 'package:animated_drawer/views/animated_drawer.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:uidev/Main/textStyles.dart';
-import 'package:uidev/Home/mainPage.dart';
+import 'package:uidev/ContactUs/contactUs.dart';
 import 'package:uidev/Home/dashBoard.dart';
 import 'package:uidev/Home/planPage.dart';
-import 'package:uidev/Plan/screens/addTaskPage.dart';
-import 'package:uidev/Plan/theme/light_colors.dart';
+import 'package:uidev/Task/theme/light_colors.dart';
 import 'package:uidev/NavBotBar/nav_bar.dart';
 import 'Color/flutter_circle_color_picker.dart';
 import 'Home/profilePage.dart';
@@ -28,13 +16,11 @@ class HomePageController extends StatefulWidget {
 class _HomePageControllerState extends State<HomePageController> {
   int selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
-    //CircleColorPicker(),
-
     PlanPage(),
-    MainPage(),
-    //TaskPage(),
-    Profile(),
     DashBoardPage(),
+    ContactUsPage(),
+    //CircleColorPicker(),
+    Profile(),
   ];
 
   @override
@@ -109,10 +95,3 @@ class _HomePageControllerState extends State<HomePageController> {
   }
 }
 
-// Today
-// Dash board
-// Task
-// Objective
-// Key Result
-// People
-// Group
