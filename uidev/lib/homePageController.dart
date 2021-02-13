@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/ContactUs/contactUs.dart';
 import 'package:uidev/Home/dashBoard.dart';
 import 'package:uidev/Home/planPage.dart';
 import 'package:uidev/Task/theme/light_colors.dart';
@@ -18,9 +17,8 @@ class _HomePageControllerState extends State<HomePageController> {
   List<Widget> _widgetOptions = <Widget>[
     PlanPage(),
     DashBoardPage(),
-    ContactUsPage(),
-    //CircleColorPicker(),
-    Profile(),
+    CircleColorPicker(),
+    ProfilePage(),
   ];
 
   @override

@@ -1,6 +1,8 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:uidev/ContactUs/contactUs.dart';
+import 'package:uidev/Home/dashBoard.dart';
+import 'package:uidev/Home/profilePage.dart';
 import 'package:uidev/Setting/setting.dart';
 import 'package:uidev/Task/screens/calendar_page.dart';
 import 'package:uidev/Task/theme/light_colors.dart';
@@ -92,7 +94,14 @@ class PlanPage extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 20)),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              PlanPage()),
+                    );
+                  },
                   child: Text(
                     "Home Screen",
                     style: TextStyle(
@@ -103,7 +112,14 @@ class PlanPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SettingsPage()),
+                    );
+                  },
                   child: Text(
                     "Notification",
                     style: TextStyle(
@@ -114,7 +130,14 @@ class PlanPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DashBoardPage()),
+                    );
+                  },
                   child: Text(
                     "Dash Board",
                     style: TextStyle(
@@ -125,9 +148,16 @@ class PlanPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProfilePage()),
+                    );
+                  },
                   child: Text(
-                    "Account",
+                    "Profile",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Color.fromRGBO(0, 0, 0, 0.60),
