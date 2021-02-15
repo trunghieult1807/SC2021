@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uidev/Database/presence.dart';
+import 'package:uidev/Login/ExternalLogin/googleSignIn.dart';
 import 'package:uidev/homePageController.dart';
 import 'package:uidev/Login/registerPage.dart';
 import 'package:uidev/Login/Helpers/customDialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-//import 'package:uidev/Externnal Login/googleSignIn.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+String uid;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -87,17 +89,17 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              pageBuilder: (c, a1, a2) => HomePageController(),
-                              transitionsBuilder: (c, anim, a2, child) =>
-                                  FadeTransition(opacity: anim, child: child),
-                              transitionDuration: Duration(milliseconds: 500),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   PageRouteBuilder(
+                          //     pageBuilder: (c, a1, a2) => HomePageController(),
+                          //     transitionsBuilder: (c, anim, a2, child) =>
+                          //         FadeTransition(opacity: anim, child: child),
+                          //     transitionDuration: Duration(milliseconds: 500),
+                          //   ),
+                          // );
+                          _validateLoginInput();
                         },
-                        // _validateLoginInput(),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: size.width * 0.2),
@@ -201,21 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 40,
                     width: 160,
                     child: GestureDetector(
-                      // onTap: () {
-                      //   signInWithGoogle().then(
-                      //     (result) {
-                      //       if (result != null) {
-                      //         Navigator.of(context).push(
-                      //           MaterialPageRoute(
-                      //             builder: (context) {
-                      //               return HomePage();
-                      //             },
-                      //           ),
-                      //         );
-                      //       }
-                      //     },
-                      //   );
-                      // },
+                      onTap: () {},
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
@@ -371,53 +359,55 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-// void _validateLoginInput() async {
-//   final FormState form = _formKey.currentState;
-//   if (_formKey.currentState.validate()) {
-//     form.save();
-//     try {
-//       UserCredential userCredential = await FirebaseAuth.instance
-//           .signInWithEmailAndPassword(email: _email, password: _password);
-//       Navigator.push(
-//         context,
-//         PageRouteBuilder(
-//           pageBuilder: (c, a1, a2) => HomePage(),
-//           transitionsBuilder: (c, anim, a2, child) =>
-//               FadeTransition(opacity: anim, child: child),
-//           transitionDuration: Duration(milliseconds: 500),
-//         ),
-//       );
-//     } catch (error) {
-//       print(error.code);
-//       switch (error.code) {
-//         case "user-not-found":
-//           {
-//             showDialog(
-//               context: context,
-//               builder: (_) => CustomAlertRegister("User not found."),
-//             );
-//           }
-//           break;
-//         case "wrong-password":
-//           {
-//             showDialog(
-//               context: context,
-//               builder: (_) =>
-//                   CustomAlertRegister("Password doesn\'t match your email."),
-//             );
-//           }
-//           break;
-//         default:
-//           {}
-//       }
-//     }
-//   }
-//   // else {
-//   //   setState(() {
-//   //     _autoValidate = true;
-//   //   });
-//   // }
-// }
+  void _validateLoginInput() async {
+    final FormState form = _formKey.currentState;
+    if (_formKey.currentState.validate()) {
+      form.save();
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: _email, password: _password);
+        uid = userCredential.user.uid;
+        print("Credential: $userCredential");
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (c, a1, a2) => PresencePage(),//HomePageController(),
+            transitionsBuilder: (c, anim, a2, child) =>
+                FadeTransition(opacity: anim, child: child),
+            transitionDuration: Duration(milliseconds: 500),
+          ),
+        );
+      } catch (error) {
+        print(error.code);
+        switch (error.code) {
+          case "user-not-found":
+            {
+              showDialog(
+                context: context,
+                builder: (_) => CustomAlertRegister("User not found."),
+              );
+            }
+            break;
+          case "wrong-password":
+            {
+              showDialog(
+                context: context,
+                builder: (_) =>
+                    CustomAlertRegister("Password doesn\'t match your email."),
+              );
+            }
+            break;
+          default:
+            {}
+        }
+      }
+    }
+    // else {
+    //   setState(() {
+    //     _autoValidate = true;
+    //   });
+    // }
+  }
 }
 
 class DrawClip extends CustomClipper<Path> {
