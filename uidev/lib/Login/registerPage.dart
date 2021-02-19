@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uidev/Database/name.dart';
 import 'package:uidev/Login/Helpers/customDialog.dart';
 import 'package:uidev/Login/loginPage.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -13,11 +14,13 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  FirebaseAuth auth = FirebaseAuth.instance;
   String _email;
   String _password;
   String _confirmPassword;
   bool _showPassword = false;
   bool _showConfirmPassword = false;
+
   void initState() {
     super.initState();
   }
@@ -39,8 +42,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [Color(0xffa58fd2), Color(0xffddc3fc)],
-                        //begin: Alignment.bottomCenter,
-                        //end: Alignment.bottomRight
                       ),
                     ),
                   ),
@@ -85,7 +86,19 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: size.height * 0.02,
                       ),
                       FlatButton(
-                        //onPressed: () => _validateRegisterInput(),
+                        onPressed: () {
+                          // Navigator.push(
+                          //   context,
+                          //   PageRouteBuilder(
+                          //     pageBuilder: (c, a1, a2) => NamePage(),
+                          //     transitionsBuilder: (c, anim, a2, child) =>
+                          //         FadeTransition(opacity: anim, child: child),
+                          //     transitionDuration: Duration(milliseconds: 500),
+                          //   ),
+                          // );
+                          _validateRegisterInput();
+                        },
+
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: size.width * 0.2),
@@ -296,7 +309,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget password(String hint, bool pass, Size size) {
-
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.1, vertical: size.height * 0.02),
@@ -339,7 +351,6 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget confirmPassword(String hint, bool pass, Size size) {
-
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: size.width * 0.1, vertical: size.height * 0.02),
@@ -360,7 +371,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 hintText: hint,
                 hintStyle: GoogleFonts.ubuntu(color: Colors.grey),
                 contentPadding:
-                EdgeInsets.only(top: 15, bottom: 15, left: 0, right: 0),
+                    EdgeInsets.only(top: 15, bottom: 15, left: 0, right: 0),
                 prefixIcon: Icon(
                   Icons.lock_outline,
                   color: Colors.grey,
@@ -368,10 +379,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 suffixIcon: IconButton(
                   icon: Icon(
                     Icons.remove_red_eye,
-                    color: this._showConfirmPassword ? Colors.blue : Colors.grey,
+                    color:
+                        this._showConfirmPassword ? Colors.blue : Colors.grey,
                   ),
                   onPressed: () {
-                    setState(() => this._showConfirmPassword = !this._showConfirmPassword);
+                    setState(() =>
+                        this._showConfirmPassword = !this._showConfirmPassword);
                   },
                 ),
                 border: UnderlineInputBorder(borderSide: BorderSide.none)),
@@ -381,44 +394,42 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  // void _validateRegisterInput() async {
-  //   final FormState form = _formKey.currentState;
-  //   if (_password != _confirmPassword) {
-  //     showDialog(
-  //       context: context,
-  //       builder: (_) =>
-  //           CustomAlertRegister("Passwords are not match"),
-  //     );
-  //   }
-  //   else if (_formKey.currentState.validate()) {
-  //     form.save();
-  //     try {
-  //       await FirebaseAuth.instance
-  //           .createUserWithEmailAndPassword(email: _email, password: _password);
-  //     } catch (error) {
-  //       switch (error.code) {
-  //         case "email-already-in-use":
-  //           {
-  //             showDialog(
-  //               context: context,
-  //               builder: (_) =>
-  //                   CustomAlertRegister("This email is already in use."),
-  //             );
-  //           }
-  //           break;
-  //         case "weak-password":
-  //           {
-  //             showDialog(
-  //               context: context,
-  //               builder: (_) => CustomAlertRegister(
-  //                   "The password must be 6 characters long or more.)"),
-  //             );
-  //           }
-  //           break;
-  //       }
-  //     }
-  //   }
-  // }
+  void _validateRegisterInput() async {
+    final FormState form = _formKey.currentState;
+    if (_password != _confirmPassword) {
+      showDialog(
+        context: context,
+        builder: (_) => CustomAlertRegister("Passwords are not match"),
+      );
+    } else if (_formKey.currentState.validate()) {
+      form.save();
+      try {
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: _email, password: _password);
+      } catch (error) {
+        switch (error.code) {
+          case "email-already-in-use":
+            {
+              showDialog(
+                context: context,
+                builder: (_) =>
+                    CustomAlertRegister("This email is already in use."),
+              );
+            }
+            break;
+          case "weak-password":
+            {
+              showDialog(
+                context: context,
+                builder: (_) => CustomAlertRegister(
+                    "The password must be 6 characters long or more.)"),
+              );
+            }
+            break;
+        }
+      }
+    }
+  }
 }
 
 class DrawClip extends CustomClipper<Path> {
