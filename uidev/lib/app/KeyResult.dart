@@ -17,6 +17,7 @@ class KeyResult extends Item {
   void addTask(Task task) {
     _taskList.add(task);
   }
+
   Task removeTask(int taskId) {
     for (var i = 0; i < _taskList.length; i++) {
       if (taskId == _taskList[i].id) {
@@ -25,6 +26,7 @@ class KeyResult extends Item {
     }
     return null;
   }
+
   @override
   bool markDone() {
     if (this.isDone) return true;
