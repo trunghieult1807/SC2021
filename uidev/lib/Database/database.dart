@@ -18,8 +18,6 @@ class Database {
     User user = User(
       uid: uid,
       name: userName,
-      presence: true,
-      lastSeenInEpoch: DateTime.now().millisecondsSinceEpoch,
     );
 
     var data = user.toJson();

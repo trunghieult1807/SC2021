@@ -6,6 +6,7 @@ import 'package:uidev/Database/name.dart';
 import 'package:uidev/Login/Helpers/customDialog.dart';
 import 'package:uidev/Login/loginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uidev/Task/theme/light_colors.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -29,6 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: LightColors.kLightYellow,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -40,9 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: size.width,
                     height: size.height * 0.75,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xffa58fd2), Color(0xffddc3fc)],
-                      ),
+                      color: LightColors.kLightYellow2,
                     ),
                   ),
                 ),
@@ -52,9 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: size.width,
                     height: size.height * 0.75,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xffddc3fc), Color(0xff91c5fc)],
-                      ),
+                      color: LightColors.kDarkYellow,
                     ),
                   ),
                 ),
@@ -104,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               vertical: 10, horizontal: size.width * 0.2),
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Color(0xff6a74ce),
+                                color: LightColors.kBlue,
                                 borderRadius: BorderRadius.circular(30)),
                             height: 45,
                             child: Center(
@@ -181,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                            color: Color(0xff38a4ef),
+                            color: Color(0x8ff56656),
                             offset: Offset(3.0, 3.0),
                             blurRadius: 15.0,
                             spreadRadius: 1.0),
@@ -192,29 +190,32 @@ class _RegisterPageState extends State<RegisterPage> {
                             spreadRadius: 1.0),
                       ],
                       borderRadius: BorderRadius.circular(30),
-                      color: Color(0xff5172b4),
+                      color: Color(0xfff56656),
                     ),
                     height: 40,
                     width: 160,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/twitter.png",
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Twitter",
-                            style: GoogleFonts.ubuntu(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/google.png",
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Google",
+                              style: GoogleFonts.ubuntu(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
