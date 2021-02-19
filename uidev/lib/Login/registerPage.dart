@@ -6,6 +6,7 @@ import 'package:uidev/Database/name.dart';
 import 'package:uidev/Login/Helpers/customDialog.dart';
 import 'package:uidev/Login/loginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uidev/Onboarding/page1.dart';
 import 'package:uidev/Task/theme/light_colors.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -405,8 +406,17 @@ class _RegisterPageState extends State<RegisterPage> {
     } else if (_formKey.currentState.validate()) {
       form.save();
       try {
-        await FirebaseAuth.instance
+        UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: _email, password: _password);
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (c, a1, a2) => Page1(),
+            transitionsBuilder: (c, anim, a2, child) =>
+                FadeTransition(opacity: anim, child: child),
+            transitionDuration: Duration(milliseconds: 500),
+          ),
+        );
       } catch (error) {
         switch (error.code) {
           case "email-already-in-use":

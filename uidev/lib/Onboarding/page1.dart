@@ -3,6 +3,8 @@ import 'package:uidev/Task/theme/light_colors.dart';
 import 'package:uidev/Onboarding/Utils/checkbox.dart';
 import 'package:uidev/Onboarding/page2.dart';
 
+int work_on;
+
 class Page1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class Page1 extends StatelessWidget {
                     clipper: DrawClip2(),
                     child: Container(
                       width: size.width,
-                      height: size.height * 0.7,
+                      height: size.height * 0.75,
                       decoration: BoxDecoration(
                         color: LightColors.kLightYellow2,
                       ),
@@ -31,7 +33,7 @@ class Page1 extends StatelessWidget {
                     clipper: DrawClip(),
                     child: Container(
                       width: size.width,
-                      height: size.height * 0.7,
+                      height: size.height * 0.75,
                       decoration: BoxDecoration(
                         color: LightColors.kLightYellow,
                       ),
@@ -57,23 +59,29 @@ class Page1 extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 60,
                       ),
-                      Text(
-                        "FRITTER",
-                        style: TextStyle(
-                            color: LightColors.kBlue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 40,
-                            fontFamily: 'Var'),
-                      ),
-                      SizedBox(
-                        height: 90,
-                      ),
+
                       Padding(
                         padding: const EdgeInsets.only(left: 50.0),
                         child: Column(
                           children: [
+                            Row(
+                              children: [
+                                Text(
+                                  "Hi there, \nYou are working on",
+                                  style: TextStyle(
+                                      color: LightColors.kBlue,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30,
+                                      fontFamily: 'Var'),
+                                ),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 40,),
                             Row(
                               children: [
                                 RoundCheckBox(
@@ -83,7 +91,7 @@ class Page1 extends StatelessWidget {
                                       Duration(milliseconds: 500),
                                   uncheckedColor: LightColors.kDarkYellow,
                                   checkedColor: LightColors.kDarkYellow,
-                                  borderColor: LightColors.kBlue,
+                                  borderColor: LightColors.kDarkBlue,
                                 ),
                                 SizedBox(
                                   width: 30,
@@ -93,7 +101,7 @@ class Page1 extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontFamily: "Var",
-                                    color: LightColors.kBlue,
+                                    color: LightColors.kDarkBlue,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -111,7 +119,7 @@ class Page1 extends StatelessWidget {
                                       Duration(milliseconds: 500),
                                   uncheckedColor: LightColors.kDarkYellow,
                                   checkedColor: LightColors.kDarkYellow,
-                                  borderColor: LightColors.kBlue,
+                                  borderColor: LightColors.kDarkBlue,
                                 ),
                                 SizedBox(
                                   width: 30,
@@ -121,7 +129,7 @@ class Page1 extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontFamily: "Var",
-                                    color: LightColors.kBlue,
+                                    color: LightColors.kDarkBlue,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -139,7 +147,7 @@ class Page1 extends StatelessWidget {
                                       Duration(milliseconds: 500),
                                   uncheckedColor: LightColors.kDarkYellow,
                                   checkedColor: LightColors.kDarkYellow,
-                                  borderColor: LightColors.kBlue,
+                                  borderColor: LightColors.kDarkBlue,
                                 ),
                                 SizedBox(
                                   width: 30,
@@ -149,7 +157,7 @@ class Page1 extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontFamily: "Var",
-                                    color: LightColors.kBlue,
+                                    color: LightColors.kDarkBlue,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

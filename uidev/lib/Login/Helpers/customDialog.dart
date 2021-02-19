@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uidev/Task/theme/light_colors.dart';
 
 class CustomAlertRegister extends StatefulWidget {
   String _errorMess;
@@ -31,9 +32,7 @@ class _CustomAlertRegisterState extends State<CustomAlertRegister> {
         children: [
           Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xffa58fd2), Color(0xffddc3fc)],
-              ),
+              color: LightColors.kDarkYellow,
               borderRadius: BorderRadius.circular(30),
             ),
             height: 200,
@@ -70,9 +69,7 @@ class _CustomAlertRegisterState extends State<CustomAlertRegister> {
             top: -60,
             child: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xffa58fd2), Color(0xffddc3fc)],
-                ),
+                color: LightColors.kDarkYellow,
                 borderRadius: BorderRadius.circular(50),
               ),
               height: 100,

@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             ),
       ),
       debugShowCheckedModeBanner: false,
-      home: Page1(),
+      home: WelcomePage(),
     );
   }
 }

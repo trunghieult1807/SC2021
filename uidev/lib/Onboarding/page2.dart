@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uidev/Onboarding/definitionController.dart';
 import 'package:uidev/Task/theme/light_colors.dart';
 
 class Page2 extends StatelessWidget {
@@ -78,6 +79,9 @@ class Page2 extends StatelessWidget {
                                   fontSize: 40,
                                   fontFamily: 'Var'),
                             ),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Text(
                               'No more procrastination.',
                               style: TextStyle(
@@ -86,7 +90,7 @@ class Page2 extends StatelessWidget {
                                   fontSize: 23,
                                   fontFamily: 'Coco'),
                             ),
-                            SizedBox(height: 15.0),
+                            SizedBox(height: 30.0),
                             Text(
                               'Before we start, let us give you some useful tips.',
                               style: TextStyle(
@@ -103,7 +107,7 @@ class Page2 extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 40,
+                height: 20,
               ),
               Center(
                 child: Container(
@@ -130,7 +134,7 @@ class Page2 extends StatelessWidget {
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (c, a1, a2) => Page2(),//HomePageController(),
+                          pageBuilder: (c, a1, a2) => OnboardingScreen(),//HomePageController(),
                           transitionsBuilder: (c, anim, a2, child) =>
                               FadeTransition(opacity: anim, child: child),
                           transitionDuration: Duration(milliseconds: 500),
