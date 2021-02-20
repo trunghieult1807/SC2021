@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Login/loginPage.dart';
-import 'package:uidev/Onboarding/page2.dart';
-import 'package:uidev/Task/theme/light_colors.dart';
-import 'package:uidev/Onboarding/definitionController.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Welcome/welcome.dart';
-import 'package:uidev/homePageController.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'Onboarding/page1.dart';
+import 'package:uidev/add/screens/homepage.dart';
+import 'package:uidev/add2/main.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +26,7 @@ class MyApp extends StatelessWidget {
             ),
       ),
       debugShowCheckedModeBanner: false,
-      home: WelcomePage(),
+      home: ToDoListApp(),
     );
   }
 }

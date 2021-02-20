@@ -2,29 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uidev/Database/presence.dart';
-import 'package:uidev/Login/ExternalLogin/googleSignIn.dart';
-import 'package:uidev/Task/theme/light_colors.dart';
-import 'package:uidev/Onboarding/page1.dart';
-import 'package:uidev/homePageController.dart';
-import 'package:uidev/Login/registerPage.dart';
-import 'package:uidev/Login/Helpers/customDialog.dart';
+import 'package:uidev/Database/name.dart';
+import 'package:uidev/Login/Helpers/custom_dialog.dart';
+import 'package:uidev/Login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uidev/Onboarding/page1.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 
-String uid;
-
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  FirebaseAuth auth = FirebaseAuth.instance;
   String _email;
   String _password;
-
-  String errorMsg = "";
+  String _confirmPassword;
   bool _showPassword = false;
+  bool _showConfirmPassword = false;
 
   void initState() {
     super.initState();
@@ -65,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       Text(
-                        "Login",
+                        "Register",
                         style: GoogleFonts.ubuntu(
                             color: Colors.white,
                             fontSize: 35,
@@ -80,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(children: <Widget>[
                             email("Username", false, size),
                             password("Password", true, size),
+                            confirmPassword("Confirm Password", true, size),
                           ]),
                         ),
                       ),
@@ -91,14 +89,15 @@ class _LoginPageState extends State<LoginPage> {
                           // Navigator.push(
                           //   context,
                           //   PageRouteBuilder(
-                          //     pageBuilder: (c, a1, a2) => HomePageController(),
+                          //     pageBuilder: (c, a1, a2) => NamePage(),
                           //     transitionsBuilder: (c, anim, a2, child) =>
                           //         FadeTransition(opacity: anim, child: child),
                           //     transitionDuration: Duration(milliseconds: 500),
                           //   ),
                           // );
-                          _validateLoginInput();
+                          _validateRegisterInput();
                         },
+
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: size.width * 0.2),
@@ -109,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                             height: 45,
                             child: Center(
                               child: Text(
-                                "Login",
+                                "Sign up",
                                 style: GoogleFonts.ubuntu(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -117,11 +116,6 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                      ),
-                      Text(
-                        "Forget your password?",
-                        style: GoogleFonts.ubuntu(
-                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -145,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                            color: Color(0x8f38a4ef),
+                            color: Color(0xff38a4ef),
                             offset: Offset(3.0, 3.0),
                             blurRadius: 15.0,
                             spreadRadius: 1.0),
@@ -233,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Don't have account?",
+                  "Already have account?",
                   style: GoogleFonts.ubuntu(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
@@ -242,7 +236,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 InkWell(
                   child: Text(
-                    "Sign Up",
+                    "Log in",
                     style: GoogleFonts.ubuntu(
                       color: Color(0xff5172b4),
                       fontWeight: FontWeight.bold,
@@ -252,7 +246,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (c, a1, a2) => RegisterPage(),
+                        pageBuilder: (c, a1, a2) => LoginPage(),
                         transitionsBuilder: (c, anim, a2, child) =>
                             FadeTransition(opacity: anim, child: child),
                         transitionDuration: Duration(milliseconds: 500),
@@ -339,7 +333,7 @@ class _LoginPageState extends State<LoginPage> {
                 contentPadding:
                     EdgeInsets.only(top: 15, bottom: 15, left: 0, right: 0),
                 prefixIcon: Icon(
-                  Icons.lock_outline,
+                  Icons.security_outlined,
                   color: Colors.grey,
                 ),
                 suffixIcon: IconButton(
@@ -358,18 +352,62 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _validateLoginInput() async {
+  Widget confirmPassword(String hint, bool pass, Size size) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.1, vertical: size.height * 0.02),
+      child: Stack(
+        children: [
+          Container(
+            height: 50,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(size.height * 0.05),
+                color: Colors.white),
+          ),
+          TextFormField(
+            obscureText: !this._showConfirmPassword,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            onSaved: (input) => _confirmPassword = input,
+            validator: (input) => input.isEmpty ? "*Required" : null,
+            decoration: InputDecoration(
+                hintText: hint,
+                hintStyle: GoogleFonts.ubuntu(color: Colors.grey),
+                contentPadding:
+                    EdgeInsets.only(top: 15, bottom: 15, left: 0, right: 0),
+                prefixIcon: Icon(
+                  Icons.lock_outline,
+                  color: Colors.grey,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    Icons.remove_red_eye,
+                    color:
+                        this._showConfirmPassword ? Colors.blue : Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() =>
+                        this._showConfirmPassword = !this._showConfirmPassword);
+                  },
+                ),
+                border: UnderlineInputBorder(borderSide: BorderSide.none)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _validateRegisterInput() async {
     final FormState form = _formKey.currentState;
-    if (_formKey.currentState.validate()) {
+    if (_password != _confirmPassword) {
+      showDialog(
+        context: context,
+        builder: (_) => CustomAlertRegister("Passwords are not match"),
+      );
+    } else if (_formKey.currentState.validate()) {
       form.save();
       try {
-        UserCredential userCredential = 
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: _email, 
-            password: _password
-          );
-        uid = userCredential.user.uid;
-        print("Credential: $userCredential");
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: _email, password: _password);
         Navigator.push(
           context,
           PageRouteBuilder(
@@ -380,35 +418,28 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       } catch (error) {
-        print(error.code);
         switch (error.code) {
-          case "user-not-found":
-            {
-              showDialog(
-                context: context,
-                builder: (_) => CustomAlertRegister("User not found."),
-              );
-            }
-            break;
-          case "wrong-password":
+          case "email-already-in-use":
             {
               showDialog(
                 context: context,
                 builder: (_) =>
-                    CustomAlertRegister("Password doesn\'t match your email."),
+                    CustomAlertRegister("This email is already in use."),
               );
             }
             break;
-          default:
-            {}
+          case "weak-password":
+            {
+              showDialog(
+                context: context,
+                builder: (_) => CustomAlertRegister(
+                    "The password must be 6 characters long or more.)"),
+              );
+            }
+            break;
         }
       }
     }
-    // else {
-    //   setState(() {
-    //     _autoValidate = true;
-    //   });
-    // }
   }
 }
 

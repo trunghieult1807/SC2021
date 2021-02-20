@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Home/dashBoard.dart';
-import 'package:uidev/Home/planPage.dart';
-import 'package:uidev/Task/theme/light_colors.dart';
+import 'package:uidev/Dashboard/dash_board.dart';
+import 'package:uidev/OKR/screens/plan_page.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/NavBotBar/nav_bar.dart';
 import 'Color/flutter_circle_color_picker.dart';
-import 'Home/profilePage.dart';
+import 'Profile/profile_page.dart';
 import 'NavBotBar/modal.dart';
 
 class HomePageController extends StatefulWidget {

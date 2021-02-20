@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:uidev/Task/theme/light_colors.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override

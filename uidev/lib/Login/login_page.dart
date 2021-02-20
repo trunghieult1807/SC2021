@@ -2,26 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uidev/Database/name.dart';
-import 'package:uidev/Login/Helpers/customDialog.dart';
-import 'package:uidev/Login/loginPage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uidev/Database/presence.dart';
+import 'package:uidev/Login/ExternalLogin/google_sign_in.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Onboarding/page1.dart';
-import 'package:uidev/Task/theme/light_colors.dart';
+import 'package:uidev/home_page_controller.dart';
+import 'package:uidev/Login/register_page.dart';
+import 'package:uidev/Login/Helpers/custom_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class RegisterPage extends StatefulWidget {
+String uid;
+
+class LoginPage extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  FirebaseAuth auth = FirebaseAuth.instance;
   String _email;
   String _password;
-  String _confirmPassword;
+
+  String errorMsg = "";
   bool _showPassword = false;
-  bool _showConfirmPassword = false;
 
   void initState() {
     super.initState();
@@ -62,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     children: [
                       Text(
-                        "Register",
+                        "Login",
                         style: GoogleFonts.ubuntu(
                             color: Colors.white,
                             fontSize: 35,
@@ -77,7 +80,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Column(children: <Widget>[
                             email("Username", false, size),
                             password("Password", true, size),
-                            confirmPassword("Confirm Password", true, size),
                           ]),
                         ),
                       ),
@@ -89,15 +91,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           // Navigator.push(
                           //   context,
                           //   PageRouteBuilder(
-                          //     pageBuilder: (c, a1, a2) => NamePage(),
+                          //     pageBuilder: (c, a1, a2) => HomePageController(),
                           //     transitionsBuilder: (c, anim, a2, child) =>
                           //         FadeTransition(opacity: anim, child: child),
                           //     transitionDuration: Duration(milliseconds: 500),
                           //   ),
                           // );
-                          _validateRegisterInput();
+                          _validateLoginInput();
                         },
-
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: size.width * 0.2),
@@ -108,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             height: 45,
                             child: Center(
                               child: Text(
-                                "Sign up",
+                                "Login",
                                 style: GoogleFonts.ubuntu(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -116,6 +117,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
+                      ),
+                      Text(
+                        "Forget your password?",
+                        style: GoogleFonts.ubuntu(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -139,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                            color: Color(0xff38a4ef),
+                            color: Color(0x8f38a4ef),
                             offset: Offset(3.0, 3.0),
                             blurRadius: 15.0,
                             spreadRadius: 1.0),
@@ -227,7 +233,7 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Already have account?",
+                  "Don't have account?",
                   style: GoogleFonts.ubuntu(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
@@ -236,7 +242,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 InkWell(
                   child: Text(
-                    "Log in",
+                    "Sign Up",
                     style: GoogleFonts.ubuntu(
                       color: Color(0xff5172b4),
                       fontWeight: FontWeight.bold,
@@ -246,7 +252,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (c, a1, a2) => LoginPage(),
+                        pageBuilder: (c, a1, a2) => RegisterPage(),
                         transitionsBuilder: (c, anim, a2, child) =>
                             FadeTransition(opacity: anim, child: child),
                         transitionDuration: Duration(milliseconds: 500),
@@ -333,7 +339,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 contentPadding:
                     EdgeInsets.only(top: 15, bottom: 15, left: 0, right: 0),
                 prefixIcon: Icon(
-                  Icons.security_outlined,
+                  Icons.lock_outline,
                   color: Colors.grey,
                 ),
                 suffixIcon: IconButton(
@@ -352,62 +358,18 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget confirmPassword(String hint, bool pass, Size size) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: size.width * 0.1, vertical: size.height * 0.02),
-      child: Stack(
-        children: [
-          Container(
-            height: 50,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(size.height * 0.05),
-                color: Colors.white),
-          ),
-          TextFormField(
-            obscureText: !this._showConfirmPassword,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            onSaved: (input) => _confirmPassword = input,
-            validator: (input) => input.isEmpty ? "*Required" : null,
-            decoration: InputDecoration(
-                hintText: hint,
-                hintStyle: GoogleFonts.ubuntu(color: Colors.grey),
-                contentPadding:
-                    EdgeInsets.only(top: 15, bottom: 15, left: 0, right: 0),
-                prefixIcon: Icon(
-                  Icons.lock_outline,
-                  color: Colors.grey,
-                ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    Icons.remove_red_eye,
-                    color:
-                        this._showConfirmPassword ? Colors.blue : Colors.grey,
-                  ),
-                  onPressed: () {
-                    setState(() =>
-                        this._showConfirmPassword = !this._showConfirmPassword);
-                  },
-                ),
-                border: UnderlineInputBorder(borderSide: BorderSide.none)),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _validateRegisterInput() async {
+  void _validateLoginInput() async {
     final FormState form = _formKey.currentState;
-    if (_password != _confirmPassword) {
-      showDialog(
-        context: context,
-        builder: (_) => CustomAlertRegister("Passwords are not match"),
-      );
-    } else if (_formKey.currentState.validate()) {
+    if (_formKey.currentState.validate()) {
       form.save();
       try {
-        UserCredential userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: _email, password: _password);
+        UserCredential userCredential = 
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: _email, 
+            password: _password
+          );
+        uid = userCredential.user.uid;
+        print("Credential: $userCredential");
         Navigator.push(
           context,
           PageRouteBuilder(
@@ -418,28 +380,35 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         );
       } catch (error) {
+        print(error.code);
         switch (error.code) {
-          case "email-already-in-use":
+          case "user-not-found":
+            {
+              showDialog(
+                context: context,
+                builder: (_) => CustomAlertRegister("User not found."),
+              );
+            }
+            break;
+          case "wrong-password":
             {
               showDialog(
                 context: context,
                 builder: (_) =>
-                    CustomAlertRegister("This email is already in use."),
+                    CustomAlertRegister("Password doesn\'t match your email."),
               );
             }
             break;
-          case "weak-password":
-            {
-              showDialog(
-                context: context,
-                builder: (_) => CustomAlertRegister(
-                    "The password must be 6 characters long or more.)"),
-              );
-            }
-            break;
+          default:
+            {}
         }
       }
     }
+    // else {
+    //   setState(() {
+    //     _autoValidate = true;
+    //   });
+    // }
   }
 }
 

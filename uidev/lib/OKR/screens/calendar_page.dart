@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Task/Calendar/horizontalCalendar.dart';
-import 'package:uidev/Task/dates_list.dart';
-import 'package:uidev/Task/screens/addTaskPage.dart';
-import 'package:uidev/Task/theme/light_colors.dart';
-import 'package:uidev/Task/widgets/task_container.dart';
-import 'package:uidev/Task/widgets/back_button.dart';
+import 'package:uidev/OKR/Calendar/horizontal_calendar.dart';
+import 'package:uidev/OKR/dates_list.dart';
+import 'package:uidev/OKR/screens/add_task_page.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/OKR/widgets/task_container.dart';
+import 'package:uidev/Theme/BackButton/back_button.dart';
 import 'package:intl/intl.dart';
 
 class CalendarPage extends StatefulWidget {

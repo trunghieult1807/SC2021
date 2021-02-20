@@ -1,15 +1,15 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
-import 'package:uidev/ContactUs/contactUs.dart';
-import 'package:uidev/Home/dashBoard.dart';
-import 'package:uidev/Home/profilePage.dart';
+import 'package:uidev/ContactUs/contact_us.dart';
+import 'package:uidev/Dashboard/dash_board.dart';
+import 'package:uidev/Profile/profile_page.dart';
 import 'package:uidev/Setting/setting.dart';
-import 'package:uidev/Task/screens/calendar_page.dart';
-import 'package:uidev/Task/theme/light_colors.dart';
+import 'package:uidev/OKR/screens/calendar_page.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:uidev/Task/widgets/task_column.dart';
-import 'package:uidev/Task/widgets/active_project_card.dart';
-import 'package:uidev/Task/widgets/top_container.dart';
+import 'package:uidev/OKR/widgets/task_column.dart';
+import 'package:uidev/OKR/widgets/active_project_card.dart';
+import 'package:uidev/OKR/widgets/top_container.dart';
 import 'package:animated_drawer/views/animated_drawer.dart';
 
 class PlanPage extends StatelessWidget {

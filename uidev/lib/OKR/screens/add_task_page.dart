@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
-import 'package:uidev/Task/AddTask/input_field.dart';
+import 'package:uidev/OKR/AddTask/input_field.dart';
 import 'package:intl/intl.dart';
-import 'package:uidev/Task/theme/light_colors.dart';
-import 'package:uidev/Task/widgets/back_button.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/Theme/BackButton/back_button.dart';
 
 class AddTaskPage extends StatefulWidget {
   @override

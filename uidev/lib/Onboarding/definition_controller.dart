@@ -1,110 +1,8 @@
-// import 'package:flutter/material.dart';
-// import 'package:liquid_swipe/liquid_swipe.dart';
-// import 'package:uidev/Task/theme/light_colors.dart';
-// import 'package:uidev/Onboarding/definition2.dart';
-// import 'package:uidev/Onboarding/definition3.dart';
-// import 'package:uidev/Onboarding/definition1.dart';
-//
-// class DefinitionController extends StatefulWidget {
-//   static final style = TextStyle(
-//     fontSize: 30,
-//     fontFamily: "Billy",
-//     fontWeight: FontWeight.w600,
-//   );
-//
-//   @override
-//   _DefinitionControllerState createState() => _DefinitionControllerState();
-// }
-//
-// class _DefinitionControllerState extends State<DefinitionController> {
-//   int page = 0;
-//   LiquidController liquidController;
-//   UpdateType updateType;
-//
-//   @override
-//   void initState() {
-//     liquidController = LiquidController();
-//     super.initState();
-//   }
-//
-//   final pages = [
-//     Definition1(),
-//     Definition2(),
-//     Definition3()
-//
-//   ];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         body: Stack(
-//           children: <Widget>[
-//             LiquidSwipe(
-//               initialPage: 0,
-//               enableLoop: false,
-//               pages: pages,
-//               onPageChangeCallback: pageChangeCallback,
-//               waveType: WaveType.liquidReveal,
-//               liquidController: liquidController,
-//               ignoreUserGestureWhileAnimating: false,
-//               enableSlideIcon: true,
-//             ),
-//             Row(
-//               children: [
-//                 // Align(
-//                 //   alignment: Alignment.bottomRight,
-//                 //   child: Padding(
-//                 //     padding: const EdgeInsets.all(25.0),
-//                 //     child: FlatButton(
-//                 //       onPressed: () {
-//                 //         liquidController.jumpToPage(
-//                 //             page: liquidController.currentPage + 1);
-//                 //       },
-//                 //       child: Text("Next"),
-//                 //       color: Colors.white.withOpacity(0.01),
-//                 //     ),
-//                 //   ),
-//                 // ),
-//
-//
-//                 // Align(
-//                 //   alignment: Alignment.bottomLeft,
-//                 //   child: Container(
-//                 //     // decoration: BoxDecoration(
-//                 //     //   borderRadius: BorderRadius.circular(10),
-//                 //     //   color: LightColors.kDarkYellow,
-//                 //     // ),
-//                 //     margin: EdgeInsets.all(25),
-//                 //     child: FlatButton(
-//                 //       onPressed: () {
-//                 //         liquidController.animateToPage(
-//                 //             page: pages.length - 1, duration: 500);
-//                 //       },
-//                 //       child: Text("Skip to End", style: TextStyle(color: LightColors.kDarkYellow),),
-//                 //       color: Colors.white.withOpacity(0.01),
-//                 //     ),
-//                 //   ),
-//                 // ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//
-//   pageChangeCallback(int lpage) {
-//     setState(() {
-//       page = lpage;
-//     });
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:uidev/Home/planPage.dart';
-import 'package:uidev/Task/theme/light_colors.dart';
+import 'package:uidev/OKR/screens/plan_page.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/home_page_controller.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -159,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Navigator.push(
                             context,
                             PageRouteBuilder(
-                              pageBuilder: (c, a1, a2) => PlanPage(),
+                              pageBuilder: (c, a1, a2) => HomePageController(),
                               //HomePageController(),
                               transitionsBuilder: (c, anim, a2, child) =>
                                   FadeTransition(opacity: anim, child: child),
@@ -316,7 +214,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (c, a1, a2) => PlanPage(),
+                          pageBuilder: (c, a1, a2) => HomePageController(),
                           //HomePageController(),
                           transitionsBuilder: (c, anim, a2, child) =>
                               FadeTransition(opacity: anim, child: child),

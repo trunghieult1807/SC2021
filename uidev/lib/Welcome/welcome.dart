@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Login/loginPage.dart';
-import 'package:uidev/Task/theme/light_colors.dart';
+import 'package:uidev/Login/login_page.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
