@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uidev/Database/presence.dart';
 import 'package:uidev/Login/ExternalLogin/googleSignIn.dart';
+import 'package:uidev/Task/theme/light_colors.dart';
+import 'package:uidev/Onboarding/page1.dart';
 import 'package:uidev/homePageController.dart';
 import 'package:uidev/Login/registerPage.dart';
 import 'package:uidev/Login/Helpers/customDialog.dart';
@@ -32,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: LightColors.kLightYellow,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -43,9 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: size.width,
                     height: size.height * 0.75,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xffa58fd2), Color(0xffddc3fc)],
-                      ),
+                      color: LightColors.kLightYellow2,
                     ),
                   ),
                 ),
@@ -55,9 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: size.width,
                     height: size.height * 0.75,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xffddc3fc), Color(0xff91c5fc)],
-                      ),
+                      color: LightColors.kDarkYellow,
                     ),
                   ),
                 ),
@@ -105,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                               vertical: 10, horizontal: size.width * 0.2),
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Color(0xff6a74ce),
+                                color: LightColors.kBlue,
                                 borderRadius: BorderRadius.circular(30)),
                             height: 45,
                             child: Center(
@@ -374,7 +373,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           PageRouteBuilder(
-            pageBuilder: (c, a1, a2) => HomePageController(),
+            pageBuilder: (c, a1, a2) => Page1(),
             transitionsBuilder: (c, anim, a2, child) =>
                 FadeTransition(opacity: anim, child: child),
             transitionDuration: Duration(milliseconds: 500),
