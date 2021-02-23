@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Dashboard/dash_board.dart';
-import 'package:uidev/OKR/screens/plan_page.dart';
+import 'package:uidev/Dashboard/Screens/dash_board.dart';
+import 'package:uidev/HomePage/home_page_provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/NavBotBar/nav_bar.dart';
-import 'Color/flutter_circle_color_picker.dart';
 import 'Profile/profile_page.dart';
 import 'NavBotBar/modal.dart';
 
@@ -15,9 +14,8 @@ class HomePageController extends StatefulWidget {
 class _HomePageControllerState extends State<HomePageController> {
   int selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
-    PlanPage(),
+    HomePageProvider(),
     DashBoardPage(),
-    CircleColorPicker(),
     ProfilePage(),
   ];
 

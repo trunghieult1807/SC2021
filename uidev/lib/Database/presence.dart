@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:uidev/Database/user.dart';
-import 'package:uidev/Login/login_page.dart';
+import 'package:uidev/Login/Screens/login_page.dart';
 import 'package:uidev/Database/database.dart';
 import 'package:flutter/material.dart';
 

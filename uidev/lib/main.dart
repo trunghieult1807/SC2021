@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:uidev/AddTask/add_task_provider.dart';
+import 'package:uidev/HomePage/home_page_provider.dart';
+import 'package:uidev/TaskList/widgets/list.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Welcome/welcome.dart';
+import 'package:uidev/Welcome/Screens/welcome.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:uidev/add/screens/homepage.dart';
-import 'package:uidev/add2/main.dart';
+import 'package:uidev/TaskList/task_list_provider.dart';
+import 'package:uidev/home_page_controller.dart';
 
 
 void main() async {
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
             ),
       ),
       debugShowCheckedModeBanner: false,
-      home: ToDoListApp(),
+      home: AddTask(),
     );
   }
 }
