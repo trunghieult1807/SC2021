@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/HomePage/SubPages/Screens/calendar_page.dart';
-import 'package:uidev/TaskList/active_project_card1.dart';
 import 'package:uidev/HomePage/widgets/okr_provider.dart';
 import 'package:uidev/HomePage/widgets/task_column.dart';
 import 'package:uidev/Theme/top_container.dart';
@@ -27,10 +26,13 @@ class _HomePageState extends State<HomePage> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
+              automaticallyImplyLeading: false,
               shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(100),
-                      bottomRight: Radius.circular(100))),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(100),
+                  bottomRight: Radius.circular(100),
+                ),
+              ),
               forceElevated: true,
               elevation: 8,
               backgroundColor: LightColors.kDarkYellow,

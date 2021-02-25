@@ -4,34 +4,30 @@ import 'package:uidev/HomePage/Widgets/okr_provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 
-class AddNewTaskGroup extends StatefulWidget {
+class AddOKRGroupUI extends StatefulWidget {
   final String id;
   final bool isEditMode;
 
-  AddNewTaskGroup({
+  AddOKRGroupUI({
     this.id,
     this.isEditMode,
   });
 
   @override
-  _AddNewTaskGroupState createState() => _AddNewTaskGroupState();
+  _AddOKRGroupUIState createState() => _AddOKRGroupUIState();
 }
 
-class _AddNewTaskGroupState extends State<AddNewTaskGroup> {
+class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
   OKR okr;
 
-  double _loadingPercent = 0;
+  double _loadingPercent;
   String _title;
   String _subtitle;
-  List<Color> colorData = [
-    LightColors.kDarkYellow,
-    LightColors.kBlue,
-    LightColors.kGreen,
-    LightColors.kRed,
-  ];
   Color _cardColor = LightColors.kDarkYellow;
 
   final _formKey = GlobalKey<FormState>();
+
+
 
   @override
   void initState() {
@@ -40,6 +36,10 @@ class _AddNewTaskGroupState extends State<AddNewTaskGroup> {
       _cardColor = okr.cardColor;
       _title = okr.title;
       _subtitle = okr.subtitle;
+      _loadingPercent = okr.loadingPercent;
+    }
+    else {
+      _loadingPercent = 0;
     }
     super.initState();
   }

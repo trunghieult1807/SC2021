@@ -2,29 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uidev/Database/presence.dart';
-import 'package:uidev/Login/ExternalLogin/google_sign_in.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Onboarding/Screens/page1.dart';
-import 'package:uidev/home_page_controller.dart';
-import 'package:uidev/Login/Screens/register_page.dart';
-import 'package:uidev/Login/Widgets/custom_dialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uidev/Database/services/auth.dart';
 
 String uid;
 
 class LoginPage extends StatefulWidget {
+  final Function toggleView;
+  LoginPage({ this.toggleView });
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
   String _email;
   String _password;
-
-  String errorMsg = "";
   bool _showPassword = false;
+
+
+  String error = '';
+  bool loading = false;
 
   void initState() {
     super.initState();
@@ -87,17 +86,20 @@ class _LoginPageState extends State<LoginPage> {
                         height: size.height * 0.02,
                       ),
                       FlatButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   PageRouteBuilder(
-                          //     pageBuilder: (c, a1, a2) => HomePageController(),
-                          //     transitionsBuilder: (c, anim, a2, child) =>
-                          //         FadeTransition(opacity: anim, child: child),
-                          //     transitionDuration: Duration(milliseconds: 500),
-                          //   ),
-                          // );
-                          _validateLoginInput();
+                        onPressed: () async {
+
+                          _validate();
+                          if(_formKey.currentState.validate()){
+                            setState(() => loading = true);
+                            dynamic result = await _auth.signInWithEmailAndPassword(_email, _password);
+                            if(result == null) {
+                              setState(() {
+                                loading = false;
+                                error = 'Could not sign in with those credentials';
+                              });
+                            }
+                          }
+                          //_validateLoginInput();
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -249,15 +251,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (c, a1, a2) => RegisterPage(),
-                        transitionsBuilder: (c, anim, a2, child) =>
-                            FadeTransition(opacity: anim, child: child),
-                        transitionDuration: Duration(milliseconds: 500),
-                      ),
-                    );
+                    widget.toggleView();
                   },
                 )
               ],
@@ -358,57 +352,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _validateLoginInput() async {
+  void _validate() async {
     final FormState form = _formKey.currentState;
     if (_formKey.currentState.validate()) {
       form.save();
-      try {
-        UserCredential userCredential = 
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: _email, 
-            password: _password
-          );
-        uid = userCredential.user.uid;
-        print("Credential: $userCredential");
-        Navigator.push(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (c, a1, a2) => Page1(),
-            transitionsBuilder: (c, anim, a2, child) =>
-                FadeTransition(opacity: anim, child: child),
-            transitionDuration: Duration(milliseconds: 500),
-          ),
-        );
-      } catch (error) {
-        print(error.code);
-        switch (error.code) {
-          case "user-not-found":
-            {
-              showDialog(
-                context: context,
-                builder: (_) => CustomAlertRegister("User not found."),
-              );
-            }
-            break;
-          case "wrong-password":
-            {
-              showDialog(
-                context: context,
-                builder: (_) =>
-                    CustomAlertRegister("Password doesn\'t match your email."),
-              );
-            }
-            break;
-          default:
-            {}
-        }
-      }
     }
-    // else {
-    //   setState(() {
-    //     _autoValidate = true;
-    //   });
-    // }
   }
 }
 

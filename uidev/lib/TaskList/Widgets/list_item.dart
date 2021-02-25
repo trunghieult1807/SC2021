@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:flutter/services.dart';
 
 import 'task.dart';
 import '../widgets/add_new_task.dart';
 import './item_text.dart';
-
-
 
 class ListItem extends StatefulWidget {
   final Task task;
@@ -51,7 +50,8 @@ class _ListItemState extends State<ListItem> {
         ),
       ),
       child: GestureDetector(
-        onTap: () {
+        onLongPress: (){
+          HapticFeedback.mediumImpact();
           showModalBottomSheet(
             context: context,
             builder: (_) => AddNewTask(
@@ -59,6 +59,12 @@ class _ListItemState extends State<ListItem> {
               isEditMode: true,
             ),
           );
+        },
+        onTap: () {
+          setState(() {
+            HapticFeedback.mediumImpact();
+            widget.task.isDone = !widget.task.isDone;
+          });
         },
         child: Container(
           height: 65,
@@ -85,10 +91,50 @@ class _ListItemState extends State<ListItem> {
                     ),
                   ],
                 ),
-                Checkbox(
-                  value: widget.task.isDone,
-                  onChanged: (_) => checkItem(),
+
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          HapticFeedback.mediumImpact();
+                          widget.task.isDone = !widget.task.isDone;
+                        });
+                      },
+                      child: Center(
+                        child: AnimatedContainer(
+                          width: 20,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 2, color: Colors.grey),
+                            shape: BoxShape.circle,
+                            color: widget.task.isDone
+                                ? LightColors.kDarkYellow
+                                : Colors.transparent,
+                          ),
+                          alignment: widget.task.isDone
+                              ? Alignment.center
+                              : AlignmentDirectional.topCenter,
+                          duration: Duration(milliseconds: 1200),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                          child: widget.task.isDone
+                              ? Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                  size: 15,
+                                )
+                              : SizedBox(
+                                  height: 0,
+                                ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
                 ),
+
               ],
             ),
           ),
@@ -97,26 +143,16 @@ class _ListItemState extends State<ListItem> {
     );
   }
 
-  void checkItem() {
-    setState(() {
-      Provider.of<TaskProvider>(context, listen: false)
-          .changeStatus(widget.task.id);
-      //print('SET STATE ${widget.task.isDone.toString()}');
-    });
-  }
+
 
   Color getColor(int n) {
     if (n == 0) {
       return LightColors.kGreen;
-    }
-    else if (n == 1) {
+    } else if (n == 1) {
       return LightColors.kBlue;
-    }
-    else if (n == 2) {
+    } else if (n == 2) {
       return LightColors.kRed;
-    }
-    else return LightColors.kDarkYellow;
+    } else
+      return LightColors.kDarkYellow;
   }
-
-
 }

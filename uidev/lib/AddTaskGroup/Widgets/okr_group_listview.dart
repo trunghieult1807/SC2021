@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/AddTask/Widgets/task_group_card.dart';
+import 'package:uidev/AddTaskGroup/Widgets/okr_group_card.dart';
 import 'package:uidev/HomePage/Widgets/okr_provider.dart';
 
 
 //Parent widget of all ListItems, this widget role is just to group all list tiles.
 
-class ListTaskGroup extends StatelessWidget {
+class OKRGroupListview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final okrList = Provider.of<OKRProvider>(context).okrList;
@@ -16,7 +16,7 @@ class ListTaskGroup extends StatelessWidget {
             shrinkWrap: true,
             itemCount: okrList.length,
             itemBuilder: (context, index) {
-              return TaskGroup(okrList[index]);
+              return OKRGroupCard(okrList[index]);
             },
           )
         : Column(

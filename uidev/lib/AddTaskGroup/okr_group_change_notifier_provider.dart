@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/AddTask/Screens/add_group.dart';
+import 'package:uidev/AddTaskGroup/Screens/okr_group_ui.dart';
 import 'package:uidev/HomePage/Widgets/okr_provider.dart';
+import 'package:uidev/Theme/BackButton/back_button.dart';
 
 
-class AddTask extends StatelessWidget {
+class OKRGroupChangeNotifierProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => OKRProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'To Do List',
-        home: AddGroup(),
+      child: Scaffold(
+        body: OKRGroupUI(),
       ),
     );
   }

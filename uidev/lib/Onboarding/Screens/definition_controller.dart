@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uidev/HomePage/home_page_provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/home_page_controller.dart';
+import 'package:uidev/wrapper.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -54,11 +57,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       alignment: Alignment.centerRight,
                       child: FlatButton(
                         onPressed: () {
+
                           Navigator.push(
                             context,
                             PageRouteBuilder(
                               pageBuilder: (c, a1, a2) => HomePageController(),
-                              //HomePageController(),
                               transitionsBuilder: (c, anim, a2, child) =>
                                   FadeTransition(opacity: anim, child: child),
                               transitionDuration: Duration(milliseconds: 500),
@@ -214,8 +217,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (c, a1, a2) => HomePageController(),
-                          //HomePageController(),
+                          pageBuilder: (c, a1, a2) => Wrapper(),
                           transitionsBuilder: (c, anim, a2, child) =>
                               FadeTransition(opacity: anim, child: child),
                           transitionDuration: Duration(milliseconds: 500),

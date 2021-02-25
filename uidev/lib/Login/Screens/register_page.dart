@@ -2,26 +2,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uidev/Database/name.dart';
 import 'package:uidev/Login/Widgets/custom_dialog.dart';
-import 'package:uidev/Login/Screens/login_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uidev/Onboarding/Screens/page1.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/Database/services/auth.dart';
 
 class RegisterPage extends StatefulWidget {
+  final Function toggleView;
+  RegisterPage({ this.toggleView });
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final AuthService _auth = AuthService();
   String _email;
   String _password;
   String _confirmPassword;
   bool _showPassword = false;
   bool _showConfirmPassword = false;
+
+  String error = '';
+  bool loading = false;
 
   void initState() {
     super.initState();
@@ -85,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: size.height * 0.02,
                       ),
                       FlatButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // Navigator.push(
                           //   context,
                           //   PageRouteBuilder(
@@ -95,7 +97,18 @@ class _RegisterPageState extends State<RegisterPage> {
                           //     transitionDuration: Duration(milliseconds: 500),
                           //   ),
                           // );
-                          _validateRegisterInput();
+                          _validate();
+                          if(_formKey.currentState.validate()){
+                            setState(() => loading = true);
+                            dynamic result = await _auth.registerWithEmailAndPassword(_email, _password);
+                            if(result == null) {
+                              setState(() {
+                                loading = false;
+                                error = 'Please supply a valid email';
+                              });
+                            }
+                          }
+                          //_validateRegisterInput();
                         },
 
                         child: Padding(
@@ -243,15 +256,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (c, a1, a2) => LoginPage(),
-                        transitionsBuilder: (c, anim, a2, child) =>
-                            FadeTransition(opacity: anim, child: child),
-                        transitionDuration: Duration(milliseconds: 500),
-                      ),
-                    );
+                    widget.toggleView();
                   },
                 )
               ],
@@ -396,7 +401,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _validateRegisterInput() async {
+  void _validate() async {
     final FormState form = _formKey.currentState;
     if (_password != _confirmPassword) {
       showDialog(
@@ -405,40 +410,6 @@ class _RegisterPageState extends State<RegisterPage> {
       );
     } else if (_formKey.currentState.validate()) {
       form.save();
-      try {
-        UserCredential userCredential = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: _email, password: _password);
-        Navigator.push(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (c, a1, a2) => Page1(),
-            transitionsBuilder: (c, anim, a2, child) =>
-                FadeTransition(opacity: anim, child: child),
-            transitionDuration: Duration(milliseconds: 500),
-          ),
-        );
-      } catch (error) {
-        switch (error.code) {
-          case "email-already-in-use":
-            {
-              showDialog(
-                context: context,
-                builder: (_) =>
-                    CustomAlertRegister("This email is already in use."),
-              );
-            }
-            break;
-          case "weak-password":
-            {
-              showDialog(
-                context: context,
-                builder: (_) => CustomAlertRegister(
-                    "The password must be 6 characters long or more.)"),
-              );
-            }
-            break;
-        }
-      }
     }
   }
 }

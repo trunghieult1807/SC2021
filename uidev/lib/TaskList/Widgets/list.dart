@@ -6,7 +6,12 @@ import './list_item.dart';
 
 //Parent widget of all ListItems, this widget role is just to group all list tiles.
 
-class List extends StatelessWidget {
+class List extends StatefulWidget {
+  @override
+  _ListState createState() => _ListState();
+}
+
+class _ListState extends State<List> {
   @override
   Widget build(BuildContext context) {
     final taskList = Provider.of<TaskProvider>(context).itemsList;

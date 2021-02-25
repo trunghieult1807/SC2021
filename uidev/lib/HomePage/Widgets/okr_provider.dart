@@ -62,24 +62,27 @@ class OKRProvider with ChangeNotifier {
   ];
 
   OKR getById(String id) {
-    return _okrList.firstWhere((task) => task.id == id);
+    return _okrList.firstWhere((okr) => okr.id == id);
   }
 
-  void createNewOKR(OKR task) {
-    final newTask = OKR(
-      id: task.id,
-      cardColor: task.cardColor,
-      loadingPercent: task.loadingPercent,
-      title: task.title,
-      subtitle: task.subtitle,
+  void createNewOKR(OKR okr) {
+    final newOKR = OKR(
+      id: okr.id,
+      cardColor: okr.cardColor,
+      loadingPercent: okr.loadingPercent,
+      title: okr.title,
+      subtitle: okr.subtitle,
     );
-    _okrList.add(newTask);
+    _okrList.add(newOKR);
     notifyListeners();
   }
 
   void editOKR(OKR okr) {
-    removeOKR(okr.id);
-    createNewOKR(okr);
+    int index = _okrList.indexWhere((_okr) => _okr.id == okr.id);
+    _okrList[index].subtitle = okr.subtitle;
+    _okrList[index].title = okr.title;
+    _okrList[index].cardColor = okr.cardColor;
+    notifyListeners();
   }
 
   void removeOKR(String id) {

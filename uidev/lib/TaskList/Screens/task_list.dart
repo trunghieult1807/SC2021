@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uidev/Theme/BackButton/back_button.dart';
+import 'package:uidev/Theme/CheckBox/check_box.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 
 import '../widgets/add_new_task.dart';
@@ -8,7 +9,15 @@ import '../widgets/list.dart';
 //Homepage of the app. It allows the user to insert new tasks to his list.
 //It'll allow the user to add new lists too (later features).
 
-class TaskList extends StatelessWidget {
+class TaskList extends StatefulWidget {
+  @override
+  _TaskListState createState() => _TaskListState();
+}
+
+/// This is the private State class that goes with MyStatefulWidget.
+class _TaskListState extends State<TaskList> {
+  bool selected = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +74,7 @@ class TaskList extends StatelessWidget {
                       child: List(),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

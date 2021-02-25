@@ -3,6 +3,7 @@ import 'package:uidev/Dashboard/Screens/dash_board.dart';
 import 'package:uidev/HomePage/home_page_provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/NavBotBar/nav_bar.dart';
+import 'package:uidev/logout.dart';
 import 'Profile/profile_page.dart';
 import 'NavBotBar/modal.dart';
 
@@ -17,6 +18,7 @@ class _HomePageControllerState extends State<HomePageController> {
     HomePageProvider(),
     DashBoardPage(),
     ProfilePage(),
+    Logout(),
   ];
 
   @override

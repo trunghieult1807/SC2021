@@ -23,7 +23,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   DateTime _selectedDate;
   TimeOfDay _selectedTime;
   String _inputDescription;
-  int mode;
+  int _mode;
 
   final _formKey = GlobalKey<FormState>();
   String _selectedMode = 'None';
@@ -268,12 +268,14 @@ class _AddNewTaskState extends State<AddNewTask> {
             id: DateTime.now().toString(),
             description: _inputDescription,
             dueDate: _selectedDate,
+            mode: _mode,
           ),
         );
       } else {
         Provider.of<TaskProvider>(context, listen: false).editTask(
           Task(
             id: task.id,
+            mode: _mode,
             description: _inputDescription,
             dueDate: _selectedDate,
           ),
