@@ -2,7 +2,7 @@ import 'package:uidev/app/Item.dart';
 import 'package:uidev/app/Task.dart';
 
 class KeyResult extends Item {
-  static int _idCount = 0;
+  static int _idCount = 1;
   DateTime _deadline;
   List<Task> _taskList = [];
 
@@ -22,6 +22,10 @@ class KeyResult extends Item {
 
   // Add Task object to TaskList of Key Result
   void addTask(Task task) {
+    if (_taskList.contains(task)) {
+      print("Task #${task.id} already in KeyResult #${this.id}");
+      return null;
+    }
     _taskList.add(task);
   }
   // Add many Task objects simultaneously

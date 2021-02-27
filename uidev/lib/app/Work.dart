@@ -2,7 +2,7 @@ import 'package:uidev/app/Item.dart';
 import 'package:uidev/app/KeyResult.dart';
 
 class Work extends Item {
-  static int _idCount = 0;
+  static int _idCount = 1;
   String _name;
   String _objective;
   DateTime _deadline;
@@ -33,12 +33,12 @@ class Work extends Item {
 
   // Add KeyResult object to KRList of Work
   void addKeyResult(KeyResult kr) {
-    if (kr.deadline.compareTo(_deadline) <= 0) {
+    if (_krList.contains(kr)) {
+      print("KeyResult #${kr.id} already in Work #${this.id}");
+    }
+    else if (kr.deadline.compareTo(_deadline) <= 0) {
       _krList.add(kr);
       print("Work #${this.id}: Add Key Result #${kr.id} successfully");
-    }
-    else {
-      print("Work #${this.id}: Invalid deadline of Key Result #${kr.id}");
     }
   }
   // Add many KeyResult objects simultaneously
