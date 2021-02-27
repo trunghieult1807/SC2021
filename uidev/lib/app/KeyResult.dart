@@ -2,11 +2,17 @@ import 'package:uidev/app/Item.dart';
 import 'package:uidev/app/Task.dart';
 
 class KeyResult extends Item {
+  static int _idCount = 0;
   DateTime _deadline;
   List<Task> _taskList = [];
 
   KeyResult(String desc, DateTime deadline) : _deadline = deadline, super(desc) {
-    print("KeyResult created!");
+    this.id = _idCount++;
+    print("KeyResult #${this.id}: Created Successfully!");
+  }
+
+  String toString() {
+    return "KeyResult ${this.id}: ${this.description}, $_deadline - ${this.isDone ? "Done" : "In progress"}";
   }
 
   // A bunch of setter and getter functions
@@ -14,9 +20,15 @@ class KeyResult extends Item {
   List<Task> get allTask => _taskList;
   set deadline(DateTime _in) => _deadline = _in;
 
+  // Add Task object to TaskList of Key Result
   void addTask(Task task) {
     _taskList.add(task);
   }
+  // Add many Task objects simultaneously
+  void addManyTasks(List<Task> manyTasks) {
+    manyTasks.forEach((task) => this.addTask(task));
+  }
+
   Task removeTask(int taskId) {
     for (var i = 0; i < _taskList.length; i++) {
       if (taskId == _taskList[i].id) {
@@ -28,9 +40,9 @@ class KeyResult extends Item {
   @override
   bool markDone() {
     if (this.isDone) return true;
-    for (var i = 0; i < _taskList.length; i++) {
-      if (!_taskList[i].isDone) return false;
-    }
+    _taskList.forEach((task) {
+      if (!task.isDone) return false;
+    });
     super.markDone();
     return true;
   }

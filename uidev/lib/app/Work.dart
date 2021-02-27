@@ -2,6 +2,7 @@ import 'package:uidev/app/Item.dart';
 import 'package:uidev/app/KeyResult.dart';
 
 class Work extends Item {
+  static int _idCount = 0;
   String _name;
   String _objective;
   DateTime _deadline;
@@ -13,7 +14,12 @@ class Work extends Item {
     _deadline = deadline,
     super(desc)
   {
-    print("Work created!");
+    this.id = _idCount++;
+    print("Work #${this.id}: Created Successfully!");
+  }
+
+  String toString() {
+    return "Work ${this.id}: $_name, $_objective, $_deadline - ${this.isDone ? "Done" : "In progress"}";
   }
 
   // A bunch of setter and getter functions
@@ -25,9 +31,21 @@ class Work extends Item {
   set objective(String _in) => _objective = _in;
   set deadline(DateTime _in) => _deadline = _in;
 
+  // Add KeyResult object to KRList of Work
   void addKeyResult(KeyResult kr) {
-    _krList.add(kr);
+    if (kr.deadline.compareTo(_deadline) <= 0) {
+      _krList.add(kr);
+      print("Work #${this.id}: Add Key Result #${kr.id} successfully");
+    }
+    else {
+      print("Work #${this.id}: Invalid deadline of Key Result #${kr.id}");
+    }
   }
+  // Add many KeyResult objects simultaneously
+  void addManyKeyResults(List<KeyResult> kr_list) {
+    kr_list.forEach((kr) => this.addKeyResult(kr));
+  }
+
   KeyResult removeKeyResult(int krId) {
     for (var i = 0; i < _krList.length; i++) {
       if (krId == _krList[i].id) {

@@ -13,7 +13,7 @@ class TaskMode {
   String _description;
 
   TaskMode(int level) {
-    if (level < 4 && level > 0) {
+    if (level < 4 && level >= 0) {
       _color = _colorList[level];
       _description = _descList[level];
       _level = level;
@@ -32,11 +32,17 @@ class TaskMode {
   }
 }
 
-class Task extends Item{
+class Task extends Item {
+  static int _idCount = 0;
   TaskMode _mode;
 
   Task(int level, String desc) : _mode = new TaskMode(level), super(desc) {
-    print("Task created!");
+    this.id = _idCount++;
+    print("Task #${this.id}: Created Successfully!");
+  }
+
+  String toString() {
+    return "Task ${this.id}: ${this.description}, ${_mode.level} - ${this.isDone ? "Done" : "In progress"}";
   }
 
   TaskMode get taskMode => _mode;
