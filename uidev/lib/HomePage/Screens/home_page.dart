@@ -1,13 +1,13 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/HomePage/SubPages/Screens/calendar_page.dart';
-import 'package:uidev/HomePage/widgets/okr_provider.dart';
-import 'package:uidev/HomePage/widgets/task_column.dart';
-import 'package:uidev/Theme/top_container.dart';
+import 'package:uidev/HomePage/Widgets/active_project_card.dart';
+import 'package:uidev/HomePage/Widgets/okr_provider.dart';
+import 'package:uidev/HomePage/Widgets/task_column.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import '../Widgets/active_project_card.dart';
+import 'package:uidev/Theme/top_container.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,9 +16,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    setState(() {});
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    //var okrList = Provider.of<List<OKR>>(context);
+    //print("This home: ${okrList.length}");
     double width = MediaQuery.of(context).size.width;
-    final okrList = Provider.of<OKRProvider>(context).okrList;
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       backgroundColor: LightColors.kLightYellow,
@@ -154,11 +161,7 @@ class _HomePageState extends State<HomePage> {
                         subheading('My Tasks'),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CalendarPage()),
-                            );
+                            navigateSecondPage();
                           },
                           child: calendarIcon(),
                         ),
@@ -197,58 +200,67 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     subheading('Active Projects'),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: okrList.length > 0
-                                ? ListView.builder(
-                                    padding: EdgeInsets.only(top: 20),
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: okrList.length,
-                                    itemBuilder: (context, index) {
-                                      return index % 2 != 1
-                                          ? Row(
-                                              children: [
-                                                ActiveProjectsCard(
-                                                    okrList[index]),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                index + 1 != okrList.length
-                                                    ? ActiveProjectsCard(
-                                                        okrList[index + 1])
-                                                    : Text('')
-                                              ],
-                                            )
-                                          : Text('');
-                                    },
-                                  )
-                                : Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.height -
-                                                450,
-                                        child: Image.asset('assets/waiting.png',
-                                            fit: BoxFit.cover),
-                                      ),
+
+                    Consumer<List<OKR>>(
+                      builder: (context, okrList, child) {
+                        print("ok: ${okrList.length}");
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: okrList.length > 0
+                                  ? ListView.builder(
+                                padding: EdgeInsets.only(top: 20),
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: okrList.length,
+                                itemBuilder: (context, index) {
+                                  return index % 2 != 1
+                                      ? Row(
+                                    children: [
+                                      ActiveProjectsCard(
+                                          okrList[index]),
                                       SizedBox(
-                                        height: 30,
+                                        width: 20,
                                       ),
-                                      Text(
-                                        'No tasks added yet...',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1,
-                                      ),
+                                      index + 1 != okrList.length
+                                          ? ActiveProjectsCard(
+                                          okrList[index + 1])
+                                          : Text('')
                                     ],
-                                  )),
-                      ],
+                                  )
+                                      : Text('');
+                                },
+                              )
+                                  : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    height:
+                                    MediaQuery.of(context).size.height -
+                                        450,
+                                    child: Image.asset('assets/waiting.png',
+                                        fit: BoxFit.cover),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  Text(
+                                    'No tasks added yet...',
+                                    style:
+                                    Theme.of(context).textTheme.subtitle1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+
+                      },
                     ),
+
+
+
                     SizedBox(
                       height: 30,
                     ),
@@ -284,4 +296,14 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
+
+  void navigateSecondPage() {
+    Route route = MaterialPageRoute(builder: (context) => CalendarPage());
+    Navigator.push(context, route).then(onGoBack);
+  }
 }
+

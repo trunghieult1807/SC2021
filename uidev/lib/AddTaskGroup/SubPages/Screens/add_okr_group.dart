@@ -31,12 +31,30 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
 
   @override
   void initState() {
+    //final okrList = Provider.of<List<OKR>>(context);
     if (widget.isEditMode) {
-      okr = Provider.of<OKRProvider>(context, listen: false).getById(widget.id);
-      _cardColor = okr.cardColor;
-      _title = okr.title;
-      _subtitle = okr.subtitle;
-      _loadingPercent = okr.loadingPercent;
+
+      // firestoreInstance.collection("users").doc(firebaseUser.uid).collection("okrs").doc(widget.id).get().then((result){
+      //   //_id: result.data()["id"];
+      //   _cardColor: Color(int.parse(
+      //   result.data()["cardColor"].split('(0x')[1].split(')')[0],
+      //   radix: 16));
+      //   print(_cardColor);
+      //   _loadingPercent: result.data()["loadingPercent"];
+      //   _title: result.data()["title"];
+      //   _subtitle: result.data()["subtitle"];
+      // });
+
+      print("_cardColor: $_subtitle");
+
+      // okr = Provider.of<List<OKR>>(context, listen: false).indexOf();
+      // _cardColor = firestoreInstance
+      //     .collection("users")
+      //     .doc(firebaseUser.uid)
+      //     .collection("okrs").doc(widget.id).get();
+      // _title = okr.title;
+      // _subtitle = okr.subtitle;
+      // _loadingPercent = okr.loadingPercent;
     }
     else {
       _loadingPercent = 0;
@@ -53,7 +71,10 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Title', style: Theme.of(context).textTheme.subtitle1),
+            Text('Title', style: Theme
+                .of(context)
+                .textTheme
+                .subtitle1),
             SizedBox(
               height: 5,
             ),
@@ -75,7 +96,7 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
                   contentPadding:
-                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                   hintText: 'Describe your task',
                 ),
                 validator: (value) {
@@ -92,7 +113,10 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
             SizedBox(
               height: 20,
             ),
-            Text('Subtitle', style: Theme.of(context).textTheme.subtitle1),
+            Text('Subtitle', style: Theme
+                .of(context)
+                .textTheme
+                .subtitle1),
             SizedBox(
               height: 5,
             ),
@@ -114,7 +138,7 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
                   contentPadding:
-                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                   hintText: 'Describe your task',
                 ),
                 validator: (value) {
@@ -131,7 +155,10 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
             SizedBox(
               height: 20,
             ),
-            Text('Color', style: Theme.of(context).textTheme.subtitle1),
+            Text('Color', style: Theme
+                .of(context)
+                .textTheme
+                .subtitle1),
             SizedBox(
               height: 5,
             ),
@@ -173,11 +200,17 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
                             setState(() => _cardColor = color),
                         heading: Text(
                           'Select color',
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline5,
                         ),
                         subheading: Text(
                           'Select color shade',
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .subtitle1,
                         ),
                       ).showPickerDialog(
                         context,
@@ -219,25 +252,46 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       if (!widget.isEditMode) {
-        Provider.of<OKRProvider>(context, listen: false).createNewOKR(
-          OKR(
-            id: DateTime.now().toString(),
-            title: _title,
-            subtitle: _subtitle,
-            loadingPercent: _loadingPercent,
-            cardColor: _cardColor,
-          ),
+        final newOKR = OKR(
+          id: DateTime.now().toString(),
+          cardColor: _cardColor,
+          loadingPercent: _loadingPercent,
+          title: _title,
+          subtitle: _subtitle,
         );
+        //_okrList.add(newOKR);
+
+        firestoreInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .collection("okrs").doc(DateTime.now().toString())
+            .set({
+          "id": newOKR.id,
+          "cardColor": newOKR.cardColor.toString(),
+          "loadingPercent": newOKR.loadingPercent,
+          "title": newOKR.title,
+          "subtitle": newOKR.subtitle,
+        });
       } else {
-        Provider.of<OKRProvider>(context, listen: false).editOKR(
-          OKR(
-            id: okr.id,
-            title: _title,
-            subtitle: _subtitle,
-            loadingPercent: _loadingPercent,
-            cardColor: _cardColor,
-          ),
+        final newOKR = OKR(
+          id: widget.id,
+          cardColor: _cardColor,
+          loadingPercent: _loadingPercent,
+          title: _title,
+          subtitle: _subtitle,
         );
+        firestoreInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .collection("okrs")
+            .doc(widget.id).update({
+          "id": newOKR.id,
+          "cardColor": newOKR.cardColor.toString(),
+          "loadingPercent": 50.0,
+          "title": newOKR.title,
+          "subtitle": newOKR.subtitle,
+        });
+
       }
       Navigator.of(context).pop();
     }

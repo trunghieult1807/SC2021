@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:uidev/AddTaskGroup/SubPages/Screens/add_task_group.dart';
+import 'package:uidev/AddTaskGroup/SubPages/Screens/add_okr_group.dart';
 import 'package:uidev/HomePage/Widgets/okr_provider.dart';
 
 class OKRGroupCard extends StatefulWidget {
