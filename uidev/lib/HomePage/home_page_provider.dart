@@ -5,6 +5,8 @@ import 'package:uidev/Database/Services/database.dart';
 import 'package:uidev/HomePage/Screens/home_page.dart';
 import 'package:uidev/HomePage/Widgets/okr_provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/app/Project.dart';
+import 'package:uuid/uuid.dart';
 
 class HomePageProvider extends StatelessWidget {
   final User user = FirebaseAuth.instance.currentUser;
@@ -13,16 +15,19 @@ class HomePageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<OKR>>(
+    return StreamProvider<List<Project>>(
         create: (_) {
-          return db.streamOKR(user);
+          return db.streamProject(user);
         } ,
-        initialData: [OKR(
-            id: 'okr#1',
-            cardColor: LightColors.kDarkYellow,
-            loadingPercent: 0.90,
-            title: "PPL",
-            subtitle: "Nguyen Hua Phung"),],
+        initialData: [Project(
+            Uuid().toString(),
+            "Medical App",
+            "Full time",
+            DateTime.now().toString(),
+            DateTime.now(),
+            Colors.pink,
+            ),
+        ],
         child: HomePage(),
     );
   }

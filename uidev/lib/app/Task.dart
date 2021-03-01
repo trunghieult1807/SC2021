@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/app/Item.dart';
 
 class TaskMode {
@@ -7,11 +9,11 @@ class TaskMode {
     "Important, not urgent. Decide when to do it",
     "Urgent & important. Do it now!"
   ];
-  static List<String> _colorList = ["green", "yellow", "red", "blue"];
+  static List<Color> _colorList = [LightColors.kDarkYellow, LightColors.kBlue, LightColors.kRed, LightColors.kGreen];
   int _priority;
   bool _important;
   bool _urgent;
-  String _color;
+  Color _color;
   String _desc;
 
   TaskMode() {
@@ -20,36 +22,36 @@ class TaskMode {
     _priority = 0;
     this._setColorAndDesc();
   }
-  TaskMode.setPriority(int pr) {
-    _priority = pr;
-    switch (pr) {
-      case 0: {
-        _important = false;
-        _urgent = false;
-      }
-      break;
-      case 1: {
-        _important = false;
-        _urgent = true;
-      }
-      break;
-      case 2: {
-        _important = true;
-        _urgent = false;
-      }
-      break;
-      case 3: {
-        _important = true;
-        _urgent = true;
-      }
-      break;
-      default: {
-        print("What the fuck is this mode!!!");
-      }
-      break;
-    }
-    this._setColorAndDesc();
-  }
+  // TaskMode.setPriority(int pr) {
+  //   _priority = pr;
+  //   switch (pr) {
+  //     case 0: {
+  //       _important = false;
+  //       _urgent = false;
+  //     }
+  //     break;
+  //     case 1: {
+  //       _important = false;
+  //       _urgent = true;
+  //     }
+  //     break;
+  //     case 2: {
+  //       _important = true;
+  //       _urgent = false;
+  //     }
+  //     break;
+  //     case 3: {
+  //       _important = true;
+  //       _urgent = true;
+  //     }
+  //     break;
+  //     default: {
+  //       print("What the fuck is this mode!!!");
+  //     }
+  //     break;
+  //   }
+  //   this._setColorAndDesc();
+  // }
   void _setColorAndDesc() {
     _color = _colorList[_priority];
     _desc = _descList[_priority];
@@ -58,7 +60,7 @@ class TaskMode {
   bool get important => _important;
   bool get urgent => _urgent;
   String get description => _desc;
-  String get color => _color;
+  Color get color => _color;
 
   void markImportant() {
     if (!_important) {
@@ -91,27 +93,26 @@ class TaskMode {
 }
 
 class Task extends Item {
-  static int _idCount = 1;
   TaskMode _mode;
+  String _projectName;
 
-  Task(String desc) : _mode = new TaskMode(), super(desc) {
-    this.id = _idCount++;
+  Task(String id, String title, String desc, String projectName) : _mode = new TaskMode(), _projectName = projectName, super(id, title, desc) {
     print("Task #${this.id}: Created Successfully!");
   }
-  Task.setPriority(int level, String desc) : _mode = new TaskMode.setPriority(level), super(desc) {
-    this.id = _idCount++;
-    print("Task #${this.id}: Created Successfully!");
-  }
+  // Task.setPriority(int level, String id, String title, String desc) : _mode = new TaskMode.setPriority(level), super(id, title, desc) {
+  //   print("Task #${this.id}: Created Successfully!");
+  // }
 
   String toString() {
-    return "Task #${this.id}: ${this.description} - ${this.isDone ? "Done" : "In progress"}";
+    return "Task #${this.id}: ${this.title} - ${this.description} - ${this.isDone ? "Done" : "In progress"}";
   }
 
   TaskMode get mode => _mode;
+  String get projectName => _projectName;
 
   void notify() {
     if (!this.isDone) {
-      print("You should do Task #${this.id} (${this.description}) now!");
+      print("You should do Task #${this.id} (${this.title} - ${this.description}) now!");
     }
   }
 }

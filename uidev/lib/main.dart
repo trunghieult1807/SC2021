@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Database/Models/user.dart';
 import 'package:uidev/Welcome/Screens/welcome.dart';
+import 'package:uidev/ex.dart';
 import 'package:uidev/wrapper.dart';
 import 'package:uidev/Database/Services/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';

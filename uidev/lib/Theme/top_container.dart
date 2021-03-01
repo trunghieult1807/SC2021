@@ -13,23 +13,10 @@ class TopContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //color: Colors.transparent,
       padding:
           padding != null ? padding : EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(
         color: color != null ? color : LightColors.kDarkYellow,
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(40.0),
-          bottomLeft: Radius.circular(40.0),
-        ),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey,//.withOpacity(0.5),
-        //     spreadRadius: 15,
-        //     blurRadius: 7,
-        //     offset: Offset(0, 0),
-        //   )
-        // ],
       ),
       height: height,
       width: width,

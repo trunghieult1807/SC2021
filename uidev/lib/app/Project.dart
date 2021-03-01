@@ -1,22 +1,25 @@
+import 'package:flutter/material.dart';
 import 'package:uidev/app/Item.dart';
 import 'package:uidev/app/Task.dart';
 
-class KeyResult extends Item {
-  static int _idCount = 1;
+class Project extends Item {
+  Color _color;
+  String _createdDate;
   DateTime _deadline;
   List<Task> _taskList = [];
+  double _progressPercent = 0;
 
-  KeyResult(String desc, DateTime deadline) : _deadline = deadline, super(desc) {
-    this.id = _idCount++;
-    print("KeyResult #${this.id}: Created Successfully!");
-  }
+  Project(String id, String title, String desc, String createdDate, DateTime deadline, Color color) : _createdDate = createdDate ,_deadline = deadline, _color = color, super(id, title, desc);
 
   String toString() {
-    return "KeyResult ${this.id}: ${this.description}, $_deadline - ${this.isDone ? "Done" : "In progress"}";
+    return "KeyResult ${this.id}: ${this.title} - ${this.description}, $_deadline - ${this.isDone ? "Done" : "In progress"}";
   }
 
   // A bunch of setter and getter functions
+  String get createDate => _createdDate;
   DateTime get deadline => _deadline;
+  Color get color => _color;
+  double get progressPercent => _progressPercent;
   List<Task> get allTask => _taskList;
   set deadline(DateTime _in) => _deadline = _in;
 

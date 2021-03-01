@@ -80,22 +80,17 @@ class _CalendarPageState extends State<CalendarPage> {
                     ),
                     child: FlatButton(
                       onPressed: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (_) => ChangeNotifierProvider.value(
-                        //         value: Provider.of<OKRProvider>(context,
-                        //             listen: false),
-                        //         child: OKRGroupUI())));
 
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (c, a1, a2) =>
-                                OKRGroupChangeNotifierProvider(),
-                            transitionsBuilder: (c, anim, a2, child) =>
-                                FadeTransition(opacity: anim, child: child),
-                            transitionDuration: Duration(milliseconds: 500),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   PageRouteBuilder(
+                        //     pageBuilder: (c, a1, a2) =>
+                        //         OKRGroupChangeNotifierProvider(),
+                        //     transitionsBuilder: (c, anim, a2, child) =>
+                        //         FadeTransition(opacity: anim, child: child),
+                        //     transitionDuration: Duration(milliseconds: 500),
+                        //   ),
+                        // );
                       },
                       child: Center(
                         child: Text(
