@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:uidev/Database/Models/brew.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uidev/HomePage/Widgets/okr_provider.dart';
-import 'package:uidev/app/Project.dart';
+import 'package:uidev/app/task.dart';
+import 'package:uidev/app/project.dart';
 
 class DatabaseService {
   final String uid;
@@ -34,5 +33,32 @@ class DatabaseService {
         .orderBy("createdDate", descending: false)
         .snapshots()
         .map(_projectListFromSnapshot);
+  }
+
+  List<Task> _taskListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Task(
+        doc.data()["id"],
+        doc.data()["title"],
+        doc.data()["desc"],
+        doc.data()["mode"],
+        doc.data()["projectName"],
+        doc.data()["createdDate"],
+        doc.data()["deadline"].toDate(),
+        doc.data()["isDone"],
+      );
+    }).toList();
+  }
+
+  Stream<List<Task>> streamTask(User user, Project project) {
+    return _db
+        .collection('users')
+        .doc(user.uid)
+        .collection('projects')
+        .doc(project.id)
+        .collection('taskList')
+        .orderBy('createdDate', descending: false)
+        .snapshots()
+        .map(_taskListFromSnapshot);
   }
 }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:uidev/AddTaskGroup/SubPages/Screens/add_okr_group.dart';
+import 'package:uidev/HomePage/Screens/add_project_popup.dart';
 import 'package:uidev/Dashboard/Screens/dash_board.dart';
 import 'package:uidev/HomePage/home_page_provider.dart';
 import 'package:uidev/Profile/profile_page.dart';
@@ -59,7 +59,7 @@ class _HomePageControllerState extends State<HomePageController> {
         onPressed: (){
           showModalBottomSheet(
             context: context,
-            builder: (_) => AddOKRGroupUI(isEditMode: false),
+            builder: (_) => AddProjectPopup(isEditMode: false),
           );
         },
       ),

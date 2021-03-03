@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/Database/Services/database.dart';
 import 'package:uidev/HomePage/Screens/home_page.dart';
-import 'package:uidev/HomePage/Widgets/okr_provider.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/app/Project.dart';
+import 'package:uidev/app/project.dart';
 import 'package:uuid/uuid.dart';
 
 class HomePageProvider extends StatelessWidget {

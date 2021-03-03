@@ -1,18 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:uidev/TaskList/widgets/input_field.dart';
-
-import 'task.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:uidev/app/task.dart';
+import 'package:uidev/app/project.dart';
+import 'package:uuid/uuid.dart';
 
 class AddNewTask extends StatefulWidget {
-  final String id;
+  final Project project;
+  final Task task;
   final bool isEditMode;
 
   AddNewTask({
-    this.id,
+    Key key,
+    @required this.project,
+    this.task,
     this.isEditMode,
-  });
+  }) : super(key: key);
 
   @override
   _AddNewTaskState createState() => _AddNewTaskState();
@@ -20,13 +25,20 @@ class AddNewTask extends StatefulWidget {
 
 class _AddNewTaskState extends State<AddNewTask> {
   Task task;
-  DateTime _selectedDate;
+  DateTime _deadline = DateTime.now();
   TimeOfDay _selectedTime;
-  String _inputDescription;
-  int _mode;
+  String _title;
+  String _desc;
+  String _createdDate;
+  bool _isDone;
+  Project _project;
 
   final _formKey = GlobalKey<FormState>();
-  String _selectedMode = 'None';
+  TextEditingController _dateController;
+  var firebaseUser = FirebaseAuth.instance.currentUser;
+  final firestoreInstance = FirebaseFirestore.instance;
+
+  String _mode = 'None';
   List<String> modeList = [
     'None',
     'Important and Urgent',
@@ -37,12 +49,19 @@ class _AddNewTaskState extends State<AddNewTask> {
 
   @override
   void initState() {
+
     if (widget.isEditMode) {
-      task =
-          Provider.of<TaskProvider>(context, listen: false).getById(widget.id);
-      _selectedDate = task.dueDate;
-      _inputDescription = task.description;
+      _title = widget.task.title;
+      _mode = modeList[widget.task.mode];
+      _deadline = widget.task.deadline;
+      _createdDate = widget.task.createdDate;
+      _desc = widget.task.description;
+      _isDone = widget.task.isDone;
     }
+    _isDone = false;
+    _project = widget.project;
+    _dateController =
+        TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline));
     super.initState();
   }
 
@@ -69,8 +88,46 @@ class _AddNewTaskState extends State<AddNewTask> {
                   ),
                   borderRadius: BorderRadius.circular(12.0)),
               child: TextFormField(
-                initialValue:
-                    _inputDescription == null ? null : _inputDescription,
+                initialValue: _title == null ? null : _title,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  hintText: 'Named your task',
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _title = value;
+                },
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text('Description', style: Theme.of(context).textTheme.subtitle1),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              //padding: EdgeInsets.only(left: 14.0),
+              height: 50,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1.0,
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(12.0)),
+              child: TextFormField(
+                initialValue: _desc == null ? null : _desc,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
@@ -88,11 +145,10 @@ class _AddNewTaskState extends State<AddNewTask> {
                   return null;
                 },
                 onSaved: (value) {
-                  _inputDescription = value;
+                  _desc = value;
                 },
               ),
             ),
-
             SizedBox(
               height: 20,
             ),
@@ -100,31 +156,60 @@ class _AddNewTaskState extends State<AddNewTask> {
             SizedBox(
               height: 5,
             ),
-            Container(
-              //padding: EdgeInsets.only(left: 14.0),
-              height: 50,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
-                    color: Colors.grey,
-                  ),
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: TextFormField(
-                onTap: () {
-                  _pickUserDueDate();
-                },
-                readOnly: true,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  contentPadding:
-                  EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: _selectedDate == null
-                      ? 'Provide your due date'
-                      : DateFormat.yMMMd().format(_selectedDate).toString(),
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return _buildDatePickerDialog(context);
+                    });
+              },
+              child: Container(
+                //padding: EdgeInsets.only(left: 14.0),
+                height: 50,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.0,
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(12.0)),
+                child: Stack(
+                  children: [
+                    TextFormField(
+                      autofocus: false,
+                      controller: _dateController,
+                      //TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline)),
+                      enabled: false,
+                      style: TextStyle(color: Colors.black),
+                      //initialValue: _deadline == null ? null : DateFormat('yyyy-MM-dd').format(_deadline),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
+                        //hintText: DateFormat('yyyy-MM-dd').format(_deadline),
+                        hintStyle: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FlatButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return _buildDatePickerDialog(context);
+                                });
+                          },
+                          child: Icon(Icons.calendar_today),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -136,7 +221,8 @@ class _AddNewTaskState extends State<AddNewTask> {
               height: 5,
             ),
             Container(
-              padding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+              padding:
+                  EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
               height: 50,
               decoration: BoxDecoration(
                   border: Border.all(
@@ -149,7 +235,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                   Expanded(
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: _selectedMode,
+                      value: _mode,
                       icon: Icon(
                         Icons.keyboard_arrow_down,
                         color: Colors.black,
@@ -158,16 +244,16 @@ class _AddNewTaskState extends State<AddNewTask> {
                       underline: Container(height: 0),
                       onChanged: (String newValue) {
                         setState(() {
-                          _selectedMode = newValue;
+                          _mode = newValue;
                         });
                       },
-                      items: modeList.map<DropdownMenuItem<String>>(
-                              (String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                      items: modeList
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
                   ),
                 ],
@@ -228,7 +314,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   void _pickUserDueDate() {
     showDatePicker(
             context: context,
-            initialDate: widget.isEditMode ? _selectedDate : DateTime.now(),
+            initialDate: widget.isEditMode ? _deadline : DateTime.now(),
             firstDate: DateTime(2020),
             lastDate: DateTime(2030))
         .then((date) {
@@ -237,7 +323,7 @@ class _AddNewTaskState extends State<AddNewTask> {
       }
       date = date;
       setState(() {
-        _selectedDate = date;
+        _deadline = date;
       });
     });
   }
@@ -256,32 +342,115 @@ class _AddNewTaskState extends State<AddNewTask> {
   //   });
   // }
 
+  int getModeLevel() {
+    if (_mode == modeList[0] || _mode == modeList[1]) return 0;
+    else if (_mode == modeList[2]) return 1;
+    else if (_mode == modeList[3]) return 2;
+    else return 3;
+  }
+
   void _validateForm() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      if (_selectedDate == null) {
-        _selectedDate = DateTime.now();
-      }
       if (!widget.isEditMode) {
-        Provider.of<TaskProvider>(context, listen: false).createNewTask(
-          Task(
-            id: DateTime.now().toString(),
-            description: _inputDescription,
-            dueDate: _selectedDate,
-            mode: _mode,
-          ),
+        final newTask = Task(
+          Uuid().v4(),
+          _title,
+          _desc,
+          getModeLevel(),
+          _project.title,
+          DateTime.now().toString(),
+          _deadline,
+          _isDone,
         );
+        //_okrList.add(newOKR);
+
+        firestoreInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .collection("projects")
+            .doc(widget.project.id)
+            .collection("taskList")
+            .doc(newTask.id)
+            .set({
+          "id": newTask.id,
+          "title": newTask.title,
+          "desc": newTask.description,
+          "mode": newTask.mode,
+          "projectName": newTask.projectName,
+          "createdDate": newTask.createdDate,
+          "deadline": newTask.deadline,
+          "isDone": newTask.isDone,
+        });
       } else {
-        Provider.of<TaskProvider>(context, listen: false).editTask(
-          Task(
-            id: task.id,
-            mode: _mode,
-            description: _inputDescription,
-            dueDate: _selectedDate,
-          ),
+        final newTask = Task(
+          widget.task.id,
+          _title,
+          _desc,
+          getModeLevel(),
+          _project.title,
+          DateTime.now().toString(),
+          _deadline,
+          _isDone,
         );
+
+        firestoreInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .collection("projects")
+            .doc(widget.project.id)
+            .collection("taskList")
+            .doc(newTask.id)
+            .set({
+          "id": newTask.id,
+          "title": newTask.title,
+          "desc": newTask.description,
+          "mode": newTask.mode,
+          "projectName": newTask.projectName,
+          "createdDate": newTask.createdDate,
+          "deadline": newTask.deadline,
+          "isDone": newTask.isDone,
+        });
       }
       Navigator.of(context).pop();
     }
+  }
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    _deadline = args.value;
+    _dateController.text = DateFormat('yyyy-MM-dd').format(_deadline);
+  }
+
+  Widget _buildDatePickerDialog(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+      ),
+      margin: const EdgeInsets.fromLTRB(40, 200, 40, 200),
+      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SfDateRangePicker(
+            onSelectionChanged: _onSelectionChanged,
+            view: DateRangePickerView.month,
+            selectionShape: DateRangePickerSelectionShape.rectangle,
+            monthCellStyle: DateRangePickerMonthCellStyle(
+              textStyle: TextStyle(fontSize: 15, color: Colors.black),
+            ),
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            FlatButton(
+                onPressed: () {},
+                child: Container(
+                  color: Colors.blue,
+                  height: 30,
+                  width: 30,
+                ))
+          ])
+        ],
+      ),
+    );
   }
 }

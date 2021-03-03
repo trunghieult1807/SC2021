@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:uidev/AddTaskGroup/Screens/okr_group_ui.dart';
-import 'package:uidev/AddTaskGroup/SubPages/Screens/add_okr_group.dart';
-import 'package:uidev/AddTaskGroup/okr_group_change_notifier_provider.dart';
 import 'package:uidev/HomePage/SubPages/Calendar/horizontal_calendar.dart';
 import 'package:uidev/HomePage/SubPages/Data/dates_list.dart';
-import 'package:uidev/HomePage/Widgets/okr_provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/HomePage/SubPages/Widgets/task_container.dart';
 import 'package:uidev/Theme/BackButton/back_button.dart';
@@ -80,17 +75,6 @@ class _CalendarPageState extends State<CalendarPage> {
                     ),
                     child: FlatButton(
                       onPressed: () {
-
-                        // Navigator.push(
-                        //   context,
-                        //   PageRouteBuilder(
-                        //     pageBuilder: (c, a1, a2) =>
-                        //         OKRGroupChangeNotifierProvider(),
-                        //     transitionsBuilder: (c, anim, a2, child) =>
-                        //         FadeTransition(opacity: anim, child: child),
-                        //     transitionDuration: Duration(milliseconds: 500),
-                        //   ),
-                        // );
                       },
                       child: Center(
                         child: Text(

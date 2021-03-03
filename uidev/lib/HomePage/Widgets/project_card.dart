@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:uidev/AddTaskGroup/SubPages/Screens/add_okr_group.dart';
+import 'package:uidev/HomePage/Screens/add_project_popup.dart';
 import 'package:uidev/TaskList/task_list_provider.dart';
-import 'package:uidev/app/Project.dart';
+import 'package:uidev/app/project.dart';
 
 class ActiveProjectsCard extends StatefulWidget {
   final Project project;
@@ -22,7 +22,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
       onLongPress: (){
         showModalBottomSheet(
           context: context,
-          builder: (_) => AddOKRGroupUI(
+          builder: (_) => AddProjectPopup(
             project: widget.project,
             isEditMode: true,
           ),
@@ -31,7 +31,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ToDoListApp()),
+          MaterialPageRoute(builder: (context) => TaskListProvider(project: widget.project,)),
         );
       },
       child: Container(
@@ -54,8 +54,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
                     width: 50,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.6),
-                      //Colors.white.withOpacity(0.7),
+                      color: Colors.white.withOpacity(0.3),
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -66,13 +65,13 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
+                      color: Colors.white.withOpacity(0.15),
                       shape: BoxShape.circle,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 27, left: 8.0, right: 10),
+                  padding: const EdgeInsets.only(top: 22, left: 8.0, right: 10),
                   child: Text(
                     widget.project.title,
                     maxLines: 2,
@@ -146,7 +145,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
 // import 'package:percent_indicator/percent_indicator.dart';
 // import 'package:uidev/HomePage/Widgets/okr_provider.dart';
 // import 'package:uidev/TaskList/task_list_provider.dart';
-// import 'package:uidev/app/Project.dart';
+// import 'package:uidev/app/project.dart';
 //
 // class ActiveProjectsCard extends StatefulWidget {
 //   final Project project;

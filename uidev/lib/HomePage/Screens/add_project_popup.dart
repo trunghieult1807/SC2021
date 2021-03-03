@@ -1,27 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:uidev/HomePage/Widgets/okr_provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/app/Project.dart';
+import 'package:uidev/app/project.dart';
 import 'package:uuid/uuid.dart';
 
-class AddOKRGroupUI extends StatefulWidget {
+class AddProjectPopup extends StatefulWidget {
   final Project project;
   final bool isEditMode;
 
-  AddOKRGroupUI({
+  AddProjectPopup({
     this.project,
     this.isEditMode,
   });
 
   @override
-  _AddOKRGroupUIState createState() => _AddOKRGroupUIState();
+  _AddProjectPopupState createState() => _AddProjectPopupState();
 }
 
-class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
+class _AddProjectPopupState extends State<AddProjectPopup> {
+  var firebaseUser = FirebaseAuth.instance.currentUser;
+  final firestoreInstance = FirebaseFirestore.instance;
+
   Project project;
 
   double _loadingPercent;
@@ -81,7 +84,7 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
                   disabledBorder: InputBorder.none,
                   contentPadding:
                       EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Describe your task',
+                  hintText: 'Named your project',
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
@@ -120,7 +123,7 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
                   disabledBorder: InputBorder.none,
                   contentPadding:
                       EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Describe your task',
+                  hintText: 'Describe your project',
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
@@ -308,7 +311,7 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
           "title": newProject.title,
           "desc": newProject.description,
           "color": newProject.color.toString(),
-          "createdDate": newProject.createDate,
+          "createdDate": newProject.createdDate,
           "deadline": newProject.deadline,
           "progressPercent": newProject.progressPercent,
         });
@@ -318,7 +321,7 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
           widget.project.id,
           _title,
           _desc,
-          widget.project.createDate,
+          widget.project.createdDate,
           _deadline,
           _color,
         );
@@ -332,7 +335,7 @@ class _AddOKRGroupUIState extends State<AddOKRGroupUI> {
           "title": newProject.title,
           "desc": newProject.description,
           "color": newProject.color.toString(),
-          "createdDate": newProject.createDate,
+          "createdDate": newProject.createdDate,
           "deadline": newProject.deadline,
           "progressPercent": newProject.progressPercent,
         });

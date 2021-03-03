@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/app/Item.dart';
-import 'package:uidev/app/Task.dart';
+import 'package:uidev/app/item.dart';
+import 'package:uidev/app/task.dart';
 
 class Project extends Item {
   Color _color;
@@ -16,7 +16,7 @@ class Project extends Item {
   }
 
   // A bunch of setter and getter functions
-  String get createDate => _createdDate;
+  String get createdDate => _createdDate;
   DateTime get deadline => _deadline;
   Color get color => _color;
   double get progressPercent => _progressPercent;

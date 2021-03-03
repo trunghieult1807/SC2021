@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/HomePage/SubPages/Screens/calendar_page.dart';
-import 'package:uidev/HomePage/Widgets/active_project_card.dart';
-import 'package:uidev/HomePage/Widgets/okr_provider.dart';
+import 'package:uidev/HomePage/Widgets/project_card.dart';
 import 'package:uidev/HomePage/Widgets/task_column.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Theme/top_container.dart';
-import 'package:uidev/app/Project.dart';
+import 'package:uidev/app/project.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,8 +23,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //var projectList = Provider.of<List<OKR>>(context);
-    //print("This home: ${projectList.length}");
     double width = MediaQuery.of(context).size.width;
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
