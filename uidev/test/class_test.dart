@@ -6,6 +6,7 @@ import 'package:uidev/app/KeyResult.dart';
 import 'package:uidev/app/Task.dart';
 import 'package:uidev/app/TaskList.dart';
 import 'package:uidev/app/Timeline.dart';
+import 'dart:io';
 
 void main() {
   Work project = new Work("SC2021", "Complete the app and win the contest", 
@@ -63,6 +64,52 @@ void main() {
       expect(task2.mode.urgent, true);
     });
   });
+  group("TaskTimer", () {
+    Task task = new Task.setPriority(2, "List all potential user personas");
+    test("Start task timer first time", () {
+      task.startTimer();
+      sleep(Duration(seconds:1));
+      expect(task.timer.isActive(), true);
+    });
+    test("Cannot get duration yet", () {
+      expect(task.timer.durationList.length, 0);
+      expect(task.getDuration(), Duration.zero);
+    });
+    test("Stop task timer second time", () {
+      task.stopTimer();
+      expect(task.timer.isActive(), false);
+    });
+    test("Get timer duration", () {
+      expect(task.timer.durationList.length, 1);
+    });
+    test("Start and stop timer many time", () {
+      task.startTimer();
+      sleep(Duration(seconds:1));
+      task.startTimer();
+      sleep(Duration(seconds:1));
+      task.stopTimer();
+      task.startTimer();
+      sleep(Duration(seconds:2));
+      task.stopTimer();
+      task.stopTimer();
+      expect(task.timer.durationList.length, 3);
+    });
+    test("Mark done task will end timer", () {
+      task.startTimer();
+      sleep(Duration(seconds:1));
+      task.markDone();
+
+      // Cannot activate timer again
+      task.startTimer();
+      sleep(Duration(seconds:1));
+      task.stopTimer();
+
+      expect(task.timer.durationList.length, 4);
+    });
+    test("Get total duration", () {
+      expect(task.getDuration().inSeconds, 6);
+    });
+  });
   group("TaskList", () {
     TaskList taskList = new TaskList(DateTime(2021, 3, 31));
     test("Add task to task list", () {
@@ -82,6 +129,10 @@ void main() {
       expect(timeline.phase2_tasks.length, 2);
       expect(timeline.phase3_tasks.length, 1);
       expect(timeline.extra_tasks.length, 0);
+    });
+    test("Get progress percent", () {
+      task1.markDone();
+      expect(taskList.getProgressPercent(), 40);
     });
   });
 }

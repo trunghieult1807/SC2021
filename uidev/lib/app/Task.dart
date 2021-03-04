@@ -57,6 +57,7 @@ class TaskMode {
 
   bool get important => _important;
   bool get urgent => _urgent;
+  int get priority => _priority;
   String get description => _desc;
   String get color => _color;
 
@@ -90,16 +91,57 @@ class TaskMode {
   }
 }
 
+class TaskTimer {
+  static int _idCount = 1;
+  int _id;
+  bool _isActive;
+  DateTime _start;
+  DateTime _end;
+  List<Duration> _durationList = [];
+
+  TaskTimer() {
+    _id = _idCount++;
+    _isActive = false;
+  }
+  int get id => _id;
+  List<Duration> get durationList => _durationList;
+  set id(int _in) => _id = _in;
+
+  void start() {
+    if (!_isActive) {
+      _isActive = true;
+      _start = DateTime.now();
+    }
+  }
+  void stop() {
+    if (_isActive) {
+      _isActive = false;
+      _end = DateTime.now();
+      _durationList.add(_end.difference(_start));
+    }
+  }
+  bool isActive() {
+    return _isActive;
+  }
+  Duration getDuration() {
+    return _durationList.fold(Duration.zero, (acc, ele) => acc + ele);
+  }
+}
+
 class Task extends Item {
   static int _idCount = 1;
   TaskMode _mode;
+  TaskTimer _timer;
+  List<Duration> _duration = [];
 
   Task(String desc) : _mode = new TaskMode(), super(desc) {
     this.id = _idCount++;
+    _timer = TaskTimer();
     print("Task #${this.id}: Created Successfully!");
   }
   Task.setPriority(int level, String desc) : _mode = new TaskMode.setPriority(level), super(desc) {
     this.id = _idCount++;
+    _timer = TaskTimer();
     print("Task #${this.id}: Created Successfully!");
   }
 
@@ -108,10 +150,34 @@ class Task extends Item {
   }
 
   TaskMode get mode => _mode;
+  TaskTimer get timer => _timer;
 
   void notify() {
     if (!this.isDone) {
       print("You should do Task #${this.id} (${this.description}) now!");
     }
+  }
+  void startTimer() {
+    if (!this.isDone) {
+      _timer.start();
+    }
+  }
+  void stopTimer() {
+    if (!this.isDone) {
+      _timer.stop();
+    }
+  }
+  void resetTimer() {
+    _timer = new TaskTimer();
+  }
+  @override
+  bool markDone() {
+    if (_timer.isActive()) {
+      _timer.stop();
+    }
+    return super.markDone();
+  }
+  Duration getDuration() {
+    return _timer.getDuration();
   }
 }

@@ -73,4 +73,16 @@ class TaskList extends Item {
 
     return timeline;
   }
+
+  double getProgressPercent() {
+    int workDone = 0;
+    int allWork = 0;
+    _taskList.forEach((task) {
+      if (task.isDone) {
+        workDone += task.mode.priority;
+      }
+      allWork += task.mode.priority;
+    });
+    return workDone / allWork * 100;
+  }
 }
