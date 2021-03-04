@@ -1,13 +1,13 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/HomePage/SubPages/Screens/calendar_page.dart';
-import 'package:uidev/HomePage/widgets/okr_provider.dart';
-import 'package:uidev/HomePage/widgets/task_column.dart';
-import 'package:uidev/Theme/top_container.dart';
+import 'package:uidev/HomePage/Widgets/project_card.dart';
+import 'package:uidev/HomePage/Widgets/task_column.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import '../Widgets/active_project_card.dart';
+import 'package:uidev/Theme/top_container.dart';
+import 'package:uidev/app/project.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,9 +16,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    setState(() {});
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    final okrList = Provider.of<OKRProvider>(context).okrList;
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       backgroundColor: LightColors.kLightYellow,
@@ -29,15 +34,17 @@ class _HomePageState extends State<HomePage> {
               automaticallyImplyLeading: false,
               shape: ContinuousRectangleBorder(
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(100),
-                  bottomRight: Radius.circular(100),
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
                 ),
               ),
               forceElevated: true,
-              elevation: 8,
+              elevation: 2,
               backgroundColor: LightColors.kDarkYellow,
-              expandedHeight: 160.0,
-              floating: false,
+              expandedHeight: 140.0,
+              floating: true,
+              snap: true,
+              toolbarHeight: topPadding / 3,
               //pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.pin,
@@ -45,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                   clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     color: LightColors.kDarkYellow,
-                    borderRadius: BorderRadius.circular(100),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                   child: Column(
                     children: [
@@ -54,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                         color: LightColors.kDarkYellow,
                       ),
                       TopContainer(
-                        height: 160,
+                        height: 140,
                         width: width,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -154,11 +161,7 @@ class _HomePageState extends State<HomePage> {
                         subheading('My Tasks'),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CalendarPage()),
-                            );
+                            navigateSecondPage();
                           },
                           child: calendarIcon(),
                         ),
@@ -197,57 +200,67 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     subheading('Active Projects'),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: okrList.length > 0
-                                ? ListView.builder(
-                                    padding: EdgeInsets.only(top: 20),
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: okrList.length,
-                                    itemBuilder: (context, index) {
-                                      return index % 2 != 1
-                                          ? Row(
-                                              children: [
-                                                ActiveProjectsCard(
-                                                    okrList[index]),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                index + 1 != okrList.length
-                                                    ? ActiveProjectsCard(
-                                                        okrList[index + 1])
-                                                    : Text('')
-                                              ],
-                                            )
-                                          : Text('');
-                                    },
-                                  )
-                                : Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.height -
-                                                450,
-                                        child: Image.asset('assets/waiting.png',
-                                            fit: BoxFit.cover),
-                                      ),
-                                      SizedBox(
-                                        height: 30,
-                                      ),
-                                      Text(
-                                        'No tasks added yet...',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1,
-                                      ),
-                                    ],
-                                  )),
-                      ],
+                    Consumer<List<Project>>(
+                      builder: (context, projectList, child) {
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: projectList.length > 0
+                                  ? ListView.builder(
+                                      padding: EdgeInsets.only(top: 20),
+                                      physics: NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: projectList.length,
+                                      itemBuilder: (context, index) {
+                                        return index % 2 != 1
+                                            ? Row(
+                                                children: [
+                                                  ActiveProjectsCard(
+                                                      projectList[index]),
+                                                  SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  index + 1 !=
+                                                          projectList.length
+                                                      ? ActiveProjectsCard(
+                                                          projectList[
+                                                              index + 1])
+                                                      : Text('')
+                                                ],
+                                              )
+                                            : Text('');
+                                      },
+                                    )
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height -
+                                              450,
+                                          child: Image.asset(
+                                              'assets/waiting.png',
+                                              fit: BoxFit.cover),
+                                        ),
+                                        SizedBox(
+                                          height: 30,
+                                        ),
+                                        Text(
+                                          'No tasks added yet...',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1,
+                                        ),
+                                      ],
+                                    ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     SizedBox(
                       height: 30,
@@ -283,5 +296,14 @@ class _HomePageState extends State<HomePage> {
         color: Colors.white,
       ),
     );
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
+
+  void navigateSecondPage() {
+    Route route = MaterialPageRoute(builder: (context) => CalendarPage());
+    Navigator.push(context, route).then(onGoBack);
   }
 }

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uidev/TaskList/Widgets/add_new_task.dart';
+import 'package:uidev/TaskList/Widgets/task_card.dart';
 import 'package:uidev/Theme/BackButton/back_button.dart';
-import 'package:uidev/Theme/CheckBox/check_box.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/app/task.dart';
+import 'package:uidev/app/project.dart';
 
-import '../widgets/add_new_task.dart';
-import '../widgets/list.dart';
 
-//Homepage of the app. It allows the user to insert new tasks to his list.
-//It'll allow the user to add new lists too (later features).
 
-class TaskList extends StatefulWidget {
+class TaskListUI extends StatefulWidget {
+  final Project project;
+  TaskListUI({Key key, @required this.project}) : super(key: key);
   @override
-  _TaskListState createState() => _TaskListState();
+  _TaskListUIState createState() => _TaskListUIState();
 }
 
 /// This is the private State class that goes with MyStatefulWidget.
-class _TaskListState extends State<TaskList> {
+class _TaskListUIState extends State<TaskListUI> {
   bool selected = false;
 
   @override
@@ -71,7 +73,38 @@ class _TaskListState extends State<TaskList> {
                 Row(
                   children: [
                     Expanded(
-                      child: List(),
+                      child: Consumer<List<Task>>(
+                        builder: (context, taskList, child) {
+                          return taskList.length > 0
+                              ? ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: taskList.length,
+                            itemBuilder: (context, index) {
+                              return ListItem(task: taskList[index], project: widget.project,);
+                            },
+                          )
+                              : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                height: MediaQuery.of(context).size.height - 450,
+                                child: Image.asset(
+                                  'assets/waiting.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                'No tasks added yet...',
+                                style: Theme.of(context).textTheme.title,
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -87,7 +120,7 @@ class _TaskListState extends State<TaskList> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (_) => AddNewTask(isEditMode: false),
+            builder: (_) => AddNewTask(project: widget.project, isEditMode: false),
           );
         },
         tooltip: 'Add a new task!',

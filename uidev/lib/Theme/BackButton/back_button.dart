@@ -11,7 +11,9 @@ class MyBackButton extends StatelessWidget {
       tag: 'backButton',
         child: GestureDetector(
         onTap: (){
-          Navigator.pop(context);
+          //Navigator.pop(context);
+          //Navigator.maybePop(context);
+          Navigator.of(context, rootNavigator: true).pop(context);
 
         },
           child: Align(

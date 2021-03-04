@@ -3,6 +3,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uidev/TaskList/task_list_provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Database/Models/user.dart';
 import 'package:uidev/Welcome/Screens/welcome.dart';
@@ -19,7 +20,6 @@ void main() async {
 
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return StreamProvider<UserModel>.value(

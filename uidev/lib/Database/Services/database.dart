@@ -1,62 +1,64 @@
-import 'package:uidev/Database/Models/brew.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uidev/app/task.dart';
+import 'package:uidev/app/project.dart';
 
 class DatabaseService {
   final String uid;
 
   DatabaseService({this.uid});
 
-  // collection reference
-  final CollectionReference taskCollection =
-      FirebaseFirestore.instance.collection('brews');
-  final CollectionReference newUserCollection =
-      FirebaseFirestore.instance.collection('newUser');
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // Future<void> isNewUser(bool setter) async {
-  //   return await newUserCollection.doc(uid).set({
-  //     'isNew': setter,
-  //   });
-  // }
-
-  // bool isNewUser(String uid) {
-  //   bool isNew = true;
-  //   FirebaseFirestore.instance
-  //       .collection("newUser")
-  //       .doc(uid)
-  //       .get()
-  //       .then((querySnapshot) {
-  //     try {
-  //       isNew = querySnapshot.data()["isNew"];
-  //     } catch (e) {
-  //       FirebaseFirestore.instance.collection("newUser").doc(uid).set({
-  //         "isNew": true,
-  //       });
-  //     }
-  //   });
-  //   return isNew;
-  // }
-
-  Future<void> updateUserData(String sugars, String name, int strength) async {
-    return await taskCollection.doc(uid).set({
-      'sugars': sugars,
-      'name': name,
-      'strength': strength,
-    });
-  }
-
-  // brew list from snapshot
-  List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
+  List<Project> _projectListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
-      //print(doc.data);
-      return Brew(
-          name: doc.data()['name'] ?? '',
-          strength: doc.data()['strength'] ?? 0,
-          sugars: doc.data()['sugars'] ?? '0');
+      return Project(
+        doc.data()["id"],
+        doc.data()["title"],
+        doc.data()["desc"],
+        doc.data()["createdDate"],
+        doc.data()["deadline"].toDate(),
+        Color(int.parse(doc.data()["color"].split('(0x')[1].split(')')[0],
+            radix: 16)),
+      );
     }).toList();
   }
 
-  // get brews stream
-  Stream<List<Brew>> get brews {
-    return taskCollection.snapshots().map(_brewListFromSnapshot);
+  Stream<List<Project>> streamProject(User user) {
+    return _db
+        .collection('users')
+        .doc(user.uid)
+        .collection('projects')
+        .orderBy("createdDate", descending: false)
+        .snapshots()
+        .map(_projectListFromSnapshot);
+  }
+
+  List<Task> _taskListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Task(
+        doc.data()["id"],
+        doc.data()["title"],
+        doc.data()["desc"],
+        doc.data()["mode"],
+        doc.data()["projectName"],
+        doc.data()["createdDate"],
+        doc.data()["deadline"].toDate(),
+        doc.data()["isDone"],
+      );
+    }).toList();
+  }
+
+  Stream<List<Task>> streamTask(User user, Project project) {
+    return _db
+        .collection('users')
+        .doc(user.uid)
+        .collection('projects')
+        .doc(project.id)
+        .collection('taskList')
+        .orderBy('createdDate', descending: false)
+        .snapshots()
+        .map(_taskListFromSnapshot);
   }
 }
