@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // import 'package:test/test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:uidev/app/Item.dart';
@@ -137,7 +136,6 @@ void main() {
     });
   });
 }
-=======
 // // import 'package:test/test.dart';
 // import 'package:flutter_test/flutter_test.dart';
 // import 'package:uidev/app/item.dart';
@@ -225,4 +223,3 @@ void main() {
 //     });
 //   });
 // }
->>>>>>> 067793a6b0b5c97afaa50bff0ad2dd24623f524b
