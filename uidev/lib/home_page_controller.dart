@@ -9,6 +9,7 @@ import 'package:uidev/HomePage/home_page_provider.dart';
 import 'package:uidev/Profile/profile_page.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/logout.dart';
+import 'package:uidev/AllTaskList/Screen/tab_bar.dart';
 
 class HomePageController extends StatefulWidget {
   final BuildContext menuScreenContext;
@@ -45,8 +46,9 @@ class _HomePageControllerState extends State<HomePageController> {
     return [
       HomePageProvider(),
       DashBoardPage(),
+      NestedTabBar(),
       ProfilePage(),
-      Logout(),
+      //Logout(),
     ];
   }
   @override

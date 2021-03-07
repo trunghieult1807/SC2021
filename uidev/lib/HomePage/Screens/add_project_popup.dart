@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/app/project.dart';
+import 'package:uidev/usage/project.dart';
 import 'package:uuid/uuid.dart';
 
 class AddProjectPopup extends StatefulWidget {

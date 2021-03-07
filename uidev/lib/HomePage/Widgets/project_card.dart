@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:uidev/HomePage/Screens/add_project_popup.dart';
 import 'package:uidev/TaskList/task_list_provider.dart';
-import 'package:uidev/app/project.dart';
+import 'package:uidev/usage/project.dart';
 
 class ActiveProjectsCard extends StatefulWidget {
   final Project project;

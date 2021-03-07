@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/TaskList/Widgets/add_new_task.dart';
-import 'package:uidev/TaskList/Widgets/task_card.dart';
 import 'package:uidev/Theme/BackButton/back_button.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/ToDoList/to_do_list_card.dart';
 import 'package:uidev/usage/task.dart';
-import 'package:uidev/usage/project.dart';
 
 
 
-class TaskListUI extends StatefulWidget {
-  final Project project;
-  TaskListUI({Key key, @required this.project}) : super(key: key);
+class ToDoListUI extends StatefulWidget {
   @override
-  _TaskListUIState createState() => _TaskListUIState();
+  _ToDoListUIState createState() => _ToDoListUIState();
 }
 
-
-class _TaskListUIState extends State<TaskListUI> {
+/// This is the private State class that goes with MyStatefulWidget.
+class _ToDoListUIState extends State<ToDoListUI> {
   bool selected = false;
 
   @override
@@ -49,7 +45,7 @@ class _TaskListUIState extends State<TaskListUI> {
                             shrinkWrap: true,
                             itemCount: taskList.length,
                             itemBuilder: (context, index) {
-                              return ListItem(task: taskList[index], project: widget.project,);
+                              return ToDoListCard(taskList[index]);
                             },
                           )
                               : Column(
@@ -81,18 +77,6 @@ class _TaskListUIState extends State<TaskListUI> {
             ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 5,
-        backgroundColor: LightColors.kDarkYellow,
-        child: Icon(Icons.add),
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (_) => AddNewTask(project: widget.project, isEditMode: false),
-          );
-        },
-        tooltip: 'Add a new task!',
       ),
     );
   }

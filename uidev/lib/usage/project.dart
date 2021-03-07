@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/app/item.dart';
-import 'package:uidev/app/task.dart';
+import 'package:uidev/usage/item.dart';
+import 'package:uidev/usage/task.dart';
 
 class Project extends Item {
   Color _color;
@@ -9,7 +9,12 @@ class Project extends Item {
   List<Task> _taskList = [];
   double _progressPercent = 0;
 
-  Project(String id, String title, String desc, String createdDate, DateTime deadline, Color color) : _createdDate = createdDate ,_deadline = deadline, _color = color, super(id, title, desc);
+  Project(String id, String title, String desc, String createdDate,
+      DateTime deadline, Color color)
+      : _createdDate = createdDate,
+        _deadline = deadline,
+        _color = color,
+        super(id, title, desc);
 
   String toString() {
     return "KeyResult ${this.id}: ${this.title} - ${this.description}, $_deadline - ${this.isDone ? "Done" : "In progress"}";
@@ -17,10 +22,15 @@ class Project extends Item {
 
   // A bunch of setter and getter functions
   String get createdDate => _createdDate;
+
   DateTime get deadline => _deadline;
+
   Color get color => _color;
+
   double get progressPercent => _progressPercent;
+
   List<Task> get allTask => _taskList;
+
   set deadline(DateTime _in) => _deadline = _in;
 
   // Add Task object to TaskList of Key Result
@@ -31,6 +41,7 @@ class Project extends Item {
     }
     _taskList.add(task);
   }
+
   // Add many Task objects simultaneously
   void addManyTasks(List<Task> manyTasks) {
     manyTasks.forEach((task) => this.addTask(task));
@@ -44,6 +55,7 @@ class Project extends Item {
     }
     return null;
   }
+
   @override
   bool markDone() {
     if (this.isDone) return true;

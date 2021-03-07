@@ -60,6 +60,19 @@ dependencies:
   animated_bottom_navigation_bar: ^0.2.1
   persistent_bottom_nav_bar: ^3.1.0
   circular_reveal_animation: ^1.1.5
+  bubble_tab_indicator: ^0.1.4
+  flutter_screenutil: ^1.0.2
+  line_awesome_flutter: ^1.0.1
+  animated_theme_switcher: ^1.0.9
+  sqflite: ^1.0.0
+  path_provider: any
+  flutter_launcher_icons: ^0.7.0
+  bloc: ^0.10.0
+  flutter_bloc: ^0.8.0
+  equatable: ^0.2.3
+  meta: ^1.1.6
+
+
 
 
 
@@ -73,6 +86,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  pedantic: ^1.8.0
   # test:
   #   sdk: flutter
 #  integration_test:
@@ -101,6 +115,7 @@ flutter:
     - assets/images/
     - assets/artwork/
     - assets/waiting.png
+    - assets/audio/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

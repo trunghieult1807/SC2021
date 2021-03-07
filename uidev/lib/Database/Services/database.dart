@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uidev/app/task.dart';
-import 'package:uidev/app/project.dart';
+import 'package:uidev/usage/task.dart';
+import 'package:uidev/usage/project.dart';
+import 'package:async/async.dart' show StreamGroup, StreamZip;
 
 class DatabaseService {
   final String uid;
@@ -43,6 +44,7 @@ class DatabaseService {
         doc.data()["desc"],
         doc.data()["mode"],
         doc.data()["projectName"],
+        doc.data()["projectID"],
         doc.data()["createdDate"],
         doc.data()["deadline"].toDate(),
         doc.data()["isDone"],
@@ -60,5 +62,31 @@ class DatabaseService {
         .orderBy('createdDate', descending: false)
         .snapshots()
         .map(_taskListFromSnapshot);
+  }
+
+  List<Task> _allTaskListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Task(
+        doc.data()["id"],
+        doc.data()["title"],
+        doc.data()["desc"],
+        doc.data()["mode"],
+        doc.data()["projectName"],
+        doc.data()["projectID"],
+        doc.data()["createdDate"],
+        doc.data()["deadline"].toDate(),
+        doc.data()["isDone"],
+      );
+    }).toList();
+  }
+
+  Stream<List<Task>> streamAllTask(User user) {
+    return _db
+        .collection("users")
+        .doc(user.uid)
+        .collection("allTaskList")
+        .orderBy('createdDate', descending: false)
+        .snapshots()
+        .map(_allTaskListFromSnapshot);
   }
 }

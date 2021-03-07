@@ -1,21 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uidev/TaskList/Widgets/add_new_task.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:flutter/services.dart';
-import 'package:uidev/app/task.dart';
+import 'package:uidev/usage/task.dart';
 
-class ListItem extends StatefulWidget {
+class ListItemTemp extends StatefulWidget {
   final Task task;
 
-  ListItem(this.task);
+  ListItemTemp(this.task);
 
   @override
-  _ListItemState createState() => _ListItemState();
+  _ListItemTempState createState() => _ListItemTempState();
 }
 
-class _ListItemState extends State<ListItem> {
-
+class _ListItemTempState extends State<ListItemTemp> {
+  var firebaseUser = FirebaseAuth.instance.currentUser;
+  final firestoreInstance = FirebaseFirestore.instance;
 
 
   @override
@@ -51,20 +54,45 @@ class _ListItemState extends State<ListItem> {
         ),
       ),
       child: GestureDetector(
-        onLongPress: () {
-          HapticFeedback.mediumImpact();
-          showModalBottomSheet(
-            context: context,
-            builder: (_) => AddNewTask(
-              task: widget.task.id,
-              isEditMode: true,
-            ),
-          );
-        },
         onTap: () {
           setState(() {
             HapticFeedback.mediumImpact();
-            widget.task.isDone = !widget.task.isDone;
+            firestoreInstance
+                .collection("users")
+                .doc(firebaseUser.uid)
+                .collection("allTaskList")
+                .doc(widget.task.id)
+                .set({
+              "id": widget.task.id,
+              "title": widget.task.title,
+              "desc": widget.task.description,
+              "mode": widget.task.mode,
+              "projectName": widget.task.projectName,
+              "projectID": widget.task.projectID,
+              "createdDate": widget.task.createdDate,
+              "deadline": widget.task.deadline,
+              "isDone": !widget.task.isDone,
+            });
+            firestoreInstance
+                .collection("users")
+                .doc(firebaseUser.uid)
+                .collection("projects")
+                .doc(widget.task.projectID)
+                .collection("taskList")
+                .doc(widget.task.id)
+                .set({
+              "id": widget.task.id,
+              "title": widget.task.title,
+              "desc": widget.task.description,
+              "mode": widget.task.mode,
+              "projectName": widget.task.projectName,
+              "projectID": widget.task.projectID,
+              "createdDate": widget.task.createdDate,
+              "deadline": widget.task.deadline,
+              "isDone": !widget.task.isDone,
+            });
+
+
           });
         },
         child: Card(
@@ -87,9 +115,9 @@ class _ListItemState extends State<ListItem> {
                     borderRadius: BorderRadius.circular(8),
                     border: widget.task.isDone
                         ? Border.all(
-                        color: getColor(widget.task.mode), width: 3)
+                        color: getColor(widget.task.mode), width: 10)
                         : Border.all(
-                        color: getColor(widget.task.mode), width: 10),
+                        color: getColor(widget.task.mode), width: 3),
                   ),
                   duration: Duration(milliseconds: 1200),
                   curve: Curves.fastLinearToSlowEaseIn,
@@ -163,7 +191,7 @@ class _ListItemState extends State<ListItem> {
                               padding: const EdgeInsets.only(
                                   left: 8, right: 8, top: 5, bottom: 5),
                               child: Text(
-                                widget.task.deadline.difference(DateTime.now()).inDays > 1? "${widget.task.deadline.difference(DateTime.now()).inDays} Days Running" : "${widget.task.deadline.difference(DateTime.now()).inDays} Day Running",
+                                widget.task.deadline.difference(DateTime.now()).inDays + 1 > 1? widget.task.deadline.difference(DateTime.now()).inDays + 1  == 1 ? "Due Tomorrow": "Due in ${widget.task.deadline.difference(DateTime.now()).inDays + 1} Days" : "Due Today",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(

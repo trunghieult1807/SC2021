@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:uidev/app/task.dart';
-import 'package:uidev/app/project.dart';
+import 'package:uidev/usage/task.dart';
+import 'package:uidev/usage/project.dart';
 import 'package:uuid/uuid.dart';
 
 class AddNewTask extends StatefulWidget {
@@ -50,6 +50,10 @@ class _AddNewTaskState extends State<AddNewTask> {
   @override
   void initState() {
 
+
+    _isDone = false;
+    _project = widget.project;
+
     if (widget.isEditMode) {
       _title = widget.task.title;
       _mode = modeList[widget.task.mode];
@@ -58,8 +62,6 @@ class _AddNewTaskState extends State<AddNewTask> {
       _desc = widget.task.description;
       _isDone = widget.task.isDone;
     }
-    _isDone = false;
-    _project = widget.project;
     _dateController =
         TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline));
     super.initState();
@@ -165,7 +167,6 @@ class _AddNewTaskState extends State<AddNewTask> {
                     });
               },
               child: Container(
-                //padding: EdgeInsets.only(left: 14.0),
                 height: 50,
                 decoration: BoxDecoration(
                     border: Border.all(
@@ -178,10 +179,8 @@ class _AddNewTaskState extends State<AddNewTask> {
                     TextFormField(
                       autofocus: false,
                       controller: _dateController,
-                      //TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline)),
                       enabled: false,
                       style: TextStyle(color: Colors.black),
-                      //initialValue: _deadline == null ? null : DateFormat('yyyy-MM-dd').format(_deadline),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
@@ -190,7 +189,6 @@ class _AddNewTaskState extends State<AddNewTask> {
                         disabledBorder: InputBorder.none,
                         contentPadding: EdgeInsets.only(
                             left: 15, bottom: 11, top: 11, right: 15),
-                        //hintText: DateFormat('yyyy-MM-dd').format(_deadline),
                         hintStyle: TextStyle(color: Colors.black),
                       ),
                     ),
@@ -259,36 +257,6 @@ class _AddNewTaskState extends State<AddNewTask> {
                 ],
               ),
             ),
-            // InputField(
-            //   title: "Mode",
-            //   hint: _selectedMode,
-            //   widget: Row(
-            //     children: [
-            //       DropdownButton<String>(
-            //         icon: Icon(
-            //           Icons.keyboard_arrow_down,
-            //           color: Colors.grey,
-            //         ),
-            //         iconSize: 32,
-            //         elevation: 4,
-            //         underline: Container(height: 0),
-            //         onChanged: (String newValue) {
-            //           setState(() {
-            //             _selectedMode = newValue;
-            //           });
-            //         },
-            //         items: modeList.map<DropdownMenuItem<String>>(
-            //                 (String value) {
-            //               return DropdownMenuItem<String>(
-            //                 value: value,
-            //                 child: Text(value),
-            //               );
-            //             }).toList(),
-            //       ),
-            //       SizedBox(width: 6),
-            //     ],
-            //   ),
-            // ),
             Container(
               alignment: Alignment.bottomRight,
               child: FlatButton(
@@ -359,6 +327,7 @@ class _AddNewTaskState extends State<AddNewTask> {
           _desc,
           getModeLevel(),
           _project.title,
+          _project.id,
           DateTime.now().toString(),
           _deadline,
           _isDone,
@@ -378,6 +347,24 @@ class _AddNewTaskState extends State<AddNewTask> {
           "desc": newTask.description,
           "mode": newTask.mode,
           "projectName": newTask.projectName,
+          "projectID": newTask.projectID,
+          "createdDate": newTask.createdDate,
+          "deadline": newTask.deadline,
+          "isDone": newTask.isDone,
+        });
+
+        firestoreInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .collection("allTaskList")
+            .doc(newTask.id)
+            .set({
+          "id": newTask.id,
+          "title": newTask.title,
+          "desc": newTask.description,
+          "mode": newTask.mode,
+          "projectName": newTask.projectName,
+          "projectID": newTask.projectID,
           "createdDate": newTask.createdDate,
           "deadline": newTask.deadline,
           "isDone": newTask.isDone,
@@ -389,6 +376,7 @@ class _AddNewTaskState extends State<AddNewTask> {
           _desc,
           getModeLevel(),
           _project.title,
+          _project.id,
           DateTime.now().toString(),
           _deadline,
           _isDone,
@@ -407,6 +395,24 @@ class _AddNewTaskState extends State<AddNewTask> {
           "desc": newTask.description,
           "mode": newTask.mode,
           "projectName": newTask.projectName,
+          "projectID": newTask.projectID,
+          "createdDate": newTask.createdDate,
+          "deadline": newTask.deadline,
+          "isDone": newTask.isDone,
+        });
+
+        firestoreInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .collection("allTaskList")
+            .doc(newTask.id)
+            .set({
+          "id": newTask.id,
+          "title": newTask.title,
+          "desc": newTask.description,
+          "mode": newTask.mode,
+          "projectName": newTask.projectName,
+          "projectID": newTask.projectID,
           "createdDate": newTask.createdDate,
           "deadline": newTask.deadline,
           "isDone": newTask.isDone,

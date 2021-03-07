@@ -2,29 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:uidev/TaskList/Widgets/add_new_task.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:uidev/usage/task.dart';
-import 'package:uidev/usage/project.dart';
 
-class ListItem extends StatefulWidget {
+class ToDoListCard extends StatefulWidget {
   final Task task;
-  final Project project;
 
-
-
-  ListItem({
-    Key key,
-    @required this.task,
-    @required this.project,
-  }) : super(key: key);
+  ToDoListCard(this.task);
 
   @override
-  _ListItemState createState() => _ListItemState();
+  _ToDoListCardState createState() => _ToDoListCardState();
 }
 
-class _ListItemState extends State<ListItem> {
+class _ToDoListCardState extends State<ToDoListCard> {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
 
@@ -62,38 +53,9 @@ class _ListItemState extends State<ListItem> {
         ),
       ),
       child: GestureDetector(
-        onLongPress: () {
-          HapticFeedback.mediumImpact();
-          showModalBottomSheet(
-            context: context,
-            builder: (_) => AddNewTask(
-              project: widget.project,
-              task: widget.task,
-              isEditMode: true,
-            ),
-          );
-        },
         onTap: () {
           setState(() {
             HapticFeedback.mediumImpact();
-            firestoreInstance
-                .collection("users")
-                .doc(firebaseUser.uid)
-                .collection("projects")
-                .doc(widget.project.id)
-                .collection("taskList")
-                .doc(widget.task.id)
-                .set({
-            "id": widget.task.id,
-            "title": widget.task.title,
-            "desc": widget.task.description,
-            "mode": widget.task.mode,
-            "projectName": widget.task.projectName,
-              "projectID": widget.task.projectID,
-            "createdDate": widget.task.createdDate,
-            "deadline": widget.task.deadline,
-            "isDone": !widget.task.isDone,
-            });
             firestoreInstance
                 .collection("users")
                 .doc(firebaseUser.uid)
@@ -110,10 +72,27 @@ class _ListItemState extends State<ListItem> {
               "deadline": widget.task.deadline,
               "isDone": !widget.task.isDone,
             });
+            firestoreInstance
+                .collection("users")
+                .doc(firebaseUser.uid)
+                .collection("projects")
+                .doc(widget.task.projectID)
+                .collection("taskList")
+                .doc(widget.task.id)
+                .set({
+              "id": widget.task.id,
+              "title": widget.task.title,
+              "desc": widget.task.description,
+              "mode": widget.task.mode,
+              "projectName": widget.task.projectName,
+              "projectID": widget.task.projectID,
+              "createdDate": widget.task.createdDate,
+              "deadline": widget.task.deadline,
+              "isDone": !widget.task.isDone,
+            });
+
 
           });
-
-
         },
         child: Card(
           elevation: 3,
@@ -122,7 +101,7 @@ class _ListItemState extends State<ListItem> {
           ),
           child: Container(
             padding: EdgeInsets.only(left: 15.0, right: 15.0),
-            height: 100,
+            height: 120,
             width: MediaQuery.of(context).size.width - 40,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -135,9 +114,9 @@ class _ListItemState extends State<ListItem> {
                     borderRadius: BorderRadius.circular(8),
                     border: widget.task.isDone
                         ? Border.all(
-                            color: getColor(widget.task.mode), width: 10)
+                        color: getColor(widget.task.mode), width: 10)
                         : Border.all(
-                            color: getColor(widget.task.mode), width: 3),
+                        color: getColor(widget.task.mode), width: 3),
                   ),
                   duration: Duration(milliseconds: 1200),
                   curve: Curves.fastLinearToSlowEaseIn,
@@ -149,6 +128,28 @@ class _ListItemState extends State<ListItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+                    GestureDetector(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: getColor(widget.task.mode).withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 8, right: 8, top: 5, bottom: 5),
+                          child: Text(
+                            widget.task.projectName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 10.0,
+                              color: getColor(widget.task.mode),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width - 120,
                       child: Padding(
@@ -176,7 +177,7 @@ class _ListItemState extends State<ListItem> {
                               Icon(Icons.timer_sharp, size: 20,),
                               SizedBox(width: 5,),
                               Text(
-                              DateFormat('dd-MM-yyy').format(widget.task.deadline),
+                                DateFormat('dd-MM-yyy').format(widget.task.deadline),
                               ),
                             ],
                           ),

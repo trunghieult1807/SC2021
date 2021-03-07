@@ -7,7 +7,8 @@ import 'package:uidev/HomePage/Widgets/project_card.dart';
 import 'package:uidev/HomePage/Widgets/task_column.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Theme/top_container.dart';
-import 'package:uidev/app/project.dart';
+import 'package:uidev/ToDoList/to_do_list_provider.dart';
+import 'package:uidev/usage/project.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -168,27 +169,51 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: 15.0),
-                    TaskColumn(
-                      icon: Icons.alarm,
-                      iconBackgroundColor: LightColors.kRed,
-                      title: 'To Do',
-                      subtitle: '5 tasks now. 1 started',
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ToDoListProvider()),
+                        );
+                      },
+                      child: TaskColumn(
+                        icon: Icons.alarm,
+                        iconBackgroundColor: LightColors.kRed,
+                        title: 'To Do',
+                        subtitle: '5 tasks now. 1 started',
+                      ),
                     ),
                     SizedBox(
                       height: 15.0,
                     ),
-                    TaskColumn(
-                      icon: Icons.blur_circular,
-                      iconBackgroundColor: LightColors.kDarkYellow,
-                      title: 'In Progress',
-                      subtitle: '1 tasks now. 1 started',
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ToDoListProvider()),
+                        );
+                      },
+                      child: TaskColumn(
+                        icon: Icons.blur_circular,
+                        iconBackgroundColor: LightColors.kDarkYellow,
+                        title: 'In Progress',
+                        subtitle: '1 tasks now. 1 started',
+                      ),
                     ),
                     SizedBox(height: 15.0),
-                    TaskColumn(
-                      icon: Icons.check_circle_outline,
-                      iconBackgroundColor: LightColors.kGreen,
-                      title: 'Done',
-                      subtitle: '18 tasks now. 13 started',
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ToDoListProvider()),
+                        );
+                      },
+                      child: TaskColumn(
+                        icon: Icons.check_circle_outline,
+                        iconBackgroundColor: LightColors.kGreen,
+                        title: 'Done',
+                        subtitle: '18 tasks now. 13 started',
+                      ),
                     ),
                   ],
                 ),
