@@ -2,10 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:uidev/TaskList/Widgets/add_new_task.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:flutter/services.dart';
-import 'package:uidev/usage/task.dart';
+import 'package:uidev/Usage/task.dart';
+import 'package:uidev/Usage/utility.dart';
 
 class ListItemTemp extends StatefulWidget {
   final Task task;
@@ -65,7 +64,7 @@ class _ListItemTempState extends State<ListItemTemp> {
                 .set({
               "id": widget.task.id,
               "title": widget.task.title,
-              "desc": widget.task.description,
+              "desc": widget.task.desc,
               "mode": widget.task.mode,
               "projectName": widget.task.projectName,
               "projectID": widget.task.projectID,
@@ -83,7 +82,7 @@ class _ListItemTempState extends State<ListItemTemp> {
                 .set({
               "id": widget.task.id,
               "title": widget.task.title,
-              "desc": widget.task.description,
+              "desc": widget.task.desc,
               "mode": widget.task.mode,
               "projectName": widget.task.projectName,
               "projectID": widget.task.projectID,
@@ -191,7 +190,8 @@ class _ListItemTempState extends State<ListItemTemp> {
                               padding: const EdgeInsets.only(
                                   left: 8, right: 8, top: 5, bottom: 5),
                               child: Text(
-                                widget.task.deadline.difference(DateTime.now()).inDays + 1 > 1? widget.task.deadline.difference(DateTime.now()).inDays + 1  == 1 ? "Due Tomorrow": "Due in ${widget.task.deadline.difference(DateTime.now()).inDays + 1} Days" : "Due Today",
+                                displayTimeLeft(DateTime.now(), widget.task.deadline),
+                                //widget.task.deadline.difference(DateTime.now()).inDays + 1 > 1? widget.task.deadline.difference(DateTime.now()).inDays + 1  == 1 ? "Due Tomorrow": "Due in ${widget.task.deadline.difference(DateTime.now()).inDays + 1} Days" : "Due Today",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -214,16 +214,4 @@ class _ListItemTempState extends State<ListItemTemp> {
       ),
     );
   }
-
-  Color getColor(int n) {
-    if (n == 0) {
-      return LightColors.kGreen;
-    } else if (n == 1) {
-      return LightColors.kBlue;
-    } else if (n == 2) {
-      return LightColors.kRed;
-    } else
-      return LightColors.kDarkYellow;
-  }
-
 }

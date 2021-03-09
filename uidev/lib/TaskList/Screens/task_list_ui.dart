@@ -4,14 +4,14 @@ import 'package:uidev/TaskList/Widgets/add_new_task.dart';
 import 'package:uidev/TaskList/Widgets/task_card.dart';
 import 'package:uidev/Theme/BackButton/back_button.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/usage/task.dart';
-import 'package:uidev/usage/project.dart';
+import 'package:uidev/Usage/task.dart';
+import 'package:uidev/Usage/task_list.dart';
 
 
 
 class TaskListUI extends StatefulWidget {
-  final Project project;
-  TaskListUI({Key key, @required this.project}) : super(key: key);
+  final TaskList taskList;
+  TaskListUI({Key key, @required this.taskList}) : super(key: key);
   @override
   _TaskListUIState createState() => _TaskListUIState();
 }
@@ -49,7 +49,7 @@ class _TaskListUIState extends State<TaskListUI> {
                             shrinkWrap: true,
                             itemCount: taskList.length,
                             itemBuilder: (context, index) {
-                              return ListItem(task: taskList[index], project: widget.project,);
+                              return ListItem(task: taskList[index], taskList: widget.taskList,);
                             },
                           )
                               : Column(
@@ -89,7 +89,7 @@ class _TaskListUIState extends State<TaskListUI> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (_) => AddNewTask(project: widget.project, isEditMode: false),
+            builder: (_) => AddNewTask(taskList: widget.taskList, isEditMode: false),
           );
         },
         tooltip: 'Add a new task!',

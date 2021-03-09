@@ -5,15 +5,16 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/usage/project.dart';
+import 'package:uidev/Usage/task_list.dart';
+import 'package:uidev/Usage/task.dart';
 import 'package:uuid/uuid.dart';
 
 class AddProjectPopup extends StatefulWidget {
-  final Project project;
+  final TaskList taskList;
   final bool isEditMode;
 
   AddProjectPopup({
-    this.project,
+    this.taskList,
     this.isEditMode,
   });
 
@@ -25,13 +26,26 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
 
-  Project project;
+  TaskList taskList;
 
   double _loadingPercent;
   String _title;
   String _desc;
   Color _color = LightColors.kDarkYellow;
   DateTime _deadline = DateTime.now();
+  List<Task> _tasks = [
+    Task(
+      "17ec17cb-97cc-4ac9-84af-031bfb399cf1",
+      "Today and tomorrow",
+      "Firebase WS",
+      2,
+      "2021-03-06 22:02:01.826902",
+      "Love me like you do",
+      "2021-03-06 22:02:01.826902",
+      DateTime.now(),
+      true,
+    )
+  ];
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController _dateController;
@@ -39,15 +53,17 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
   @override
   void initState() {
     if (widget.isEditMode) {
-      _title = widget.project.title;
-      _desc = widget.project.description;
-      _deadline = widget.project.deadline;
-      _color = widget.project.color;
-
+      _title = widget.taskList.title;
+      _desc = widget.taskList.desc;
+      _deadline = widget.taskList.deadline;
+      _color = widget.taskList.color;
+      _tasks = widget.taskList.tasks;
     } else {
       _loadingPercent = 0;
     }
-    _dateController = TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline));
+
+    _dateController =
+        TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline));
     super.initState();
   }
 
@@ -64,7 +80,6 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
             SizedBox(
               height: 5,
             ),
-
             Container(
               //padding: EdgeInsets.only(left: 14.0),
               height: 50,
@@ -164,7 +179,8 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
                   children: [
                     TextFormField(
                       autofocus: false,
-                      controller: _dateController,//TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline)),
+                      controller: _dateController,
+                      //TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline)),
                       enabled: false,
                       style: TextStyle(color: Colors.black),
                       //initialValue: _deadline == null ? null : DateFormat('yyyy-MM-dd').format(_deadline),
@@ -174,8 +190,8 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        contentPadding:
-                        EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
                         //hintText: DateFormat('yyyy-MM-dd').format(_deadline),
                         hintStyle: TextStyle(color: Colors.black),
                       ),
@@ -196,7 +212,6 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
                       ],
                     ),
                   ],
-
                 ),
               ),
             ),
@@ -291,15 +306,42 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       if (!widget.isEditMode) {
-        final newProject = Project(
+        final newProject = TaskList(
           Uuid().v4(),
           _title,
           _desc,
+          _tasks,
           DateTime.now().toString(),
           _deadline,
           _color,
         );
-        //_okrList.add(newOKR);
+        firestoreInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .collection("projects")
+            .doc(newProject.id)
+            .set({
+          "id": newProject.id,
+          "title": newProject.title,
+          "desc": newProject.desc,
+          "color": newProject.color.toString(),
+          "tasks": newProject.tasks.map((task) {
+                    return task.toMap();
+                   }).toList(),
+          "createdDate": newProject.createdDate,
+          "deadline": newProject.deadline,
+          "progressPercent": newProject.progressPercent,
+        });
+      } else {
+        final newProject = TaskList(
+          widget.taskList.id,
+          _title,
+          _desc,
+          _tasks,
+          widget.taskList.createdDate,
+          _deadline,
+          _color,
+        );
 
         firestoreInstance
             .collection("users")
@@ -309,32 +351,11 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
             .set({
           "id": newProject.id,
           "title": newProject.title,
-          "desc": newProject.description,
+          "desc": newProject.desc,
           "color": newProject.color.toString(),
-          "createdDate": newProject.createdDate,
-          "deadline": newProject.deadline,
-          "progressPercent": newProject.progressPercent,
-        });
-      } else {
-        print("widgetid: ${widget.project.id}");
-        final newProject = Project(
-          widget.project.id,
-          _title,
-          _desc,
-          widget.project.createdDate,
-          _deadline,
-          _color,
-        );
-        firestoreInstance
-            .collection("users")
-            .doc(firebaseUser.uid)
-            .collection("projects")
-            .doc(widget.project.id)
-            .update({
-          "id": newProject.id,
-          "title": newProject.title,
-          "desc": newProject.description,
-          "color": newProject.color.toString(),
+          "tasks": newProject.tasks.map((task) {
+            return task.toMap();
+          }).toList(),
           "createdDate": newProject.createdDate,
           "deadline": newProject.deadline,
           "progressPercent": newProject.progressPercent,
@@ -343,7 +364,6 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
       Navigator.of(context).pop();
     }
   }
-
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     _deadline = args.value;

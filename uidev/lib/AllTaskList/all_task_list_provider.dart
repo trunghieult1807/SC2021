@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/Database/Services/database.dart';
 import 'package:uidev/AllTaskList/Screen/all_task_list_view_ui.dart';
-import 'package:uidev/usage/task.dart';
+import 'package:uidev/Usage/task.dart';
 
 
 class AllTaskListProvider extends StatelessWidget {

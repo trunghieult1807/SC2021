@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:uidev/HomePage/Screens/add_project_popup.dart';
 import 'package:uidev/TaskList/task_list_provider.dart';
-import 'package:uidev/usage/project.dart';
+import 'package:uidev/Usage/task_list.dart';
 
 class ActiveProjectsCard extends StatefulWidget {
-  final Project project;
+  final TaskList taskList;
 
-  ActiveProjectsCard(this.project);
+  ActiveProjectsCard(this.taskList);
 
   @override
   _ActiveProjectsCardState createState() => _ActiveProjectsCardState();
@@ -23,7 +23,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
         showModalBottomSheet(
           context: context,
           builder: (_) => AddProjectPopup(
-            project: widget.project,
+            taskList: widget.taskList,
             isEditMode: true,
           ),
         );
@@ -31,7 +31,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TaskListProvider(project: widget.project,)),
+          MaterialPageRoute(builder: (context) => TaskListProvider(taskList: widget.taskList,)),
         );
       },
       child: Container(
@@ -40,7 +40,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
         height: 180,
         width: (MediaQuery.of(context).size.width - 60) / 2,
         decoration: BoxDecoration(
-          color: widget.project.color,
+          color: widget.taskList.color,
           borderRadius: BorderRadius.circular(40.0),
         ),
         child: Column(
@@ -73,7 +73,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
                 Padding(
                   padding: const EdgeInsets.only(top: 22, left: 8.0, right: 10),
                   child: Text(
-                    widget.project.title,
+                    widget.taskList.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -101,7 +101,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
                 children: [
                   Expanded(
                     child: Text(
-                      widget.project.description,
+                      widget.taskList.desc,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyle(
@@ -116,13 +116,13 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
                     child: CircularPercentIndicator(
                       animation: true,
                       radius: 55.0,
-                      percent: widget.project.progressPercent,
+                      percent: widget.taskList.progressPercent,
                       lineWidth: 5.0,
                       circularStrokeCap: CircularStrokeCap.round,
                       backgroundColor: Colors.black12,
                       progressColor: Colors.white,
                       center: Text(
-                        '${(widget.project.progressPercent * 100).round()}%',
+                        '${(widget.taskList.progressPercent * 100).round()}%',
                         style: TextStyle(
                             fontWeight: FontWeight.w700, color: Colors.white),
                       ),
@@ -145,7 +145,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
 // import 'package:percent_indicator/percent_indicator.dart';
 // import 'package:uidev/HomePage/Widgets/okr_provider.dart';
 // import 'package:uidev/TaskList/task_list_provider.dart';
-// import 'package:uidev/app/project.dart';
+// import 'package:uidev/app/task_list.dart';
 //
 // class ActiveProjectsCard extends StatefulWidget {
 //   final Project project;

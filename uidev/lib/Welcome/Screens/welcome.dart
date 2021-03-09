@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Login/Screens/login_page.dart';
 import 'package:uidev/Onboarding/Screens/page1.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 

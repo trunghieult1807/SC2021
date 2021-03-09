@@ -3,18 +3,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:uidev/usage/task.dart';
-import 'package:uidev/usage/project.dart';
+import 'package:uidev/Usage/task.dart';
+import 'package:uidev/Usage/task_list.dart';
 import 'package:uuid/uuid.dart';
 
 class AddNewTask extends StatefulWidget {
-  final Project project;
+  final TaskList taskList;
   final Task task;
   final bool isEditMode;
 
   AddNewTask({
     Key key,
-    @required this.project,
+    @required this.taskList,
     this.task,
     this.isEditMode,
   }) : super(key: key);
@@ -31,7 +31,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   String _desc;
   String _createdDate;
   bool _isDone;
-  Project _project;
+  TaskList _taskList;
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController _dateController;
@@ -52,14 +52,14 @@ class _AddNewTaskState extends State<AddNewTask> {
 
 
     _isDone = false;
-    _project = widget.project;
+    _taskList = widget.taskList;
 
     if (widget.isEditMode) {
       _title = widget.task.title;
       _mode = modeList[widget.task.mode];
       _deadline = widget.task.deadline;
       _createdDate = widget.task.createdDate;
-      _desc = widget.task.description;
+      _desc = widget.task.desc;
       _isDone = widget.task.isDone;
     }
     _dateController =
@@ -326,8 +326,8 @@ class _AddNewTaskState extends State<AddNewTask> {
           _title,
           _desc,
           getModeLevel(),
-          _project.title,
-          _project.id,
+          _taskList.title,
+          _taskList.id,
           DateTime.now().toString(),
           _deadline,
           _isDone,
@@ -338,13 +338,13 @@ class _AddNewTaskState extends State<AddNewTask> {
             .collection("users")
             .doc(firebaseUser.uid)
             .collection("projects")
-            .doc(widget.project.id)
+            .doc(widget.taskList.id)
             .collection("taskList")
             .doc(newTask.id)
             .set({
           "id": newTask.id,
           "title": newTask.title,
-          "desc": newTask.description,
+          "desc": newTask.desc,
           "mode": newTask.mode,
           "projectName": newTask.projectName,
           "projectID": newTask.projectID,
@@ -361,7 +361,7 @@ class _AddNewTaskState extends State<AddNewTask> {
             .set({
           "id": newTask.id,
           "title": newTask.title,
-          "desc": newTask.description,
+          "desc": newTask.desc,
           "mode": newTask.mode,
           "projectName": newTask.projectName,
           "projectID": newTask.projectID,
@@ -375,8 +375,8 @@ class _AddNewTaskState extends State<AddNewTask> {
           _title,
           _desc,
           getModeLevel(),
-          _project.title,
-          _project.id,
+          _taskList.title,
+          _taskList.id,
           DateTime.now().toString(),
           _deadline,
           _isDone,
@@ -386,13 +386,13 @@ class _AddNewTaskState extends State<AddNewTask> {
             .collection("users")
             .doc(firebaseUser.uid)
             .collection("projects")
-            .doc(widget.project.id)
+            .doc(widget.taskList.id)
             .collection("taskList")
             .doc(newTask.id)
             .set({
           "id": newTask.id,
           "title": newTask.title,
-          "desc": newTask.description,
+          "desc": newTask.desc,
           "mode": newTask.mode,
           "projectName": newTask.projectName,
           "projectID": newTask.projectID,
@@ -409,7 +409,7 @@ class _AddNewTaskState extends State<AddNewTask> {
             .set({
           "id": newTask.id,
           "title": newTask.title,
-          "desc": newTask.description,
+          "desc": newTask.desc,
           "mode": newTask.mode,
           "projectName": newTask.projectName,
           "projectID": newTask.projectID,

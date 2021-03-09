@@ -8,7 +8,7 @@ import 'package:uidev/HomePage/Widgets/task_column.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Theme/top_container.dart';
 import 'package:uidev/ToDoList/to_do_list_provider.dart';
-import 'package:uidev/usage/project.dart';
+import 'package:uidev/Usage/task_list.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -225,8 +225,9 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     subheading('Active Projects'),
-                    Consumer<List<Project>>(
+                    Consumer<List<TaskList>>(
                       builder: (context, projectList, child) {
+                        print("project: ${projectList.length}");
                         return Row(
                           children: [
                             Expanded(

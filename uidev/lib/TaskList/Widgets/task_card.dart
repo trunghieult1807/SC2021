@@ -3,21 +3,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uidev/TaskList/Widgets/add_new_task.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:flutter/services.dart';
-import 'package:uidev/usage/task.dart';
-import 'package:uidev/usage/project.dart';
+import 'package:uidev/Timer/home_page.dart';
+import 'package:uidev/Usage/task.dart';
+import 'package:uidev/Usage/task_list.dart';
+import 'package:uidev/Usage/utility.dart';
 
 class ListItem extends StatefulWidget {
   final Task task;
-  final Project project;
+  final TaskList taskList;
 
 
 
   ListItem({
     Key key,
     @required this.task,
-    @required this.project,
+    @required this.taskList,
   }) : super(key: key);
 
   @override
@@ -62,12 +63,18 @@ class _ListItemState extends State<ListItem> {
         ),
       ),
       child: GestureDetector(
+        onDoubleTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TimerUI()),
+          );
+        },
         onLongPress: () {
           HapticFeedback.mediumImpact();
           showModalBottomSheet(
             context: context,
             builder: (_) => AddNewTask(
-              project: widget.project,
+              taskList: widget.taskList,
               task: widget.task,
               isEditMode: true,
             ),
@@ -80,13 +87,13 @@ class _ListItemState extends State<ListItem> {
                 .collection("users")
                 .doc(firebaseUser.uid)
                 .collection("projects")
-                .doc(widget.project.id)
+                .doc(widget.taskList.id)
                 .collection("taskList")
                 .doc(widget.task.id)
                 .set({
             "id": widget.task.id,
             "title": widget.task.title,
-            "desc": widget.task.description,
+            "desc": widget.task.desc,
             "mode": widget.task.mode,
             "projectName": widget.task.projectName,
               "projectID": widget.task.projectID,
@@ -102,7 +109,7 @@ class _ListItemState extends State<ListItem> {
                 .set({
               "id": widget.task.id,
               "title": widget.task.title,
-              "desc": widget.task.description,
+              "desc": widget.task.desc,
               "mode": widget.task.mode,
               "projectName": widget.task.projectName,
               "projectID": widget.task.projectID,
@@ -189,7 +196,8 @@ class _ListItemState extends State<ListItem> {
                               padding: const EdgeInsets.only(
                                   left: 8, right: 8, top: 5, bottom: 5),
                               child: Text(
-                                widget.task.deadline.difference(DateTime.now()).inDays + 1 > 1? widget.task.deadline.difference(DateTime.now()).inDays + 1  == 1 ? "Due Tomorrow": "Due in ${widget.task.deadline.difference(DateTime.now()).inDays + 1} Days" : "Due Today",
+                                displayTimeLeft(DateTime.now(), widget.task.deadline),
+                                //widget.task.deadline.difference(DateTime.now()).inDays + 1 > 1? widget.task.deadline.difference(DateTime.now()).inDays + 1  == 1 ? "Due Tomorrow": "Due in ${widget.task.deadline.difference(DateTime.now()).inDays + 1} Days" : "Due Today",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -212,16 +220,4 @@ class _ListItemState extends State<ListItem> {
       ),
     );
   }
-
-  Color getColor(int n) {
-    if (n == 0) {
-      return LightColors.kGreen;
-    } else if (n == 1) {
-      return LightColors.kBlue;
-    } else if (n == 2) {
-      return LightColors.kRed;
-    } else
-      return LightColors.kDarkYellow;
-  }
-
 }

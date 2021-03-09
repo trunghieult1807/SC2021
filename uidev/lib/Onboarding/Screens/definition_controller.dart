@@ -61,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Navigator.push(
                             context,
                             PageRouteBuilder(
-                              pageBuilder: (c, a1, a2) => HomePageController(),
+                              pageBuilder: (c, a1, a2) => Wrapper(),
                               transitionsBuilder: (c, anim, a2, child) =>
                                   FadeTransition(opacity: anim, child: child),
                               transitionDuration: Duration(milliseconds: 500),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/Database/Services/database.dart';
 import 'package:uidev/HomePage/Screens/home_page.dart';
-import 'package:uidev/usage/project.dart';
+import 'package:uidev/Usage/task_list.dart';
 import 'package:uuid/uuid.dart';
 
 class HomePageProvider extends StatelessWidget {
@@ -13,14 +13,15 @@ class HomePageProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<Project>>(
+    return StreamProvider<List<TaskList>>(
         create: (_) {
-          return db.streamProject(user);
+          return db.streamTaskList(user);
         } ,
-        initialData: [Project(
+        initialData: [TaskList(
             Uuid().toString(),
             "Medical App",
             "Full time",
+            [],
             DateTime.now().toString(),
             DateTime.now(),
             Colors.pink,
