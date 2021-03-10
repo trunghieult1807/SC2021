@@ -20,7 +20,7 @@ class DatabaseService {
         doc.data()['tasks'].map<Task>((item) {
           return Task.fromMap(item);
         }).toList(),
-        doc.data()["createdDate"],
+        doc.data()["createdDate"].toDate(),
         doc.data()["deadline"].toDate(),
         Color(
           int.parse(doc.data()["color"].split('(0x')[1].split(')')[0],
@@ -34,7 +34,7 @@ class DatabaseService {
     return _db
         .collection('users')
         .doc(user.uid)
-        .collection('projects')
+        .collection('taskList')
         .orderBy("createdDate", descending: false)
         .snapshots()
         .map(_taskListFromSnapshot);
@@ -51,7 +51,7 @@ class DatabaseService {
         doc.data()['tasks'].map<Task>((item) {
           return Task.fromMap(item);
         }).toList(),
-        doc.data()["createdDate"],
+        doc.data()["createdDate"].toDate(),
         doc.data()["deadline"].toDate(),
         Color(
           int.parse(doc.data()["color"].split('(0x')[1].split(')')[0],
@@ -65,7 +65,7 @@ class DatabaseService {
     return _db
         .collection('users')
         .doc(user.uid)
-        .collection('projects')
+        .collection('taskList')
         .orderBy("createdDate", descending: false)
         .snapshots()
         .map(_tasksFromSnapshot);
@@ -77,7 +77,7 @@ class DatabaseService {
 
   List<Task> _allTaskListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
-      return Task(
+      return Task.retrieve(
         doc.data()["id"],
         doc.data()["title"],
         doc.data()["desc"],

@@ -18,6 +18,9 @@ class TaskMode {
     _priority = 0;
     this._setColorAndDesc();
   }
+
+
+
   TaskMode.setPriority(int pr) {
     _priority = pr;
     switch (pr) {
@@ -48,6 +51,15 @@ class TaskMode {
     }
     this._setColorAndDesc();
   }
+
+
+  // Map<String, dynamic> toJson() =>
+  //     {
+  //       'priority': _priority,
+  //       'coordinates': _,
+  //     };
+
+
   void _setColorAndDesc() {
     _color = _colorList[_priority];
     _desc = _descList[_priority];

@@ -27,21 +27,20 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
   final firestoreInstance = FirebaseFirestore.instance;
 
   TaskList taskList;
-
   double _loadingPercent;
   String _title;
   String _desc;
   Color _color = LightColors.kDarkYellow;
   DateTime _deadline = DateTime.now();
   List<Task> _tasks = [
-    Task(
+    Task.retrieve(
       "17ec17cb-97cc-4ac9-84af-031bfb399cf1",
       "Today and tomorrow",
       "Firebase WS",
       2,
       "2021-03-06 22:02:01.826902",
       "Love me like you do",
-      "2021-03-06 22:02:01.826902",
+      DateTime(2021, 3, 15, 11, 11, 11),
       DateTime.now(),
       true,
     )
@@ -318,7 +317,7 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
         firestoreInstance
             .collection("users")
             .doc(firebaseUser.uid)
-            .collection("projects")
+            .collection("taskList")
             .doc(newProject.id)
             .set({
           "id": newProject.id,
@@ -346,7 +345,7 @@ class _AddProjectPopupState extends State<AddProjectPopup> {
         firestoreInstance
             .collection("users")
             .doc(firebaseUser.uid)
-            .collection("projects")
+            .collection("taskList")
             .doc(newProject.id)
             .set({
           "id": newProject.id,

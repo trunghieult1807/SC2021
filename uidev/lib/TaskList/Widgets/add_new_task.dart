@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:uidev/Usage/task.dart';
 import 'package:uidev/Usage/task_list.dart';
+import 'package:uidev/Usage/task_mode.dart';
 import 'package:uuid/uuid.dart';
 
 class AddNewTask extends StatefulWidget {
@@ -26,10 +27,9 @@ class AddNewTask extends StatefulWidget {
 class _AddNewTaskState extends State<AddNewTask> {
   Task task;
   DateTime _deadline = DateTime.now();
-  TimeOfDay _selectedTime;
   String _title;
   String _desc;
-  String _createdDate;
+  DateTime _createdDate = DateTime.now();
   bool _isDone;
   TaskList _taskList;
 
@@ -279,22 +279,22 @@ class _AddNewTaskState extends State<AddNewTask> {
     );
   }
 
-  void _pickUserDueDate() {
-    showDatePicker(
-            context: context,
-            initialDate: widget.isEditMode ? _deadline : DateTime.now(),
-            firstDate: DateTime(2020),
-            lastDate: DateTime(2030))
-        .then((date) {
-      if (date == null) {
-        return;
-      }
-      date = date;
-      setState(() {
-        _deadline = date;
-      });
-    });
-  }
+  // void _pickUserDueDate() {
+  //   showDatePicker(
+  //           context: context,
+  //           initialDate: widget.isEditMode ? _deadline : DateTime.now(),
+  //           firstDate: DateTime(2020),
+  //           lastDate: DateTime(2030))
+  //       .then((date) {
+  //     if (date == null) {
+  //       return;
+  //     }
+  //     date = date;
+  //     setState(() {
+  //       _deadline = date;
+  //     });
+  //   });
+  // }
 
   // void _pickUserDueTime() {
   //   showTimePicker(
@@ -321,14 +321,14 @@ class _AddNewTaskState extends State<AddNewTask> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       if (!widget.isEditMode) {
-        final newTask = Task(
+        final newTask = Task.store(
           Uuid().v4(),
           _title,
           _desc,
-          getModeLevel(),
+          TaskMode(),
           _taskList.title,
           _taskList.id,
-          DateTime.now().toString(),
+          _createdDate,
           _deadline,
           _isDone,
         );
@@ -370,14 +370,14 @@ class _AddNewTaskState extends State<AddNewTask> {
           "isDone": newTask.isDone,
         });
       } else {
-        final newTask = Task(
+        final newTask = Task.store(
           widget.task.id,
           _title,
           _desc,
-          getModeLevel(),
+          TaskMode(),
           _taskList.title,
           _taskList.id,
-          DateTime.now().toString(),
+          _createdDate,
           _deadline,
           _isDone,
         );

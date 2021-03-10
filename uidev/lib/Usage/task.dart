@@ -6,14 +6,15 @@ class Task {
   String _desc;
   TaskMode _mode;
   String _projectName;
-  String _createdDate;
+  DateTime _createdDate;
   DateTime _deadline;
   bool _isDone;
   String _projectID;
 
+
   Task(String id, String title, String desc,
-       int mode, String projectName, String projectID,
-       String createdDate, DateTime deadline, bool isDone)
+      int mode, String projectName, String projectID,
+      DateTime createdDate, DateTime deadline, bool isDone)
       : _id = id,
         _title = title,
         _desc = desc,
@@ -23,6 +24,34 @@ class Task {
         _createdDate = createdDate,
         _deadline = deadline,
         _isDone = isDone;
+
+  Task.retrieve(String id, String title, String desc,
+       int mode, String projectName, String projectID,
+       DateTime createdDate, DateTime deadline, bool isDone)
+      : _id = id,
+        _title = title,
+        _desc = desc,
+        _mode = TaskMode.setPriority(mode),
+        _projectName = projectName,
+        _projectID = projectID,
+        _createdDate = createdDate,
+        _deadline = deadline,
+        _isDone = isDone;
+
+  Task.store(String id, String title, String desc,
+      TaskMode mode, String projectName, String projectID,
+      DateTime createdDate, DateTime deadline, bool isDone)
+      : _id = id,
+        _title = title,
+        _desc = desc,
+        _mode = mode,
+        _projectName = projectName,
+        _projectID = projectID,
+        _createdDate = createdDate,
+        _deadline = deadline,
+        _isDone = isDone;
+
+
 
   Map<String,dynamic> toMap() => {
     "id": this.id,
@@ -49,7 +78,7 @@ class Task {
 
 
   TaskMode get mode => _mode;
-  String get createdDate => _createdDate;
+  DateTime get createdDate => _createdDate;
   String get id => _id;
   String get title => _title;
   String get desc => _desc;
