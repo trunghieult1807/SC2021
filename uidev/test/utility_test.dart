@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:uidev/app/utility.dart';
+import 'package:uidev/Usage/utility.dart';
 import 'dart:io';
 
 void main() {
@@ -61,6 +61,6 @@ void main() {
   test("Illusion timeline universe", () {
     DateTime start = DateTime(2023, 3, 15, 11, 11, 11);
     DateTime end = DateTime(2021, 3, 15, 11, 11, 11);
-    expect(displayTimeLeft(start, end), "Illusion timeline universe");
+    expect(displayTimeLeft(start, end), "Overdue");
   });
 }

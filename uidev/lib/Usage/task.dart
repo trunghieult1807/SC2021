@@ -1,15 +1,28 @@
+import 'package:uidev/Usage/task_mode.dart';
+
 class Task {
   String _id;
   String _title;
   String _desc;
-  int _mode;
+  TaskMode _mode;
   String _projectName;
   String _createdDate;
   DateTime _deadline;
   bool _isDone;
   String _projectID;
-  Task(String id, String title, String desc, int mode, String projectName, String projectID, String createdDate, DateTime deadline, bool isDone) : _id = id, _title = title, _desc = desc, _mode = mode, _projectName = projectName, _projectID = projectID, _createdDate = createdDate, _deadline = deadline, _isDone = isDone;
 
+  Task(String id, String title, String desc,
+       int mode, String projectName, String projectID,
+       String createdDate, DateTime deadline, bool isDone)
+      : _id = id,
+        _title = title,
+        _desc = desc,
+        _mode = TaskMode.setPriority(mode),
+        _projectName = projectName,
+        _projectID = projectID,
+        _createdDate = createdDate,
+        _deadline = deadline,
+        _isDone = isDone;
 
   Map<String,dynamic> toMap() => {
     "id": this.id,
@@ -35,8 +48,7 @@ class Task {
         _isDone = task["isDone"];
 
 
-
-  int get mode => _mode;
+  TaskMode get mode => _mode;
   String get createdDate => _createdDate;
   String get id => _id;
   String get title => _title;
