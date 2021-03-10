@@ -19,8 +19,6 @@ class TaskMode {
     this._setColorAndDesc();
   }
 
-
-
   TaskMode.setPriority(int pr) {
     _priority = pr;
     switch (pr) {
