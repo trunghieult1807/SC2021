@@ -14,7 +14,7 @@ class Task {
 
   Task(String id, String title, String desc,
       int mode, String projectName, String projectID,
-      DateTime createdDate, DateTime deadline, bool isDone)
+      DateTime createdDate, DateTime deadline)
       : _id = id,
         _title = title,
         _desc = desc,
@@ -23,7 +23,7 @@ class Task {
         _projectID = projectID,
         _createdDate = createdDate,
         _deadline = deadline,
-        _isDone = isDone;
+        _isDone = false;
 
   Task.retrieve(String id, String title, String desc,
        int mode, String projectName, String projectID,
