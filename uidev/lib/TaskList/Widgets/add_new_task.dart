@@ -300,12 +300,12 @@ class _AddNewTaskState extends State<AddNewTask> {
   //   showTimePicker(
   //     context: context,
   //     initialTime: widget.isEditMode ? _selectedTime : TimeOfDay.now(),
-  //   ).then((time) {
-  //     if (time == null) {
+  //   ).then((time.dart) {
+  //     if (time.dart == null) {
   //       return;
   //     }
   //     setState(() {
-  //       _selectedTime = time;
+  //       _selectedTime = time.dart;
   //     });
   //   });
   // }

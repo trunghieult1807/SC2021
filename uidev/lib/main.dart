@@ -3,9 +3,11 @@ import 'package:after_layout/after_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uidev/Test/main.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Database/Models/user.dart';
-import 'package:uidev/Timer/home_page.dart';
+import 'package:uidev/Timer/Old/home_page.dart';
+import 'package:uidev/Timer/time.dart';
 import 'package:uidev/Welcome/Screens/welcome.dart';
 import 'package:uidev/wrapper.dart';
 import 'package:uidev/Database/Services/auth.dart';
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: Splash(),
+          home: MyTimer(),
         ),
     );
   }

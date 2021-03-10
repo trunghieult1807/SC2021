@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Timer/clock.dart';
+import 'package:uidev/Timer/Old/clock.dart';
 
 
 class TimerUI extends StatefulWidget {

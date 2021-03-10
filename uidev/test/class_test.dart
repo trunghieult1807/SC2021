@@ -67,7 +67,7 @@
 //   });
 //   group("TaskTimer", () {
 //     Task task = new Task.setPriority(2, "List all potential user personas");
-//     test("Start task timer first time", () {
+//     test("Start task timer first time.dart", () {
 //       task.startTimer();
 //       sleep(Duration(seconds:1));
 //       expect(task.timer.isActive(), true);
@@ -76,14 +76,14 @@
 //       expect(task.timer.durationList.length, 0);
 //       expect(task.getDuration(), Duration.zero);
 //     });
-//     test("Stop task timer second time", () {
+//     test("Stop task timer second time.dart", () {
 //       task.stopTimer();
 //       expect(task.timer.isActive(), false);
 //     });
 //     test("Get timer duration", () {
 //       expect(task.timer.durationList.length, 1);
 //     });
-//     test("Start and stop timer many time", () {
+//     test("Start and stop timer many time.dart", () {
 //       task.startTimer();
 //       sleep(Duration(seconds:1));
 //       task.startTimer();
@@ -205,7 +205,7 @@
 // //   });
 // //   group("TaskTimer", () {
 // //     Task task = new Task.setPriority(2, "List all potential user personas");
-// //     test("Start task timer first time", () {
+// //     test("Start task timer first time.dart", () {
 // //       task.startTimer();
 // //       sleep(Duration(seconds:1));
 // //       expect(task.timer.isActive(), true);
@@ -214,14 +214,14 @@
 // //       expect(task.timer.durationList.length, 0);
 // //       expect(task.getDuration(), Duration.zero);
 // //     });
-// //     test("Stop task timer second time", () {
+// //     test("Stop task timer second time.dart", () {
 // //       task.stopTimer();
 // //       expect(task.timer.isActive(), false);
 // //     });
 // //     test("Get timer duration", () {
 // //       expect(task.timer.durationList.length, 1);
 // //     });
-// //     test("Start and stop timer many time", () {
+// //     test("Start and stop timer many time.dart", () {
 // //       task.startTimer();
 // //       sleep(Duration(seconds:1));
 // //       task.startTimer();

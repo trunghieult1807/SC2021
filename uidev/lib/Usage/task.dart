@@ -8,6 +8,7 @@ class Task {
   DateTime _deadline;
   bool _isDone;
   String _projectID;
+
   Task(String id, String title, String desc, int mode, String projectName, String projectID, String createdDate, DateTime deadline, bool isDone) : _id = id, _title = title, _desc = desc, _mode = mode, _projectName = projectName, _projectID = projectID, _createdDate = createdDate, _deadline = deadline, _isDone = isDone;
 
 

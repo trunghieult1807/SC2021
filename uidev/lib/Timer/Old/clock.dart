@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Timer/clock_painter.dart';
+import 'package:uidev/Timer/Old/clock_painter.dart';
 
 
 class Clock extends StatefulWidget {

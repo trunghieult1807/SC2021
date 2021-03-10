@@ -40,6 +40,41 @@ class DatabaseService {
         .map(_taskListFromSnapshot);
   }
 
+
+
+  List<TaskList> _tasksFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return TaskList(
+        doc.data()["id"],
+        doc.data()["title"],
+        doc.data()["desc"],
+        doc.data()['tasks'].map<Task>((item) {
+          return Task.fromMap(item);
+        }).toList(),
+        doc.data()["createdDate"],
+        doc.data()["deadline"].toDate(),
+        Color(
+          int.parse(doc.data()["color"].split('(0x')[1].split(')')[0],
+              radix: 16),
+        ),
+      );
+    }).toList();
+  }
+
+  Stream<List<TaskList>> streamTasks(User user) {
+    return _db
+        .collection('users')
+        .doc(user.uid)
+        .collection('projects')
+        .orderBy("createdDate", descending: false)
+        .snapshots()
+        .map(_tasksFromSnapshot);
+  }
+
+
+
+
+
   List<Task> _allTaskListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Task(
