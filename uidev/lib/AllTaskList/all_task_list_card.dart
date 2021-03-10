@@ -114,9 +114,9 @@ class _ListItemTempState extends State<ListItemTemp> {
                     borderRadius: BorderRadius.circular(8),
                     border: widget.task.isDone
                         ? Border.all(
-                        color: getColor(widget.task.mode), width: 10)
+                        color: getColor(widget.task.mode.priority), width: 10)
                         : Border.all(
-                        color: getColor(widget.task.mode), width: 3),
+                        color: getColor(widget.task.mode.priority), width: 3),
                   ),
                   duration: Duration(milliseconds: 1200),
                   curve: Curves.fastLinearToSlowEaseIn,
@@ -131,7 +131,7 @@ class _ListItemTempState extends State<ListItemTemp> {
                     GestureDetector(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: getColor(widget.task.mode).withOpacity(0.3),
+                          color: getColor(widget.task.mode.priority).withOpacity(0.3),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
@@ -143,7 +143,7 @@ class _ListItemTempState extends State<ListItemTemp> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 10.0,
-                              color: getColor(widget.task.mode),
+                              color: getColor(widget.task.mode.priority),
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -183,7 +183,7 @@ class _ListItemTempState extends State<ListItemTemp> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              color: getColor(widget.task.mode).withOpacity(0.3),
+                              color: getColor(widget.task.mode.priority).withOpacity(0.3),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Padding(
@@ -196,7 +196,7 @@ class _ListItemTempState extends State<ListItemTemp> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 10.0,
-                                  color: getColor(widget.task.mode),
+                                  color: getColor(widget.task.mode.priority),
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),

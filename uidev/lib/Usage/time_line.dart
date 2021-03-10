@@ -11,7 +11,6 @@ class Timeline {
   List<Task> _phase2_tasks = [];
   List<Task> _phase3_tasks = [];
   List<Task> _extra_tasks = [];
-  List<DateTime> _notificationScheduler = [];
 
   Timeline(DateTime deadline) {
     Duration duration = deadline.difference(DateTime.now());
@@ -71,6 +70,16 @@ class Timeline {
   }
   void addExtraTask(Task task) {
     _extra_tasks.add(task);
+  }
+
+  List<Task> getToDoTasks() {
+    List<Task> todoTasks = [];
+    if (_phase1_notifier) {
+      _phase1_tasks.forEach((task) => todoTasks.add(task));
+    }
+    if (_phase1_tasks.length == 0 || _phase2_notifier) {
+      _phase2_tasks.forEach((task) => todoTasks.add(task));
+    }
   }
 
   void notify() {

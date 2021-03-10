@@ -142,9 +142,9 @@ class _ListItemState extends State<ListItem> {
                     borderRadius: BorderRadius.circular(8),
                     border: widget.task.isDone
                         ? Border.all(
-                            color: getColor(widget.task.mode), width: 10)
+                            color: getColor(widget.task.mode.priority), width: 10)
                         : Border.all(
-                            color: getColor(widget.task.mode), width: 3),
+                            color: getColor(widget.task.mode.priority), width: 3),
                   ),
                   duration: Duration(milliseconds: 1200),
                   curve: Curves.fastLinearToSlowEaseIn,
@@ -189,7 +189,7 @@ class _ListItemState extends State<ListItem> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              color: getColor(widget.task.mode).withOpacity(0.3),
+                              color: getColor(widget.task.mode.priority).withOpacity(0.3),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Padding(
@@ -202,7 +202,7 @@ class _ListItemState extends State<ListItem> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 10.0,
-                                  color: getColor(widget.task.mode),
+                                  color: getColor(widget.task.mode.priority),
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),

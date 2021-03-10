@@ -56,7 +56,7 @@ class _AddNewTaskState extends State<AddNewTask> {
 
     if (widget.isEditMode) {
       _title = widget.task.title;
-      _mode = modeList[widget.task.mode];
+      _mode = modeList[widget.task.mode.priority];
       _deadline = widget.task.deadline;
       _createdDate = widget.task.createdDate;
       _desc = widget.task.desc;
