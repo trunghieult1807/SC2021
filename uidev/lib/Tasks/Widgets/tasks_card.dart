@@ -2,30 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:uidev/TaskList/Widgets/add_new_task.dart';
+import 'package:uidev/Tasks/Widgets/add_new_task.dart';
 import 'package:flutter/services.dart';
 import 'package:uidev/Timer/Old/home_page.dart';
 import 'package:uidev/Usage/task.dart';
 import 'package:uidev/Usage/task_list.dart';
 import 'package:uidev/Usage/utility.dart';
 
-class ListItem extends StatefulWidget {
+class TasksCard extends StatefulWidget {
   final Task task;
   final TaskList taskList;
 
 
 
-  ListItem({
+  TasksCard({
     Key key,
     @required this.task,
     @required this.taskList,
   }) : super(key: key);
 
   @override
-  _ListItemState createState() => _ListItemState();
+  _TasksCardState createState() => _TasksCardState();
 }
 
-class _ListItemState extends State<ListItem> {
+class _TasksCardState extends State<TasksCard> {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
 

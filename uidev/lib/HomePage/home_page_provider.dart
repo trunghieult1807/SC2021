@@ -22,7 +22,7 @@ class HomePageProvider extends StatelessWidget {
             "Medical App",
             "Full time.dart",
             [],
-            DateTime.now().toString(),
+            DateTime.now(),
             DateTime.now(),
             Colors.pink,
             ),

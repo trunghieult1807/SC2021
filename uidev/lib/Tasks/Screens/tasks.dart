@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/TaskList/Widgets/add_new_task.dart';
-import 'package:uidev/TaskList/Widgets/task_card.dart';
+import 'package:uidev/Tasks/Widgets/add_new_task.dart';
+import 'package:uidev/Tasks/Widgets/tasks_card.dart';
 import 'package:uidev/Theme/BackButton/back_button.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Usage/task.dart';
@@ -9,15 +9,15 @@ import 'package:uidev/Usage/task_list.dart';
 
 
 
-class TaskListUI extends StatefulWidget {
+class TasksUI extends StatefulWidget {
   final TaskList taskList;
-  TaskListUI({Key key, @required this.taskList}) : super(key: key);
+  TasksUI({Key key, @required this.taskList}) : super(key: key);
   @override
-  _TaskListUIState createState() => _TaskListUIState();
+  _TasksUIState createState() => _TasksUIState();
 }
 
 
-class _TaskListUIState extends State<TaskListUI> {
+class _TasksUIState extends State<TasksUI> {
   bool selected = false;
 
   @override
@@ -42,14 +42,15 @@ class _TaskListUIState extends State<TaskListUI> {
                 Row(
                   children: [
                     Expanded(
-                      child: Consumer<List<Task>>(
+                      child: Consumer<List<TaskList>>(
                         builder: (context, taskList, child) {
+                          var tasks = taskList.where((element) => element.id == widget.taskList.id).toList()[0].tasks;
                           return taskList.length > 0
                               ? ListView.builder(
                             shrinkWrap: true,
-                            itemCount: taskList.length,
+                            itemCount: tasks.length,
                             itemBuilder: (context, index) {
-                              return ListItem(task: taskList[index], taskList: widget.taskList,);
+                              return TasksCard(task: tasks[index], taskList: widget.taskList,);
                             },
                           )
                               : Column(

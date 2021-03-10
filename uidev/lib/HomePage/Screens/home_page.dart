@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/HomePage/SubPages/Screens/calendar_page.dart';
-import 'package:uidev/HomePage/Widgets/project_card.dart';
+import 'package:uidev/HomePage/Widgets/tasklist_card.dart';
 import 'package:uidev/HomePage/Widgets/task_column.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Theme/top_container.dart';
@@ -226,30 +226,30 @@ class _HomePageState extends State<HomePage> {
                   children: <Widget>[
                     subheading('Active Projects'),
                     Consumer<List<TaskList>>(
-                      builder: (context, projectList, child) {
-                        print("project: ${projectList.length}");
+                      builder: (context, taskList, child) {
+                        print("project: ${taskList.length}");
                         return Row(
                           children: [
                             Expanded(
-                              child: projectList.length > 0
+                              child: taskList.length > 0
                                   ? ListView.builder(
                                       padding: EdgeInsets.only(top: 20),
                                       physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
-                                      itemCount: projectList.length,
+                                      itemCount: taskList.length,
                                       itemBuilder: (context, index) {
                                         return index % 2 != 1
                                             ? Row(
                                                 children: [
-                                                  ActiveProjectsCard(
-                                                      projectList[index]),
+                                                  TaskListCard(
+                                                      taskList[index]),
                                                   SizedBox(
                                                     width: 20,
                                                   ),
                                                   index + 1 !=
-                                                          projectList.length
-                                                      ? ActiveProjectsCard(
-                                                          projectList[
+                                                      taskList.length
+                                                      ? TaskListCard(
+                                                      taskList[
                                                               index + 1])
                                                       : Text('')
                                                 ],

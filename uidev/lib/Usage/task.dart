@@ -57,7 +57,7 @@ class Task {
     "id": this.id,
     "title": this.title,
     "decs": this.desc,
-    "mode": this.mode,
+    "mode": this.mode.toJson(),
     "projectName": this.projectName,
     "projectID": this.projectID,
     "createdDate": this.createdDate,
@@ -65,16 +65,16 @@ class Task {
     "isDone": this.isDone,
   };
 
-  Task.fromMap(Map<dynamic, dynamic> task)
-      : _id = task["id"],
-        _title = task["title"],
-        _desc = task["desc"],
-        _mode = task["mode"],
-        _projectName = task["projectName"],
-        _projectID = task["projectID"],
-        _createdDate = task["createdDate"],
-        _deadline = task["deadline"].toDate(),
-        _isDone = task["isDone"];
+  Task.fromMap(Map<dynamic, dynamic> map)
+      : _id = map["id"],
+        _title = map["title"],
+        _desc = map["desc"],
+        _mode = TaskMode.fromJson(map["mode"]),
+        _projectName = map["projectName"],
+        _projectID = map["projectID"],
+        _createdDate = map["createdDate"].toDate(),
+        _deadline = map["deadline"].toDate(),
+        _isDone = map["isDone"];
 
 
   TaskMode get mode => _mode;

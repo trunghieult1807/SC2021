@@ -2,27 +2,27 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:uidev/HomePage/Screens/add_project_popup.dart';
-import 'package:uidev/TaskList/task_list_provider.dart';
+import 'package:uidev/HomePage/Screens/add_tasklist_popup.dart';
+import 'package:uidev/Tasks/tasks_provider.dart';
 import 'package:uidev/Usage/task_list.dart';
 
-class ActiveProjectsCard extends StatefulWidget {
+class TaskListCard extends StatefulWidget {
   final TaskList taskList;
 
-  ActiveProjectsCard(this.taskList);
+  TaskListCard(this.taskList);
 
   @override
-  _ActiveProjectsCardState createState() => _ActiveProjectsCardState();
+  _TaskListCardState createState() => _TaskListCardState();
 }
 
-class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
+class _TaskListCardState extends State<TaskListCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: (){
         showModalBottomSheet(
           context: context,
-          builder: (_) => AddProjectPopup(
+          builder: (_) => AddTaskListPopup(
             taskList: widget.taskList,
             isEditMode: true,
           ),
@@ -31,7 +31,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TaskListProvider(taskList: widget.taskList,)),
+          MaterialPageRoute(builder: (context) => TasksProvider(taskList: widget.taskList,)),
         );
       },
       child: Container(
@@ -101,7 +101,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
                 children: [
                   Expanded(
                     child: Text(
-                      widget.taskList.desc,
+                      widget.taskList.desc + "${widget.taskList.tasks.length}",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyle(
@@ -144,7 +144,7 @@ class _ActiveProjectsCardState extends State<ActiveProjectsCard> {
 // import 'package:flutter/material.dart';
 // import 'package:percent_indicator/percent_indicator.dart';
 // import 'package:uidev/HomePage/Widgets/okr_provider.dart';
-// import 'package:uidev/TaskList/task_list_provider.dart';
+// import 'package:uidev/TaskList/tasks_provider.dart';
 // import 'package:uidev/app/task_list.dart';
 //
 // class ActiveProjectsCard extends StatefulWidget {

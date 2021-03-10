@@ -7,13 +7,13 @@ class TaskList {
   String _title;
   String _desc;
   Color _color;
-  String _createdDate;
+  DateTime _createdDate;
   DateTime _deadline;
   List<Task> _tasks;
   double _progressPercent = 0;
 
   TaskList(String id, String title, String desc, List<Task> tasks,
-      String createdDate, DateTime deadline, Color color)
+      DateTime createdDate, DateTime deadline, Color color)
       : _id = id,
         _title = title,
         _desc = desc,
@@ -60,7 +60,7 @@ class TaskList {
   String get id => _id;
   String get title => _title;
   String get desc => _desc;
-  String get createdDate => _createdDate;
+  DateTime get createdDate => _createdDate;
   DateTime get deadline => _deadline;
   Color get color => _color;
   double get progressPercent => _progressPercent;

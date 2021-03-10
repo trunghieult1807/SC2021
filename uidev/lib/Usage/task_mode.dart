@@ -53,12 +53,14 @@ class TaskMode {
   }
 
 
-  // Map<String, dynamic> toJson() =>
-  //     {
-  //       'priority': _priority,
-  //       'coordinates': _,
-  //     };
+  Map<String, dynamic> toJson() =>
+      {
+        'priority': _priority,
+      };
 
+  TaskMode.fromJson(Map parsedJson) {
+    _priority = parsedJson['priority'];
+  }
 
   void _setColorAndDesc() {
     _color = _colorList[_priority];
@@ -70,6 +72,7 @@ class TaskMode {
   int get priority => _priority;
   String get description => _desc;
   String get color => _color;
+  set priority(int _in) => _priority = _in;
 
   void markImportant() {
     if (!_important) {

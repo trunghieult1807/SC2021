@@ -3,65 +3,78 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:uidev/Usage/task.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Usage/task_list.dart';
+import 'package:uidev/Usage/task.dart';
 import 'package:uidev/Usage/task_mode.dart';
 import 'package:uuid/uuid.dart';
 
-class AddNewTask extends StatefulWidget {
+class AddTaskListPopup extends StatefulWidget {
   final TaskList taskList;
-  final Task task;
   final bool isEditMode;
 
-  AddNewTask({
-    Key key,
-    @required this.taskList,
-    this.task,
+  AddTaskListPopup({
+    this.taskList,
     this.isEditMode,
-  }) : super(key: key);
+  });
 
   @override
-  _AddNewTaskState createState() => _AddNewTaskState();
+  _AddTaskListPopupState createState() => _AddTaskListPopupState();
 }
 
-class _AddNewTaskState extends State<AddNewTask> {
-  Task task;
-  DateTime _deadline = DateTime.now();
-  String _title;
-  String _desc;
-  DateTime _createdDate = DateTime.now();
-  bool _isDone;
-  TaskList _taskList;
-
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController _dateController;
+class _AddTaskListPopupState extends State<AddTaskListPopup> {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
 
-  String _mode = 'None';
-  List<String> modeList = [
-    'None',
-    'Important and Urgent',
-    'Important but not Urgent',
-    'Not Important but Urgent',
-    'Not Important and not Urgent',
+  TaskList taskList;
+  double _loadingPercent;
+  String _title;
+  String _desc;
+  Color _color = LightColors.kDarkYellow;
+  DateTime _deadline = DateTime.now();
+  DateTime _createdDate = DateTime.now();
+  List<Task> _tasks = [
+    Task.store(
+      "17ec17cb-97cc-4ac9-84af-031bfb399cf1",
+      "Today and tomorrow",
+      "Firebase WS",
+      TaskMode(),
+      "2021-03-06 22:02:01.826902",
+      "Love me like you do",
+      DateTime(2021, 3, 15, 11, 11, 11),
+      DateTime.now(),
+      true,
+    ),
+    Task.store(
+      "17s17cb-91cc-4ac9-84af-031bfb399cf1",
+      "Today and tomorrow",
+      "Firebase WS",
+      TaskMode(),
+      "2021-03-06 22:02:01.826902",
+      "Love mdae like you do",
+      DateTime(2021, 3, 15, 11, 11, 11),
+      DateTime.now(),
+      true,
+    )
   ];
+
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController _dateController;
 
   @override
   void initState() {
-
-
-    _isDone = false;
-    _taskList = widget.taskList;
-
     if (widget.isEditMode) {
-      _title = widget.task.title;
-      _mode = modeList[widget.task.mode.priority];
-      _deadline = widget.task.deadline;
-      _createdDate = widget.task.createdDate;
-      _desc = widget.task.desc;
-      _isDone = widget.task.isDone;
+      _title = widget.taskList.title;
+      _desc = widget.taskList.desc;
+      _deadline = widget.taskList.deadline;
+      _color = widget.taskList.color;
+      _tasks = widget.taskList.tasks;
+      _createdDate = widget.taskList.createdDate;
+    } else {
+      _loadingPercent = 0;
     }
+
     _dateController =
         TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline));
     super.initState();
@@ -99,7 +112,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                   disabledBorder: InputBorder.none,
                   contentPadding:
                       EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Named your task',
+                  hintText: 'Named your project',
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
@@ -115,7 +128,7 @@ class _AddNewTaskState extends State<AddNewTask> {
             SizedBox(
               height: 20,
             ),
-            Text('Description', style: Theme.of(context).textTheme.subtitle1),
+            Text('Subtitle', style: Theme.of(context).textTheme.subtitle1),
             SizedBox(
               height: 5,
             ),
@@ -138,7 +151,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                   disabledBorder: InputBorder.none,
                   contentPadding:
                       EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Describe your task',
+                  hintText: 'Describe your project',
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
@@ -154,7 +167,7 @@ class _AddNewTaskState extends State<AddNewTask> {
             SizedBox(
               height: 20,
             ),
-            Text('Due date', style: Theme.of(context).textTheme.subtitle1),
+            Text('Deadline', style: Theme.of(context).textTheme.subtitle1),
             SizedBox(
               height: 5,
             ),
@@ -167,6 +180,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                     });
               },
               child: Container(
+                //padding: EdgeInsets.only(left: 14.0),
                 height: 50,
                 decoration: BoxDecoration(
                     border: Border.all(
@@ -179,8 +193,10 @@ class _AddNewTaskState extends State<AddNewTask> {
                     TextFormField(
                       autofocus: false,
                       controller: _dateController,
+                      //TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline)),
                       enabled: false,
                       style: TextStyle(color: Colors.black),
+                      //initialValue: _deadline == null ? null : DateFormat('yyyy-MM-dd').format(_deadline),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
@@ -189,6 +205,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                         disabledBorder: InputBorder.none,
                         contentPadding: EdgeInsets.only(
                             left: 15, bottom: 11, top: 11, right: 15),
+                        //hintText: DateFormat('yyyy-MM-dd').format(_deadline),
                         hintStyle: TextStyle(color: Colors.black),
                       ),
                     ),
@@ -214,58 +231,77 @@ class _AddNewTaskState extends State<AddNewTask> {
             SizedBox(
               height: 20,
             ),
-            Text('Mode', style: Theme.of(context).textTheme.subtitle1),
+            Text('Color', style: Theme.of(context).textTheme.subtitle1),
             SizedBox(
               height: 5,
             ),
-            Container(
-              padding:
-                  EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-              height: 50,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
-                    color: Colors.grey,
-                  ),
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: DropdownButton<String>(
-                      isExpanded: true,
-                      value: _mode,
-                      icon: Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.black,
+            Row(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: _color,
                       ),
-                      elevation: 4,
-                      underline: Container(height: 0),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          _mode = newValue;
-                        });
-                      },
-                      items: modeList
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 10),
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.grey.withOpacity(0.7),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      ColorPicker(
+                        color: _color,
+                        onColorChanged: (Color color) =>
+                            setState(() => _color = color),
+                        heading: Text(
+                          'Select color',
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
+                        subheading: Text(
+                          'Select color shade',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      ).showPickerDialog(
+                        context,
+                        constraints: const BoxConstraints(
+                            minHeight: 460, minWidth: 300, maxWidth: 320),
+                      );
+                    },
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Container(
               alignment: Alignment.bottomRight,
               child: FlatButton(
                 child: Text(
-                  !widget.isEditMode ? 'ADD TASK' : 'EDIT TASK',
+                  !widget.isEditMode ? 'Create' : 'Edit',
                   style: TextStyle(
-                      color: Theme.of(context).accentColor,
-                      fontFamily: 'Lato',
-                      fontSize: 18,
+                      color: LightColors.kDarkYellow,
+                      fontFamily: 'Var',
+                      fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
                 onPressed: () {
@@ -279,143 +315,63 @@ class _AddNewTaskState extends State<AddNewTask> {
     );
   }
 
-  // void _pickUserDueDate() {
-  //   showDatePicker(
-  //           context: context,
-  //           initialDate: widget.isEditMode ? _deadline : DateTime.now(),
-  //           firstDate: DateTime(2020),
-  //           lastDate: DateTime(2030))
-  //       .then((date) {
-  //     if (date == null) {
-  //       return;
-  //     }
-  //     date = date;
-  //     setState(() {
-  //       _deadline = date;
-  //     });
-  //   });
-  // }
-
-  // void _pickUserDueTime() {
-  //   showTimePicker(
-  //     context: context,
-  //     initialTime: widget.isEditMode ? _selectedTime : TimeOfDay.now(),
-  //   ).then((time.dart) {
-  //     if (time.dart == null) {
-  //       return;
-  //     }
-  //     setState(() {
-  //       _selectedTime = time.dart;
-  //     });
-  //   });
-  // }
-
-  int getModeLevel() {
-    if (_mode == modeList[0] || _mode == modeList[1]) return 0;
-    else if (_mode == modeList[2]) return 1;
-    else if (_mode == modeList[3]) return 2;
-    else return 3;
-  }
-
   void _validateForm() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       if (!widget.isEditMode) {
-        final newTask = Task.store(
+        final newProject = TaskList(
           Uuid().v4(),
           _title,
           _desc,
-          TaskMode(),
-          _taskList.title,
-          _taskList.id,
+          _tasks,
           _createdDate,
           _deadline,
-          _isDone,
+          _color,
         );
-        //_okrList.add(newOKR);
-
         firestoreInstance
             .collection("users")
             .doc(firebaseUser.uid)
-            .collection("projects")
-            .doc(widget.taskList.id)
             .collection("taskList")
-            .doc(newTask.id)
+            .doc(newProject.id)
             .set({
-          "id": newTask.id,
-          "title": newTask.title,
-          "desc": newTask.desc,
-          "mode": newTask.mode,
-          "projectName": newTask.projectName,
-          "projectID": newTask.projectID,
-          "createdDate": newTask.createdDate,
-          "deadline": newTask.deadline,
-          "isDone": newTask.isDone,
-        });
-
-        firestoreInstance
-            .collection("users")
-            .doc(firebaseUser.uid)
-            .collection("allTaskList")
-            .doc(newTask.id)
-            .set({
-          "id": newTask.id,
-          "title": newTask.title,
-          "desc": newTask.desc,
-          "mode": newTask.mode,
-          "projectName": newTask.projectName,
-          "projectID": newTask.projectID,
-          "createdDate": newTask.createdDate,
-          "deadline": newTask.deadline,
-          "isDone": newTask.isDone,
+          "id": newProject.id,
+          "title": newProject.title,
+          "desc": newProject.desc,
+          "color": newProject.color.toString(),
+          "tasks": newProject.tasks.map((task) {
+                    return task.toMap();
+                   }).toList(),
+          "createdDate": newProject.createdDate,
+          "deadline": newProject.deadline,
+          "progressPercent": newProject.progressPercent,
         });
       } else {
-        final newTask = Task.store(
-          widget.task.id,
+        final newProject = TaskList(
+          widget.taskList.id,
           _title,
           _desc,
-          TaskMode(),
-          _taskList.title,
-          _taskList.id,
+          _tasks,
           _createdDate,
           _deadline,
-          _isDone,
+          _color,
         );
 
         firestoreInstance
             .collection("users")
             .doc(firebaseUser.uid)
-            .collection("projects")
-            .doc(widget.taskList.id)
             .collection("taskList")
-            .doc(newTask.id)
+            .doc(newProject.id)
             .set({
-          "id": newTask.id,
-          "title": newTask.title,
-          "desc": newTask.desc,
-          "mode": newTask.mode,
-          "projectName": newTask.projectName,
-          "projectID": newTask.projectID,
-          "createdDate": newTask.createdDate,
-          "deadline": newTask.deadline,
-          "isDone": newTask.isDone,
-        });
-
-        firestoreInstance
-            .collection("users")
-            .doc(firebaseUser.uid)
-            .collection("allTaskList")
-            .doc(newTask.id)
-            .set({
-          "id": newTask.id,
-          "title": newTask.title,
-          "desc": newTask.desc,
-          "mode": newTask.mode,
-          "projectName": newTask.projectName,
-          "projectID": newTask.projectID,
-          "createdDate": newTask.createdDate,
-          "deadline": newTask.deadline,
-          "isDone": newTask.isDone,
+          "id": newProject.id,
+          "title": newProject.title,
+          "desc": newProject.desc,
+          "color": newProject.color.toString(),
+          "tasks": newProject.tasks.map((task) {
+            return task.toMap();
+          }).toList(),
+          "createdDate": newProject.createdDate,
+          "deadline": newProject.deadline,
+          "progressPercent": newProject.progressPercent,
         });
       }
       Navigator.of(context).pop();
