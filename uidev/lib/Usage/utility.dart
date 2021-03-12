@@ -36,13 +36,13 @@ String displayTimeLeft(DateTime start, DateTime end) {
   return "${time} ${unit} left";
 }
 
-Color getColor(int n) {
-  if (n == 0) {
+Color getColor(int priority) {
+  if (priority == 0) {
     return LightColors.kGreen;
-  } else if (n == 1) {
+  } else if (priority == 1) {
     return LightColors.kBlue;
-  } else if (n == 2) {
-    return LightColors.kRed;
-  } else
+  } else if (priority == 2) {
     return LightColors.kDarkYellow;
+  } else
+    return LightColors.kRed;
 }

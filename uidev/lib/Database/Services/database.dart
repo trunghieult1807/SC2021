@@ -82,10 +82,6 @@ class DatabaseService {
         doc.data()["title"],
         doc.data()["desc"],
         doc.data()["mode"],
-        doc.data()["projectName"],
-        doc.data()["projectID"],
-        doc.data()["createdDate"],
-        doc.data()["deadline"].toDate(),
         doc.data()["isDone"],
       );
     }).toList();

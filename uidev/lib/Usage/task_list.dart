@@ -12,7 +12,6 @@ class TaskList {
   DateTime _deadline;
   List<Task> _tasks;
   Timeline _timeline;
-  double _progressPercent = 0;
 
   TaskList(String id, String title, String desc, List<Task> tasks,
       DateTime createdDate, DateTime deadline, Color color)
@@ -66,7 +65,8 @@ class TaskList {
   List<Task> getToDoTasks(DateTime date) {
     if (date.isBefore(_createdDate) || date.isAfter(_deadline)) {
       print("TaskList.getToDoTasks: invalid input date");
-      exit(-1);
+      return [];
+      //exit(-1);
     }
     // Group Tasks into 4 priority groups
     List<Task> important_urgent = [];
@@ -76,11 +76,11 @@ class TaskList {
 
     _tasks.forEach((task) {
       if (!task.isDone) {
-        if (task.mode.important && task.mode.urgent)
+        if (task.mode.priority == 3)
           important_urgent.add(task);
-        else if (task.mode.important)
+        else if (task.mode.priority == 2)
           important.add(task);
-        else if (task.mode.urgent)
+        else if (task.mode.priority == 1)
           urgent.add(task);
         else
           extra.add(task);
@@ -132,7 +132,7 @@ class TaskList {
       }
       allWork += task.mode.priority;
     });
-    return workDone / allWork * 100;
+    return allWork == 0 ?  0 :  workDone / allWork ;
   }
 
 
@@ -143,7 +143,9 @@ class TaskList {
   DateTime get createdDate => _createdDate;
   DateTime get deadline => _deadline;
   Color get color => _color;
-  double get progressPercent => _progressPercent;
+  double get progressPercent {
+    return getProgressPercent();
+  }
   List<Task> get tasks => _tasks;
 
   set deadline(DateTime _in) {

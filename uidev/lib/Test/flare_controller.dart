@@ -1,90 +1,143 @@
-import 'dart:math';
-import 'package:flare_dart/math/mat2d.dart';
-import 'package:flare_flutter/flare.dart';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flare_flutter/flare_controller.dart';
+import 'package:uidev/Test/main.dart';
+import 'package:flutter/material.dart';
 
-class AnimationControls extends FlareController {
-  ///so we can reference this any where once we declare it
-  FlutterActorArtboard _artboard;
 
-  ///our fill animation, so we can animate this each time we add/reduce water intake
-  ActorAnimation _fillAnimation;
+class Test extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: HomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
 
-  ///our ice cube that moves on the Y Axis based on current water intake
-  ActorAnimation _iceboyMoveY;
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
-  ///used for mixing animations
-  final List<FlareAnimationLayer> _baseAnimations = [];
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-  ///our overall fill
-  double _waterFill = 0.00;
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  Animation ballBounce;
+  Animation shadowFade;
+  AnimationController animationController;
 
-  ///current amount of water consumed
-  double _currentWaterFill = 0;
+  @override
+  void initState() {
+    super.initState();
+    animationController =
+    AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          animationController.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          animationController.forward(from: 0.0);
+        }
+      });
+    ballBounce = Tween(begin: Offset(0, 0), end: Offset(0, -20.0))
+        .animate(animationController);
+    shadowFade = Tween(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+        curve: Interval(0.4, 1.0), parent: animationController));
 
-  ///time used to smooth the fill line movement
-  double _smoothTime = 5;
-
-  void initialize(FlutterActorArtboard artboard) {
-    //get the reference here on start to our animations and artboard
-
-    if (artboard.name.compareTo("Artboard") == 0) {
-      _artboard = artboard;
-
-      _fillAnimation = artboard.getAnimation("water up");
-      _iceboyMoveY = artboard.getAnimation("iceboy_move_up");
-    }
+    animationController.forward();
   }
 
-  void setViewTransform(Mat2D viewTransform) {}
-
-  bool advance(FlutterActorArtboard artboard, double elapsed) {
-    //we need this separate from our generic mixing animations,
-    // b/c the animation duration is needed in this calculation
-    if (artboard.name.compareTo("Artboard") == 0) {
-      _currentWaterFill +=
-          (_waterFill - _currentWaterFill) * min(1, elapsed * _smoothTime);
-      _fillAnimation.apply(
-          _currentWaterFill * _fillAnimation.duration, artboard, 1);
-      _iceboyMoveY.apply(
-          _currentWaterFill * _iceboyMoveY.duration, artboard, 1);
-    }
-
-    int len = _baseAnimations.length - 1;
-    for (int i = len; i >= 0; i--) {
-      FlareAnimationLayer layer = _baseAnimations[i];
-      layer.time += elapsed;
-      layer.mix = min(1.0, layer.time / 0.01);
-      layer.apply(_artboard);
-
-      if (layer.isDone) {
-        _baseAnimations.removeAt(i);
-      }
-    }
-    return true;
-  }
-
-  ///called from the 'tracking_input'
-  void playAnimation(String animName) {
-    ActorAnimation animation = _artboard.getAnimation(animName);
-
-    if (animation != null) {
-      _baseAnimations.add(FlareAnimationLayer()
-        ..name = animName
-        ..animation = animation);
-    }
-  }
-
-  ///called from the 'tracking_input'
-  ///updates the water fill line
-  void updateWaterPercent(double amt) {
-    _waterFill = amt;
-  }
-
-  ///called from the 'tracking_input'
-  ///resets the water fill line
-  void resetWater() {
-    _waterFill = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Transform.translate(
+            offset: ballBounce.value,
+            child: Image(
+              image: AssetImage("images/icon.png"),
+              height: 140,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Opacity(
+            opacity: shadowFade.value,
+            child: ClipOval(
+              child: Container(
+                height: 15,
+                color: Colors.black.withOpacity(0.2),
+                width: 100,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            child: Text(
+              "What are you working on?",
+              style: TextStyle(
+                  fontWeight: FontWeight.w800, fontSize: 32, wordSpacing: 0.6),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+              width: MediaQuery.of(context).size.width / 1.5,
+              child: Text(
+                "Dribbble is where designers get inspired and hired .",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                textAlign: TextAlign.center,
+              )),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width - 80,
+            height: 40,
+            decoration: BoxDecoration(
+                color: AppColors.pink,
+                borderRadius: BorderRadius.circular(6.0)),
+            child: Center(
+              child: Text(
+                "Sign up",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "I already have an account",
+                style: TextStyle(fontSize: 18, color: Colors.blue),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Icon(
+                Icons.arrow_right,
+                size: 20,
+                color: Colors.blue,
+              )
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

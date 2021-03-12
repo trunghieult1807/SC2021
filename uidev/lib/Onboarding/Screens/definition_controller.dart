@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:uidev/HomePage/home_page_provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/home_page_controller.dart';
 import 'package:uidev/wrapper.dart';
 
 class OnboardingScreen extends StatefulWidget {

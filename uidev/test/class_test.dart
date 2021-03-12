@@ -9,13 +9,13 @@ import 'dart:io';
 void main() {
   DateTime deadline = DateTime(2021, 3, 31);
   DateTime createdDate = DateTime(2021, 2, 25);
-  Task task1 = new Task('1', "a", "b", 2, "c", "a", createdDate, deadline);
-  Task task2 = new Task('2', "a", "b", 1, "c", "a", createdDate, deadline);
-  Task task3 = new Task('3', "a", "b", 3, "c", "a", createdDate, deadline);
-  Task task4 = new Task('4', "a", "b", 2, "c", "a", createdDate, deadline);
-  Task task5 = new Task('5', "a", "b", 1, "c", "a", createdDate, deadline);
-  Task task6 = new Task('6', "a", "b", 0, "c", "a", createdDate, deadline);
-  Task task7 = new Task('7', "a", "b", 2, "c", "a", createdDate, deadline);
+  Task task1 = new Task('1', "a", "b", 2);
+  Task task2 = new Task('2', "a", "b", 1);
+  Task task3 = new Task('3', "a", "b", 3);
+  Task task4 = new Task('4', "a", "b", 2);
+  Task task5 = new Task('5', "a", "b", 1);
+  Task task6 = new Task('6', "a", "b", 0);
+  Task task7 = new Task('7', "a", "b", 2);
   List<Task> taskLst = [task1, task2, task3, task4, task5, task6, task7];
   TaskList taskList = new TaskList('1', 'a', 'b', taskLst, createdDate, deadline, null);
   group("Task", () {

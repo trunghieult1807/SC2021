@@ -1,12 +1,12 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:uidev/FirstNavigator/nested_tab_bar.dart';
 import 'package:uidev/HomePage/Screens/add_tasklist_popup.dart';
 import 'package:uidev/Dashboard/Screens/dash_board.dart';
 import 'package:uidev/HomePage/home_page_provider.dart';
 import 'package:uidev/Profile/profile_page.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/AllTaskList/Screen/tab_bar.dart';
 
 class HomePageController extends StatefulWidget {
   final BuildContext menuScreenContext;
@@ -24,8 +24,8 @@ class _HomePageControllerState extends State<HomePageController> {
   CurvedAnimation curve;
   final iconList = <IconData>[
     Icons.home,
-    Icons.bar_chart,
     Icons.notifications,
+    Icons.bar_chart,
     Icons.person,
   ];
 
@@ -41,11 +41,10 @@ class _HomePageControllerState extends State<HomePageController> {
 
   List<Widget> _buildScreens() {
     return [
+      NestedTabBar(),
       HomePageProvider(),
       DashBoardPage(),
-      NestedTabBar(),
       ProfilePage(),
-      //Logout(),
     ];
   }
   @override

@@ -67,7 +67,7 @@ dependencies:
   sqflite: ^1.0.0 #???
   meta: ^1.1.6 #???
   flare_flutter: ^2.0.6
-
+  audioplayers: ^0.17.4
 
 
 #  firebase_auth: ^0.18.4+1
@@ -112,8 +112,11 @@ flutter:
     - assets/artwork/
     - assets/waiting.png
     - assets/sw.png
-    - assets/timer/
     - assets/WaterArtboards.flr
+    - assets/beep-07.wav
+    - assets/time/png/
+    - assets/Prj/
+    - assets/clock/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

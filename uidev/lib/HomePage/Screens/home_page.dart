@@ -6,8 +6,8 @@ import 'package:uidev/HomePage/SubPages/Screens/calendar_page.dart';
 import 'package:uidev/HomePage/Widgets/tasklist_card.dart';
 import 'package:uidev/HomePage/Widgets/task_column.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/Theme/SwitchButton/switch_button.dart';
 import 'package:uidev/Theme/top_container.dart';
-import 'package:uidev/ToDoList/to_do_list_provider.dart';
 import 'package:uidev/Usage/task_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -154,80 +154,11 @@ class _HomePageState extends State<HomePage> {
                 color: LightColors.kLightYellow,
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                 child: Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        subheading('My Tasks'),
-                        GestureDetector(
-                          onTap: () {
-                            navigateSecondPage();
-                          },
-                          child: calendarIcon(),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15.0),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ToDoListProvider()),
-                        );
-                      },
-                      child: TaskColumn(
-                        icon: Icons.alarm,
-                        iconBackgroundColor: LightColors.kRed,
-                        title: 'To Do',
-                        subtitle: '5 tasks now. 1 started',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ToDoListProvider()),
-                        );
-                      },
-                      child: TaskColumn(
-                        icon: Icons.blur_circular,
-                        iconBackgroundColor: LightColors.kDarkYellow,
-                        title: 'In Progress',
-                        subtitle: '1 tasks now. 1 started',
-                      ),
-                    ),
-                    SizedBox(height: 15.0),
-                    GestureDetector(
-                      onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ToDoListProvider()),
-                        );
-                      },
-                      child: TaskColumn(
-                        icon: Icons.check_circle_outline,
-                        iconBackgroundColor: LightColors.kGreen,
-                        title: 'Done',
-                        subtitle: '18 tasks now. 13 started',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                color: LightColors.kLightYellow,
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     subheading('Active Projects'),
                     Consumer<List<TaskList>>(
                       builder: (context, taskList, child) {
-                        print("project: ${taskList.length}");
                         return Row(
                           children: [
                             Expanded(
@@ -241,16 +172,13 @@ class _HomePageState extends State<HomePage> {
                                         return index % 2 != 1
                                             ? Row(
                                                 children: [
-                                                  TaskListCard(
-                                                      taskList[index]),
+                                                  TaskListCard(taskList[index]),
                                                   SizedBox(
                                                     width: 20,
                                                   ),
-                                                  index + 1 !=
-                                                      taskList.length
+                                                  index + 1 != taskList.length
                                                       ? TaskListCard(
-                                                      taskList[
-                                                              index + 1])
+                                                          taskList[index + 1])
                                                       : Text('')
                                                 ],
                                               )

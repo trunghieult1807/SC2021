@@ -34,30 +34,7 @@ class _AddTaskListPopupState extends State<AddTaskListPopup> {
   Color _color = LightColors.kDarkYellow;
   DateTime _deadline = DateTime.now();
   DateTime _createdDate = DateTime.now();
-  List<Task> _tasks = [
-    Task.store(
-      "17ec17cb-97cc-4ac9-84af-031bfb399cf1",
-      "Today and tomorrow",
-      "Firebase WS",
-      TaskMode(),
-      "2021-03-06 22:02:01.826902",
-      "Love me like you do",
-      DateTime(2021, 3, 15, 11, 11, 11),
-      DateTime.now(),
-      true,
-    ),
-    Task.store(
-      "17s17cb-91cc-4ac9-84af-031bfb399cf1",
-      "Today and tomorrow",
-      "Firebase WS",
-      TaskMode(),
-      "2021-03-06 22:02:01.826902",
-      "Love mdae like you do",
-      DateTime(2021, 3, 15, 11, 11, 11),
-      DateTime.now(),
-      true,
-    )
-  ];
+  List<Task> _tasks = [];
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController _dateController;

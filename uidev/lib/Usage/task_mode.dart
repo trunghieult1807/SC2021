@@ -1,9 +1,9 @@
 class TaskMode {
   static List<String> _descList = [
-    "Not important, not urgent. Delete it!",
-    "Urgent, not important. Delegate it",
-    "Important, not urgent. Decide when to do it",
-    "Urgent & important. Do it now!"
+    "Delete it!",
+    "Delegate it",
+    "Decide when to do it",
+    "Do it now!"
   ];
   static List<String> _colorList = ["green", "yellow", "red", "blue"];
   int _priority;
@@ -68,10 +68,12 @@ class TaskMode {
   bool get important => _important;
   bool get urgent => _urgent;
   int get priority => _priority;
-  String get description => _desc;
   String get color => _color;
   set priority(int _in) => _priority = _in;
 
+  String getDescription(int priority){
+    return _descList[priority];
+  }
   void markImportant() {
     if (!_important) {
       _important = true;

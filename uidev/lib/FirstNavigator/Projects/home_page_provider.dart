@@ -1,0 +1,33 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uidev/Database/Services/database.dart';
+import 'package:uidev/FirstNavigator/Projects/Screens/tasklist_ui.dart';
+import 'package:uidev/Usage/task_list.dart';
+import 'package:uuid/uuid.dart';
+
+class TaskListProvider extends StatelessWidget {
+  final User user = FirebaseAuth.instance.currentUser;
+  final db = DatabaseService();
+
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamProvider<List<TaskList>>(
+        create: (_) {
+          return db.streamTaskList(user);
+        } ,
+        initialData: [TaskList(
+            Uuid().toString(),
+            "Medical App",
+            "Full detail_view.dart",
+            [],
+            DateTime.now(),
+            DateTime.now(),
+            Colors.pink,
+            ),
+        ],
+        child: TaskListUI(),
+    );
+  }
+}
