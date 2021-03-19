@@ -42,8 +42,8 @@ class LightColors  {
   static const Color gGreen = Color(0xff27c76f);
   static const Color gGreen2 = Color(0xff7af8b0);
 
-  static const Color gOrange = Color(0xfffac136);
-  static const Color gOrange2 = Color(0xfff66451);
+  static const Color gOrange = Color(0xfff66451);
+  static const Color gOrange2 = Color(0xfffac136);
 
   static const Color gRed = Color(0xffea5455);
   static const gRed2 = Color(0xfffeb692);

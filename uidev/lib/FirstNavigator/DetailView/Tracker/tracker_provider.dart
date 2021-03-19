@@ -23,7 +23,7 @@ class TrackerProvider extends StatelessWidget {
       create: (_) {
         return db.streamTaskList(user);
       } ,
-      child: Tracker(taskList: taskList, task: task,),
+      child: Tracker(taskList: taskList, task: task),
     );
   }
 }

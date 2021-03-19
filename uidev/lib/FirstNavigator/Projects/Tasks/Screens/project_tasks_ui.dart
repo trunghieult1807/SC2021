@@ -25,7 +25,7 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
     final Size size = MediaQuery.of(context).size;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     final topPadding = MediaQuery.of(context).padding.top;
-    List<Task> _tasks = [];
+    bool isComplete = false;
     return Scaffold(
       backgroundColor: LightColors.theme,
       body: Stack(
@@ -58,7 +58,21 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
           ),
           Consumer<List<TaskList>>(
             builder: (context, taskList, child) {
-              if (taskList == null) {
+              List<Task> _tasks = [];
+
+              taskList.forEach(
+                (taskList) {
+                  if (taskList.id == widget.taskList.id) {
+                    _tasks.addAll(taskList.tasks);
+                  }
+                },
+              );
+              if (_tasks.isNotEmpty) {
+                isComplete = true;
+              }
+
+              if (taskList == null || isComplete == false) {
+                isComplete = false;
                 return Scaffold(
                   backgroundColor: Colors.transparent,
                   body: Center(
@@ -72,17 +86,7 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
                   ),
                 );
               } else {
-                if (_tasks.isEmpty) {
-                  print("t");
-                  taskList.forEach(
-                        (taskList) {
-                      if (taskList.id == widget.taskList.id) {
-                        _tasks.addAll(taskList.tasks);
-                      }
-                    },
-                  );
-                }
-                if (_tasks.length > 0) {
+                if (_tasks.length > 0 && isComplete == true) {
                   return Scaffold(
                     backgroundColor: Colors.transparent,
                     body: SingleChildScrollView(
@@ -131,7 +135,7 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
                       tooltip: 'Add a new task!',
                     ),
                   );
-                } else if (_tasks.length == 0) {
+                } else if (_tasks.length == 0 && isComplete == false) {
                   return Scaffold(
                     backgroundColor: Colors.transparent,
                     body: Column(
@@ -183,27 +187,35 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
                             SizedBox(
                               height: 60,
                             ),
-                            Container(
-                              height: 50,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    LightColors.primary,
-                                    LightColors.secondary1
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
+                            GestureDetector(
+                              onTap: () => showModalBottomSheet(
+                                context: context,
+                                builder: (_) => AddNewTask(
+                                    taskList: widget.taskList,
+                                    isEditMode: false),
                               ),
-                              child: Center(
-                                child: Text(
-                                  "Add a task",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'theme',
-                                    fontSize: 20,
+                              child: Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      LightColors.primary,
+                                      LightColors.secondary1
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Add a task",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'theme',
+                                      fontSize: 20,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -217,7 +229,18 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
                     ),
                   );
                 } else
-                  return SizedBox();
+                  return Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: Center(
+                      child: LoadingBouncingGrid.circle(
+                        borderColor: LightColors.primary,
+                        borderSize: 3.0,
+                        size: 30.0,
+                        backgroundColor: LightColors.theme,
+                        duration: Duration(milliseconds: 500),
+                      ),
+                    ),
+                  );
               }
             },
           ),

@@ -30,17 +30,17 @@ class _NotiCardState extends State<NotiCard> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [LightColors.primary, LightColors.secondary1],
-          //stops: [0.3, 0.0, 0.3],
+          colors: [LightColors.secondary1.withOpacity(0.6), LightColors.primary.withOpacity(0.3)],
+          // stops: [0,0.1, 0.5],
         ),
         //color: getNotiColor(widget.notiMode).withOpacity(0.5),
       ),
       child: Row(
         children: [
           Container(
-            margin: EdgeInsets.only(left: 25, right: 25),
-            height: 30,
-            width: 30,
+            margin: EdgeInsets.only(left: 20, right: 20),
+            height: 40,
+            width: 40,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -53,7 +53,7 @@ class _NotiCardState extends State<NotiCard> {
             child: Icon(
               getNotiIcon(widget.notiMode),
               color: Colors.white,
-              size: 20,
+              size: 25,
             ),
           ),
           Column(
@@ -99,13 +99,13 @@ class _NotiCardState extends State<NotiCard> {
 
   List<Color> getNotiColor(int notiMode) {
     if (notiMode == 0) {
-      return [LightColors.gGreen, LightColors.gGreen2];
+      return [LightColors.gGreen2, LightColors.gGreen];
     } else if (notiMode == 1) {
-      return [LightColors.gBlue, LightColors.gBlue2];
+      return [LightColors.gBlue2, LightColors.gBlue];
     } else if (notiMode == 2) {
-      return [LightColors.gOrange, LightColors.gOrange2];
+      return [LightColors.gOrange2, LightColors.gOrange];
     } else
-      return [LightColors.gRed, LightColors.gRed2];
+      return [LightColors.gRed2, LightColors.gRed];
   }
 
   IconData getNotiIcon(int notiMode) {

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Theme/SwitchButton/switch_button.dart';
 import 'package:uidev/Usage/task.dart';
 import 'package:uidev/Usage/task_list.dart';
@@ -66,7 +67,11 @@ class _AddNewTaskState extends State<AddNewTask> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Title', style: Theme.of(context).textTheme.subtitle1),
+            Text(
+              'Title',
+              style: TextStyle(
+                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
+            ),
             SizedBox(
               height: 5,
             ),
@@ -104,7 +109,11 @@ class _AddNewTaskState extends State<AddNewTask> {
             SizedBox(
               height: 20,
             ),
-            Text('Description', style: Theme.of(context).textTheme.subtitle1),
+            Text(
+              'Description',
+              style: TextStyle(
+                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
+            ),
             SizedBox(
               height: 5,
             ),
@@ -142,7 +151,11 @@ class _AddNewTaskState extends State<AddNewTask> {
             SizedBox(
               height: 20,
             ),
-            Text('Mode', style: Theme.of(context).textTheme.subtitle1),
+            Text(
+              'Mode',
+              style: TextStyle(
+                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
+            ),
             SizedBox(
               height: 5,
             ),
@@ -153,7 +166,11 @@ class _AddNewTaskState extends State<AddNewTask> {
                     arrays: ["Urgent", "Not \nUrgent"],
                     unselbgColor: Colors.white,
                     themeColor: Colors.grey,
-                    index: !widget.isEditMode? 0 : _mode.priority == 1 || _mode.priority == 3? 0: 1,
+                    index: !widget.isEditMode
+                        ? 0
+                        : _mode.priority == 1 || _mode.priority == 3
+                            ? 0
+                            : 1,
                     callback: (var index, String title) {
                       index == 0 ? _mode.markUrgent() : _mode.unmarkUrgent();
                       print(_mode.priority);
@@ -168,7 +185,11 @@ class _AddNewTaskState extends State<AddNewTask> {
                     arrays: ["Important", "Not \nImportant"],
                     unselbgColor: Colors.white,
                     themeColor: Colors.grey,
-                    index: !widget.isEditMode ? 0 : _mode.priority == 2 || _mode.priority == 3? 0: 1,
+                    index: !widget.isEditMode
+                        ? 0
+                        : _mode.priority == 2 || _mode.priority == 3
+                            ? 0
+                            : 1,
                     callback: (var index, String title) {
                       index == 0
                           ? _mode.markImportant()
@@ -179,15 +200,16 @@ class _AddNewTaskState extends State<AddNewTask> {
                 ),
               ],
             ),
+            SizedBox(height: 40,),
             Container(
               alignment: Alignment.bottomRight,
               child: FlatButton(
                 child: Text(
-                  !widget.isEditMode ? 'ADD TASK' : 'EDIT TASK',
+                  !widget.isEditMode ? 'Create' : 'Edit',
                   style: TextStyle(
-                      color: Theme.of(context).accentColor,
-                      fontFamily: 'Lato',
-                      fontSize: 18,
+                      color: LightColors.primary,
+                      fontFamily: 'Var',
+                      fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
                 onPressed: () {

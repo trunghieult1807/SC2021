@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:uidev/FirstNavigator/DetailView/Tracker/stop_watch_timer.dart';
 import 'dart:core';
 import 'package:uidev/Theme/Color/light_colors.dart';
@@ -36,10 +37,9 @@ class _TrackerState extends State<Tracker> {
   var displayTime;
   var value;
   static int duration;
+  static bool isDone;
 
   BorderRadiusGeometry _borderRadius = BorderRadius.circular(10);
-
-
 
   @override
   void initState() {
@@ -54,26 +54,25 @@ class _TrackerState extends State<Tracker> {
     }
 
     getData().then((val) {
-      for (int n = 0;
-      n < val.data()["tasks"].length;
-      n = n + 1) {
-        if (Task.fromMap(val.data()["tasks"][n]).id ==
-            widget.task.id) {
+      for (int n = 0; n < val.data()["tasks"].length; n = n + 1) {
+        if (Task.fromMap(val.data()["tasks"][n]).id == widget.task.id) {
           duration = Task.fromMap(val.data()["tasks"][n]).duration;
+          isDone = Task.fromMap(val.data()["tasks"][n]).isDone;
+          print(isDone);
           print(duration);
           displayTime = duration % 60;
         }
       }
     });
 
-
     if (!mounted) {
       return;
     }
     super.initState();
   }
+
   final StopWatchTimer _stopWatchTimer = StopWatchTimer(
-    duration: duration == null? 0: duration,
+    duration: duration == null ? 0 : duration,
     onChange: (value) {
       var temp = value + duration;
       min = ((temp - (i * elapsed)) / 60000).floor();
@@ -96,6 +95,8 @@ class _TrackerState extends State<Tracker> {
 
   @override
   void dispose() async {
+    print("clm");
+    print(isDone);
     super.dispose();
     _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
     final newTask = Task.store(
@@ -103,7 +104,7 @@ class _TrackerState extends State<Tracker> {
       widget.task.title,
       widget.task.desc,
       widget.task.mode,
-      widget.task.isDone,
+      isDone,
       duration + buff,
     );
     getData() async {
@@ -122,19 +123,15 @@ class _TrackerState extends State<Tracker> {
           .collection("taskList")
           .doc(widget.taskList.id)
           .update({'tasks': []});
-      for (int n = 0;
-      n < val.data()["tasks"].length;
-      n = n + 1) {
-        if (Task.fromMap(val.data()["tasks"][n]).id ==
-            widget.task.id) {
+      for (int n = 0; n < val.data()["tasks"].length; n = n + 1) {
+        if (Task.fromMap(val.data()["tasks"][n]).id == widget.task.id) {
           firestoreInstance
               .collection("users")
               .doc(firebaseUser.uid)
               .collection("taskList")
               .doc(widget.taskList.id)
               .update({
-            'tasks': FieldValue.arrayUnion(
-                [newTask.toMap()])
+            'tasks': FieldValue.arrayUnion([newTask.toMap()])
           });
         } else {
           firestoreInstance
@@ -143,10 +140,8 @@ class _TrackerState extends State<Tracker> {
               .collection("taskList")
               .doc(widget.taskList.id)
               .update({
-            'tasks': FieldValue.arrayUnion([
-              Task.fromMap(val.data()["tasks"][n])
-                  .toMap()
-            ])
+            'tasks': FieldValue.arrayUnion(
+                [Task.fromMap(val.data()["tasks"][n]).toMap()])
           });
           //tasks.add(Task.fromMap(val.data()["tasks"][n]));
         }
@@ -178,6 +173,19 @@ class _TrackerState extends State<Tracker> {
         ),
         Column(
           children: [
+            Consumer<List<TaskList>>(builder: (context, taskList, child) {
+              taskList
+                  .where(
+                      (element) => element.id == widget.taskList.id)
+                  .toList()[0]
+                  .tasks
+                  .forEach((element) {
+                if (element.id == widget.task.id) {
+                  isDone = element.isDone;
+                }
+              });
+              return SizedBox();
+            }),
             Text(
               DateFormat('EEEE, d MMM, yyyy').format(DateTime.now()),
               style: TextStyle(

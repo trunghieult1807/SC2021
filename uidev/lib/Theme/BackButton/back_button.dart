@@ -6,9 +6,9 @@ class MyBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pop(context);
+        // Navigator.pop(context);
         //Navigator.maybePop(context);
-        // Navigator.of(context, rootNavigator: false).pop(context);
+        Navigator.of(context, rootNavigator: true).pop(context);
       },
       child: Align(
         alignment: Alignment.centerLeft,

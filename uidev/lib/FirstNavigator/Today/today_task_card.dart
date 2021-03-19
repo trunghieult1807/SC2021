@@ -46,14 +46,22 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
       onTap: () {
         Navigator.push(
           context,
-          PageRouteBuilder(
-            pageBuilder: (c, a1, a2) => DatailViewProvider(
-                task: widget.task, taskList: widget.taskList),
-            transitionsBuilder: (c, anim, a2, child) =>
-                FadeTransition(opacity: anim, child: child),
-            transitionDuration: Duration(milliseconds: 500),
+          MaterialPageRoute(
+            builder: (context) => DatailViewProvider(
+              task: widget.task, taskList: widget.taskList,
+            ),
           ),
         );
+        // Navigator.push(
+        //   context,
+        //   PageRouteBuilder(
+        //     pageBuilder: (c, a1, a2) => DatailViewProvider(
+        //         task: widget.task, taskList: widget.taskList),
+        //     transitionsBuilder: (c, anim, a2, child) =>
+        //         FadeTransition(opacity: anim, child: child),
+        //     transitionDuration: Duration(milliseconds: 500),
+        //   ),
+        // );
       },
       child: Stack(
         children: [

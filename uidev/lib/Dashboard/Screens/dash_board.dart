@@ -30,15 +30,41 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
     var series = [
       new charts.Series(
-          id: 'Clicks',
-          domainFn: (CompletedTask clickData, _) => clickData.month,
-          measureFn: (CompletedTask clickData, _) => clickData.clicks,
-          colorFn: (CompletedTask clickData, _) => clickData.color,
-          data: data)
+        id: 'Clicks',
+        domainFn: (CompletedTask clickData, _) => clickData.month,
+        measureFn: (CompletedTask clickData, _) => clickData.clicks,
+        colorFn: (CompletedTask clickData, _) => clickData.color,
+        data: data,
+      )
     ];
 
-    var chart = new charts.BarChart(series,
-        animate: true, animationDuration: Duration(milliseconds: 1500));
+    var chart = new charts.BarChart(
+      series,
+      domainAxis: new charts.OrdinalAxisSpec(
+        renderSpec: new charts.SmallTickRendererSpec(
+          labelStyle: new charts.TextStyleSpec(
+            fontSize: 10,
+            color: charts.MaterialPalette.white,
+          ),
+        ),
+      ),
+
+      /// Assign a custom style for the measure axis.
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+        renderSpec: new charts.GridlineRendererSpec(
+          labelStyle: new charts.TextStyleSpec(
+            fontSize: 10,
+            color: charts.MaterialPalette.white,
+          ),
+
+          lineStyle:
+              new charts.LineStyleSpec(color: charts.MaterialPalette.gray.shade600),
+        ),
+      ),
+
+      animate: true,
+      animationDuration: Duration(milliseconds: 1500),
+    );
 
     var chartWidget = Padding(
       padding: EdgeInsets.all(32.0),
@@ -54,7 +80,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: topPadding,),
+                  SizedBox(
+                    height: topPadding,
+                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(
                       20,
@@ -106,7 +134,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           height: 350.0,
                           decoration: BoxDecoration(
                               color: LightColors.theme2,
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Colors.black.withOpacity(0.1),
@@ -119,10 +148,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 25.0, vertical: 25.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         Text(
@@ -173,7 +204,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                         Column(
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 5.0),
                               child: Row(
                                 children: <Widget>[
                                   Material(
@@ -194,7 +226,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   SizedBox(width: 25.0),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
                                           'Edit OKR',
@@ -223,7 +256,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               child: Divider(),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 5.0),
                               child: Row(
                                 children: <Widget>[
                                   Material(
@@ -244,7 +278,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   SizedBox(width: 25.0),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
                                           'Key result',
