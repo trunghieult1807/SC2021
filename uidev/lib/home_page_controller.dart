@@ -6,6 +6,7 @@ import 'package:uidev/HomePage/Screens/add_tasklist_popup.dart';
 import 'package:uidev/Dashboard/Screens/dash_board.dart';
 import 'package:uidev/HomePage/home_page_provider.dart';
 import 'package:uidev/Profile/profile_page.dart';
+import 'package:uidev/SecondNavigator/noti_ui.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 
 class HomePageController extends StatefulWidget {
@@ -19,9 +20,6 @@ class HomePageController extends StatefulWidget {
 class _HomePageControllerState extends State<HomePageController> {
   var _bottomNavIndex = 0;
 
-  AnimationController _animationController;
-  Animation<double> animation;
-  CurvedAnimation curve;
   final iconList = <IconData>[
     Icons.home,
     Icons.notifications,
@@ -32,17 +30,17 @@ class _HomePageControllerState extends State<HomePageController> {
   @override
   void initState() {
     super.initState();
-    animation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(curve);
+    // animation = Tween<double>(
+    //   begin: 0,
+    //   end: 5,
+    // ).animate(curve);
   }
 
 
   List<Widget> _buildScreens() {
     return [
       NestedTabBar(),
-      HomePageProvider(),
+      NotiUI(),
       DashBoardPage(),
       ProfilePage(),
     ];
@@ -50,9 +48,10 @@ class _HomePageControllerState extends State<HomePageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: LightColors.theme,
       body: _buildScreens()[_bottomNavIndex],
       floatingActionButton: FloatingActionButton(
-        backgroundColor: LightColors.kDarkYellow,
+        backgroundColor: LightColors.primary,
         child: Icon(Icons.add),
         onPressed: (){
           showModalBottomSheet(
@@ -62,18 +61,37 @@ class _HomePageControllerState extends State<HomePageController> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: AnimatedBottomNavigationBar(
-        backgroundColor: LightColors.kLightYellow,
-        elevation: 10,
-        splashColor: LightColors.kLightYellow,
-        activeColor: LightColors.kDarkYellow,
-        icons: iconList,
-        activeIndex: _bottomNavIndex,
-        gapLocation: GapLocation.center,
-        notchSmoothness: NotchSmoothness.defaultEdge,
-        leftCornerRadius: 10,
-        rightCornerRadius: 10,
-        onTap: (index) => setState(() => _bottomNavIndex = index),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          // boxShadow: [BoxShadow(
+          //   color: Colors.grey.withOpacity(0.1),
+          //   blurRadius: 10,
+          //   offset: Offset(0,2),
+          //   spreadRadius: 5,
+          // )],
+          borderRadius: BorderRadius.circular(15),
+          gradient: LinearGradient(
+            colors: [LightColors.taitanum, LightColors.theme],
+            begin: Alignment.topLeft,
+            stops: [0, 0.6],
+            tileMode: TileMode.clamp,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: AnimatedBottomNavigationBar(
+          backgroundColor: Colors.transparent,//LightColors.theme,
+          elevation: 10,
+          splashColor: Colors.white60,
+          activeColor: Colors.white,
+          icons: iconList,
+          inactiveColor: Colors.white24,
+          activeIndex: _bottomNavIndex,
+          gapLocation: GapLocation.center,
+          notchSmoothness: NotchSmoothness.defaultEdge,
+          leftCornerRadius: 10,
+          rightCornerRadius: 10,
+          onTap: (index) => setState(() => _bottomNavIndex = index),
+        ),
       ),
     );
   }

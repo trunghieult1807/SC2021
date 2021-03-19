@@ -20,7 +20,7 @@ class HomePageProvider extends StatelessWidget {
         initialData: [TaskList(
             Uuid().toString(),
             "Medical App",
-            "Full detail_view.dart",
+            "Full detail_view_ui.dart",
             [],
             DateTime.now(),
             DateTime.now(),

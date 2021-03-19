@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/Database/Services/database.dart';
-import 'package:uidev/FirstNavigator/Projects/Tasks/Screens/tasks.dart';
+import 'package:uidev/FirstNavigator/Projects/Tasks/Screens/project_tasks_ui.dart';
 import 'package:uidev/Usage/task.dart';
 import 'package:uidev/Usage/task_list.dart';
 
@@ -21,10 +21,8 @@ class TasksProvider extends StatelessWidget {
     return StreamProvider<List<TaskList>>(
       create: (_) {
         return db.streamTaskList(user);
-
       } ,
-
-      child: TasksUI(taskList: taskList),
+      child: ProjectTasksUI(taskList: taskList),
     );
   }
 

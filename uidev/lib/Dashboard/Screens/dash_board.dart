@@ -10,19 +10,22 @@ class DashBoardPage extends StatefulWidget {
 class _DashBoardPageState extends State<DashBoardPage> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    final topPadding = MediaQuery.of(context).padding.top;
     var data = [
-      CompletedTask('Jan', 30, LightColors.kRed),
-      CompletedTask('Feb', 42, LightColors.kBlue),
-      CompletedTask('Mar', 54, LightColors.kRed),
-      CompletedTask('Apr', 20, LightColors.kBlue),
-      CompletedTask('May', 76, LightColors.kRed),
-      CompletedTask('Jun', 35, LightColors.kBlue),
-      CompletedTask('Jul', 30, LightColors.kRed),
-      CompletedTask('Aug', 42, LightColors.kBlue),
-      CompletedTask('Sep', 54, LightColors.kRed),
-      CompletedTask('Oct', 20, LightColors.kBlue),
-      CompletedTask('Nov', 76, LightColors.kRed),
-      CompletedTask('Dec', 35, LightColors.kBlue),
+      CompletedTask('Jan', 30, LightColors.primary),
+      CompletedTask('Feb', 42, LightColors.secondary1),
+      CompletedTask('Mar', 54, LightColors.primary),
+      CompletedTask('Apr', 20, LightColors.secondary1),
+      CompletedTask('May', 76, LightColors.primary),
+      CompletedTask('Jun', 35, LightColors.secondary1),
+      CompletedTask('Jul', 30, LightColors.primary),
+      CompletedTask('Aug', 42, LightColors.secondary1),
+      CompletedTask('Sep', 54, LightColors.primary),
+      CompletedTask('Oct', 20, LightColors.secondary1),
+      CompletedTask('Nov', 76, LightColors.primary),
+      CompletedTask('Dec', 35, LightColors.secondary1),
     ];
 
     var series = [
@@ -43,205 +46,241 @@ class _DashBoardPageState extends State<DashBoardPage> {
     );
 
     return Scaffold(
-      backgroundColor: LightColors.kLightYellow,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-              20,
-              20,
-              20,
-              0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Dashboard',
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.7),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 32.0,
-                      ),
+      backgroundColor: LightColors.theme,
+      body: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: topPadding,),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      20,
+                      20,
+                      20,
+                      0,
                     ),
-                    CircleAvatar(
-                      //radius: 50,
-                      backgroundImage: AssetImage('assets/profile.png'),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  height: 350.0,
-                  decoration: BoxDecoration(
-                      color: LightColors.kDarkYellow,
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            offset: Offset(0.0, 0.3),
-                            blurRadius: 15.0)
-                      ]),
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 25.0, vertical: 25.0),
-                        child: Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Text(
-                                  '236',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'Completed Tasks',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14.0,
-                                  ),
-                                )
-                              ],
+                            Text(
+                              'Dashboard',
+                              style: TextStyle(
+                                fontFamily: 'theme',
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32.0,
+                              ),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.show_chart),
-                              onPressed: () {},
-                              color: Colors.white,
-                              iconSize: 30.0,
-                            )
+                            Container(
+                              //backgroundColor: LightColors.kBlue,
+                              height: 35.0,
+                              width: 35.0,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: ExactAssetImage('assets/profile.png'),
+                                ),
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [
+                                    LightColors.primary,
+                                    LightColors.secondary1,
+                                    //widget.taskList.color.withOpacity(0.7)
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                      chartWidget
-                    ],
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          height: 350.0,
+                          decoration: BoxDecoration(
+                              color: LightColors.theme2,
+                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    offset: Offset(0.0, 0.3),
+                                    blurRadius: 15.0)
+                              ]),
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 25.0, vertical: 25.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Text(
+                                          '236',
+                                          style: TextStyle(
+                                              fontFamily: 'theme',
+                                              color: Colors.white,
+                                              fontSize: 30.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          'Completed Tasks',
+                                          style: TextStyle(
+                                            fontFamily: 'theme',
+                                            color: Colors.white,
+                                            fontSize: 14.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.show_chart),
+                                      onPressed: () {},
+                                      color: Colors.white,
+                                      iconSize: 30.0,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              chartWidget
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          'Recent Activity',
+                          style: TextStyle(
+                              fontFamily: 'theme',
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Material(
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    color: Colors.purple.withOpacity(0.1),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(15.0),
+                                      child: Text(
+                                        'PPL',
+                                        style: TextStyle(
+                                            fontFamily: 'theme',
+                                            color: Colors.purple,
+                                            fontSize: 24.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 25.0),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          'Edit OKR',
+                                          style: TextStyle(
+                                              fontFamily: 'theme',
+                                              color: Colors.white,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          'Reset deadline',
+                                          style: TextStyle(
+                                              fontFamily: 'theme',
+                                              color: Colors.white54,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 25.0),
+                              child: Divider(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              child: Row(
+                                children: <Widget>[
+                                  Material(
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    color: Colors.orange.withOpacity(0.1),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(15.0),
+                                      child: Text(
+                                        'DSA',
+                                        style: TextStyle(
+                                            fontFamily: 'theme',
+                                            color: Colors.orange,
+                                            fontSize: 24.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 25.0),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          'Key result',
+                                          style: TextStyle(
+                                              fontFamily: 'theme',
+                                              color: Colors.white,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          'Add new task',
+                                          style: TextStyle(
+                                              fontFamily: 'theme',
+                                              color: Colors.white54,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  'Recent Activity',
-                  style: TextStyle(
-                      color: Colors.black.withOpacity(0.7),
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Material(
-                            borderRadius: BorderRadius.circular(100.0),
-                            color: Colors.purple.withOpacity(0.1),
-                            child: Padding(
-                              padding: EdgeInsets.all(15.0),
-                              child: Text(
-                                'PPL',
-                                style: TextStyle(
-                                    color: Colors.purple,
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 25.0),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Edit OKR',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'Reset deadline',
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.8),
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w400),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25.0),
-                      child: Divider(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Material(
-                            borderRadius: BorderRadius.circular(100.0),
-                            color: Colors.orange.withOpacity(0.1),
-                            child: Padding(
-                              padding: EdgeInsets.all(15.0),
-                              child: Text(
-                                'DSA',
-                                style: TextStyle(
-                                    color: Colors.orange,
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 25.0),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Key result',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'Add new task',
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.8),
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w400),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

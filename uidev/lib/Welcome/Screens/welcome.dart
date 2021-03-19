@@ -14,72 +14,72 @@ class _WelcomePageState extends State<WelcomePage> {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
-      backgroundColor: LightColors.kLightYellow,
-      body: Column(
+      backgroundColor: Colors.black,
+      body: Stack(
         children: [
-          SizedBox(
-            height: topPadding,
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: topPadding + 10,
+                  ),
+                  Container(
+                    width: size.width * 0.9,
+                    child: Image(
+                      image: AssetImage(
+                        'assets/3d/wel.png',
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30,),
+                  Container(
+                    width: size.width * 0.9,
+                    child: Image(
+                      image: AssetImage(
+                        'assets/3d/wel2.png',
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
           ),
-          Container(
-            color: LightColors.kDarkYellow,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Stack(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    ClipPath(
-                      clipper: DrawClip2(),
-                      child: Container(
-                        width: size.width,
-                        height: size.height * 0.75,
-                        decoration: BoxDecoration(
-                          color: LightColors.kLightYellow2,
-                        ),
-                      ),
-                    ),
-                    ClipPath(
-                      clipper: DrawClip(),
-                      child: Container(
-                        width: size.width,
-                        height: size.height * 0.75,
-                        decoration: BoxDecoration(
-                          color: LightColors.kLightYellow,
-                        ),
-                      ),
-                    ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Center(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 90,
+                        Text(
+                          "FRITTER",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 60,
+                            fontFamily: 'Var',
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(2.0, 2.0),
+                                blurRadius: 2.0,
+                                color: Colors.grey,
                               ),
-                              Container(
-                                width: size.width * 0.8,
-                                child: Image(
-                                  image: AssetImage(
-                                    'assets/artwork/welcome.png',
-                                  ),
-                                ),
+                              Shadow(
+                                offset: Offset(5.0, 5.0),
+                                blurRadius: 5.0,
+                                color: Colors.grey.withOpacity(0.5),
                               ),
                             ],
                           ),
                         ),
                         SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "FRITTER",
-                          style: TextStyle(
-                              color: LightColors.kBlue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 40,
-                              fontFamily: 'Var'),
-                        ),
-                        SizedBox(
-                          height: 340,
+                          height: size.height * 0.14,
                         ),
                         Center(
                           child: Container(
@@ -97,7 +97,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                     spreadRadius: 1.0),
                               ],
                               borderRadius: BorderRadius.circular(30),
-                              color: LightColors.kLightYellow,
+                              color: LightColors.primary,
                             ),
                             height: 40,
                             width: 200,
@@ -121,7 +121,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                   Text(
                                     "Let's get going",
                                     style: TextStyle(
-                                      color: LightColors.kDarkYellow,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
                                       fontFamily: 'Var',
@@ -134,19 +134,19 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Text(
+                      "YOUR MESSY WORK WILL BE GONE",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: bottomPadding + 20,
+                    ),
                   ],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text("YOUR MESSY WORK WILL BE GONE"),
               ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              height: bottomPadding,
-              color: LightColors.kDarkYellow,
             ),
           ),
         ],

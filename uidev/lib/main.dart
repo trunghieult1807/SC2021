@@ -3,8 +3,6 @@ import 'package:after_layout/after_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/Test/flare_controller.dart';
-import 'package:uidev/Test/main.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Database/Models/user.dart';
 import 'package:uidev/Welcome/Screens/welcome.dart';

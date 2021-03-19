@@ -2,229 +2,259 @@ import 'package:flutter/material.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Onboarding/Widgets/checkbox.dart';
 import 'package:uidev/Onboarding/Screens/page2.dart';
+import 'package:uidev/Theme/background.dart';
 
-int work_on;
 
 class Page1 extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
-      backgroundColor: LightColors.kLightYellow,
-      body: SafeArea(
-        child: Container(
-          color: LightColors.kDarkYellow,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  ClipPath(
-                    clipper: DrawClip2(),
-                    child: Container(
-                      width: size.width,
-                      height: size.height * 0.75,
-                      decoration: BoxDecoration(
-                        color: LightColors.kLightYellow2,
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: topPadding,),
+                Center(
+                  child: Container(
+                    height: (size.height - topPadding) * 0.48,
+                    child: Image(
+                      image: AssetImage(
+                        'assets/3d/1.png',
                       ),
                     ),
                   ),
-                  ClipPath(
-                    clipper: DrawClip(),
-                    child: Container(
-                      width: size.width,
-                      height: size.height * 0.75,
-                      decoration: BoxDecoration(
-                        color: LightColors.kLightYellow,
+                ),
+                Center(
+                  child: Container(
+                    height: (size.height - topPadding) * 0.48,
+                    child: Image(
+                      image: AssetImage(
+                        'assets/3d/wel2.png',
                       ),
                     ),
                   ),
-                  Column(
-                    children: [
-                      Center(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Container(
-                              width: size.width * 0.8,
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/artwork/page1.png',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 60,
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(left: 50.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Hi there, \nYou are working on",
-                                  style: TextStyle(
-                                      color: LightColors.kBlue,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
-                                      fontFamily: 'Var'),
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 40,),
-                            Row(
-                              children: [
-                                RoundCheckBox(
-                                  onTap: (selected) {},
-                                  size: 30,
-                                  animationDuration:
-                                      Duration(milliseconds: 500),
-                                  uncheckedColor: LightColors.kDarkYellow,
-                                  checkedColor: LightColors.kDarkYellow,
-                                  borderColor: LightColors.kDarkBlue,
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Text(
-                                  "A project",
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontFamily: "Var",
-                                    color: LightColors.kDarkBlue,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                RoundCheckBox(
-                                  onTap: (selected) {},
-                                  size: 30,
-                                  animationDuration:
-                                      Duration(milliseconds: 500),
-                                  uncheckedColor: LightColors.kDarkYellow,
-                                  checkedColor: LightColors.kDarkYellow,
-                                  borderColor: LightColors.kDarkBlue,
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Text(
-                                  "An examination",
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontFamily: "Var",
-                                    color: LightColors.kDarkBlue,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                RoundCheckBox(
-                                  onTap: (selected) {},
-                                  size: 30,
-                                  animationDuration:
-                                      Duration(milliseconds: 500),
-                                  uncheckedColor: LightColors.kDarkYellow,
-                                  checkedColor: LightColors.kDarkYellow,
-                                  borderColor: LightColors.kDarkBlue,
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Text(
-                                  "Other",
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontFamily: "Var",
-                                    color: LightColors.kDarkBlue,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(3.0, 3.0),
-                          blurRadius: 15.0,
-                          spreadRadius: 1.0),
-                      BoxShadow(
-                          color: Colors.black12,
-                          offset: Offset(-3.0, -3.0),
-                          blurRadius: 15.0,
-                          spreadRadius: 1.0),
-                    ],
-                    borderRadius: BorderRadius.circular(30),
-                    color: LightColors.kBlue,
-                  ),
-                  height: 40,
-                  width: 170,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (c, a1, a2) => Page2(),//HomePageController(),
-                          transitionsBuilder: (c, anim, a2, child) =>
-                              FadeTransition(opacity: anim, child: child),
-                          transitionDuration: Duration(milliseconds: 500),
-                        ),
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              ],
+            ),
+          ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      height: topPadding,
+                    ),
+                    // ClipPath(
+                    //   clipper: DrawClip2(),
+                    //   child: Container(
+                    //     width: size.width,
+                    //     height: size.height * 0.75,
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.grey,
+                    //     ),
+                    //   ),
+                    // ),
+                    // ClipPath(
+                    //   clipper: DrawClip(),
+                    //   child: Container(
+                    //     width: size.width,
+                    //     height: size.height * 0.75,
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.black,
+                    //     ),
+                    //   ),
+                    // ),
+                    Column(
                       children: [
-                        Text(
-                          "Continue",
-                          style: TextStyle(
-                            color: LightColors.kLightYellow,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            fontFamily: 'Var',
+                        Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 50,
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 50.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Hi there, \nYou are working on",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
+                                        fontFamily: 'theme'),
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 40,),
+                              Row(
+                                children: [
+                                  RoundCheckBox(
+                                    onTap: (selected) {},
+                                    size: 30,
+                                    animationDuration:
+                                        Duration(milliseconds: 500),
+                                    checkedColor: Colors.transparent,
+                                    borderColor: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  Text(
+                                    "A project",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontFamily: 'theme',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  RoundCheckBox(
+                                    onTap: (selected) {},
+                                    size: 30,
+                                    animationDuration:
+                                        Duration(milliseconds: 500),
+                                    checkedColor: Colors.transparent,
+                                    borderColor: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  Text(
+                                    "An examination",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontFamily: 'theme',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  RoundCheckBox(
+                                    onTap: (selected) {},
+                                    size: 30,
+                                    animationDuration:
+                                        Duration(milliseconds: 500),
+                                    checkedColor: Colors.transparent,
+                                    borderColor: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
+                                  Text(
+                                    "Other",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontFamily: 'theme',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
+                  ],
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(3.0, 3.0),
+                            blurRadius: 15.0,
+                            spreadRadius: 1.0),
+                        BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(-3.0, -3.0),
+                            blurRadius: 15.0,
+                            spreadRadius: 1.0),
+                      ],
+                      borderRadius: BorderRadius.circular(30),
+                      color: LightColors.primary,
+                    ),
+                    height: 40,
+                    width: 170,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (c, a1, a2) => Page2(),//HomePageController(),
+                            transitionsBuilder: (c, anim, a2, child) =>
+                                FadeTransition(opacity: anim, child: child),
+                            transitionDuration: Duration(milliseconds: 500),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Continue",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'theme',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: bottomPadding + 20,
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

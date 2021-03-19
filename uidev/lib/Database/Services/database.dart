@@ -83,6 +83,7 @@ class DatabaseService {
         doc.data()["desc"],
         doc.data()["mode"],
         doc.data()["isDone"],
+        doc.data()["duration"],
       );
     }).toList();
   }

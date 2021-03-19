@@ -10,7 +10,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LightColors.kLightYellow,
+      backgroundColor: LightColors.theme,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -35,10 +35,28 @@ class ProfilePage extends StatelessWidget {
                             margin: EdgeInsets.only(top: 20),
                             child: Stack(
                               children: <Widget>[
-                                CircleAvatar(
-                                  radius: 55,
-                                  backgroundImage:
-                                      AssetImage('assets/profile.png'),
+                                Center(
+                                  child: Container(
+                                    //backgroundColor: LightColors.kBlue,
+                                    height: 85.0,
+                                    width: 85.0,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: ExactAssetImage(
+                                            'assets/profile.png'),
+                                      ),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.bottomLeft,
+                                        end: Alignment.topRight,
+                                        colors: [
+                                          LightColors.primary,
+                                          LightColors.secondary1,
+                                          //widget.taskList.color.withOpacity(0.7)
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
                                 ),
                                 Align(
                                   alignment: Alignment.bottomRight,
@@ -46,7 +64,7 @@ class ProfilePage extends StatelessWidget {
                                     height: 25,
                                     width: 25,
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).accentColor,
+                                      color: Colors.white,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Center(
@@ -64,14 +82,20 @@ class ProfilePage extends StatelessWidget {
                           ),
                           SizedBox(height: 12),
                           Text(
-                            'Nicolas Adams',
+                            'Hieu Le',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 25),
+                              color: Colors.white,
+                                fontFamily: 'theme',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25),
                           ),
                           Text(
-                            'nicolasadams@gmail.com',
+                            'letrunghieu@gmail.com',
                             style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 15),
+                                fontFamily: 'theme',
+                                color: Colors.white60,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15),
                           ),
                           SizedBox(height: 25),
                           Container(
@@ -79,11 +103,15 @@ class ProfilePage extends StatelessWidget {
                             width: 150,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(60),
-                              color: LightColors.kDarkYellow,
+                              color: LightColors.primary,
                             ),
                             child: Center(
                               child: Text(
                                 'Upgrade to PRO',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'theme',
+                                ),
                               ),
                             ),
                           ),

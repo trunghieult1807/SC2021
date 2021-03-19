@@ -67,7 +67,7 @@ class _RoundCheckBoxState extends State<RoundCheckBox> {
     checkedColor = widget.checkedColor ?? Colors.green;
     borderColor = widget.borderColor ?? Colors.grey;
     checkedWidget =
-        widget.checkedWidget ?? Icon(CheckIcon.ok, color: LightColors.kBlue);//Icon(Icons.check, color: LightColors.kBlue,);
+        widget.checkedWidget ?? Icon(CheckIcon.ok, color: Colors.white);//Icon(Icons.check, color: LightColors.kBlue,);
     uncheckedWidget = widget.uncheckedWidget ?? const SizedBox.shrink();
     super.initState();
   }
@@ -91,7 +91,7 @@ class _RoundCheckBoxState extends State<RoundCheckBox> {
         height: size,
         width: size,
         decoration: BoxDecoration(
-          color: isChecked ? checkedColor : uncheckedColor,
+          color: Colors.transparent, //: uncheckedColor,
           border: Border.all(
             color: borderColor,
             width: 3,

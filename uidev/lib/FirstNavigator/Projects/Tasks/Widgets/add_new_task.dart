@@ -31,6 +31,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   String _desc;
   bool _isDone;
   TaskList _taskList;
+  int _duration = 0;
 
   final _formKey = GlobalKey<FormState>();
   var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -48,6 +49,7 @@ class _AddNewTaskState extends State<AddNewTask> {
       _mode = widget.task.mode;
       _desc = widget.task.desc;
       _isDone = widget.task.isDone;
+      _duration = widget.task.duration;
     } else {
       _mode.markImportant();
       _mode.markUrgent();
@@ -151,7 +153,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                     arrays: ["Urgent", "Not \nUrgent"],
                     unselbgColor: Colors.white,
                     themeColor: Colors.grey,
-                    index: 0,
+                    index: !widget.isEditMode? 0 : _mode.priority == 1 || _mode.priority == 3? 0: 1,
                     callback: (var index, String title) {
                       index == 0 ? _mode.markUrgent() : _mode.unmarkUrgent();
                       print(_mode.priority);
@@ -166,7 +168,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                     arrays: ["Important", "Not \nImportant"],
                     unselbgColor: Colors.white,
                     themeColor: Colors.grey,
-                    index: 0,
+                    index: !widget.isEditMode ? 0 : _mode.priority == 2 || _mode.priority == 3? 0: 1,
                     callback: (var index, String title) {
                       index == 0
                           ? _mode.markImportant()
@@ -209,6 +211,7 @@ class _AddNewTaskState extends State<AddNewTask> {
           _desc,
           _mode,
           _isDone,
+          _duration,
         );
         print('aa: ${_mode.priority}');
         firestoreInstance
@@ -226,6 +229,7 @@ class _AddNewTaskState extends State<AddNewTask> {
           _desc,
           _mode,
           _isDone,
+          _duration,
         );
         getData() async {
           return await firestoreInstance

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/FirstNavigator/Today/today_task_card.dart';
@@ -21,7 +22,7 @@ class _TodayTasksUIState extends State<TodayTasksUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: LightColors.theme,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           20,
@@ -35,6 +36,22 @@ class _TodayTasksUIState extends State<TodayTasksUI> {
               Expanded(
                 child: Consumer<List<TaskList>>(
                   builder: (context, taskList, child) {
+                    if (taskList == null) {
+                      return Column(
+                        children: [
+                          SizedBox(height: MediaQuery.of(context).size.height*0.3,),
+                          Container(
+                            child: LoadingBouncingGrid.circle(
+                              borderColor: LightColors.primary,
+                              borderSize: 3.0,
+                              size: 30.0,
+                              backgroundColor: LightColors.theme,
+                              duration: Duration(milliseconds: 500),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
                     List<Task> _tasks = [];
                     List<TaskList> _taskList = [];
                     taskList.forEach((taskList) {
@@ -43,12 +60,14 @@ class _TodayTasksUIState extends State<TodayTasksUI> {
                         _taskList.add(taskList);
                       });
                     });
+
                     return _tasks.length > 0
                         ? ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: _tasks.length,
                             itemBuilder: (context, index) {
+                              print("then: ${taskList}");
                               return TodayTaskCard(
                                 task: _tasks[index],
                                 taskList: _taskList[index],

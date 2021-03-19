@@ -16,6 +16,7 @@ class TodayTasksProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<TaskList>>(
+
       create: (_) {
         print("here: ${db.streamTaskList(user)}");
         return db.streamTaskList(user);

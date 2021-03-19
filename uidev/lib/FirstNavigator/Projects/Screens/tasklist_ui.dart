@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:uidev/FirstNavigator/Projects/Widgets/tasklist_card.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Usage/task_list.dart';
 
 class TaskListUI extends StatefulWidget {
@@ -20,7 +22,7 @@ class _TaskListUIState extends State<TaskListUI> {
     double width = MediaQuery.of(context).size.width;
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: LightColors.theme,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           20,
@@ -37,19 +39,62 @@ class _TaskListUIState extends State<TaskListUI> {
                   children: <Widget>[
                     Consumer<List<TaskList>>(
                       builder: (context, taskList, child) {
+                        if (taskList == null) {
+                          return Column(
+                            children: [
+                              SizedBox(height: MediaQuery.of(context).size.height*0.3,),
+                              Container(
+                                child: LoadingBouncingGrid.circle(
+                                  borderColor: LightColors.primary,
+                                  borderSize: 3.0,
+                                  size: 30.0,
+                                  backgroundColor: LightColors.theme,
+                                  duration: Duration(milliseconds: 500),
+                                ),
+                              ),
+                            ],
+                          );
+                        }
                         return Row(
                           children: [
                             Expanded(
                               child: taskList.length > 0
-                                  ? ListView.builder(
-                                      padding: EdgeInsets.only(top: 20),
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: taskList.length,
-                                      itemBuilder: (context, index) {
-                                        return TaskListCard(taskList[index]);
-                                      },
-                                    )
+                                  ?
+                              // ListView.builder(
+                              //         padding: EdgeInsets.only(top: 20),
+                              //         physics: NeverScrollableScrollPhysics(),
+                              //         shrinkWrap: true,
+                              //         itemCount: taskList.length,
+                              //         itemBuilder: (context, index) {
+                              //           return TaskListCard(taskList[index]);
+                              //         },
+                              //       )
+                              ListView.builder(
+                                padding: EdgeInsets.only(top: 20),
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: taskList.length,
+                                itemBuilder: (context, index) {
+                                  return index % 2 != 1
+                                      ? Row(
+                                    children: [
+                                      TaskListCard(
+                                          taskList[index]),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      index + 1 !=
+                                          taskList.length
+                                          ? TaskListCard(
+                                          taskList[
+                                          index + 1])
+                                          : Text('')
+                                    ],
+                                  )
+                                      : Text('');
+                                },
+                              )
+
                                   : Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

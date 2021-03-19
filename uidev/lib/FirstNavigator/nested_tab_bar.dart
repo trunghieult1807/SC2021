@@ -30,7 +30,7 @@ class _NestedTabBarState extends State<NestedTabBar>
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: LightColors.theme,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -55,26 +55,31 @@ class _NestedTabBarState extends State<NestedTabBar>
                       Text(
                         'Hi Hieu!',
                         style: TextStyle(
+                          fontFamily: 'theme',
                           fontSize: 18.0,
                           fontWeight: FontWeight.w500,
-                          color: LightColors.kDarkBlue.withOpacity(0.7),
+                          color: Colors.white.withOpacity(0.7),
                         ),
                       ),
-                      SizedBox(height: 15,),
+                      SizedBox(
+                        height: 15,
+                      ),
                       Text(
                         'Check your',
                         style: TextStyle(
+                          fontFamily: 'theme',
                           fontSize: 21.0,
                           fontWeight: FontWeight.w500,
-                          color: LightColors.kDarkBlue,
+                          color: Colors.white,
                         ),
                       ),
                       Text(
                         'Upcoming tasks',
                         style: TextStyle(
+                          fontFamily: 'theme',
                           fontSize: 25.0,
                           fontWeight: FontWeight.w700,
-                          color: LightColors.kDarkBlue,
+                          color: Colors.white,
                         ),
                       ),
                       SizedBox(
@@ -82,11 +87,24 @@ class _NestedTabBarState extends State<NestedTabBar>
                       ),
                     ],
                   ),
-                  CircleAvatar(
-                    backgroundColor: LightColors.kBlue,
-                    radius: 20.0,
-                    backgroundImage: AssetImage(
-                      'assets/profile.png',
+                  Container(
+                    //backgroundColor: LightColors.kBlue,
+                    height: 35.0,
+                    width: 35.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: ExactAssetImage('assets/profile.png'),
+                      ),
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                          LightColors.primary,
+                          LightColors.secondary1,
+                          //widget.taskList.color.withOpacity(0.7)
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ],
@@ -117,8 +135,9 @@ class _NestedTabBarState extends State<NestedTabBar>
               labelStyle: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'theme',
               ),
-              unselectedLabelColor: Colors.black54,
+              unselectedLabelColor: Colors.white54,
               isScrollable: true,
               tabs: <Widget>[
                 Tab(

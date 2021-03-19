@@ -24,23 +24,29 @@ class ProfileListItem extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(40),
-        color: LightColors.kLightYellow2,
+        color: LightColors.theme2,
       ),
       child: Row(
         children: <Widget>[
           Icon(
             this.icon,
             size:20,
+            color: Colors.white,
           ),
           SizedBox(width: 10),
           Text(
             this.text,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'theme',
+            ),
           ),
           Spacer(),
           if (this.hasNavigation)
             Icon(
               LineAwesomeIcons.angle_right,
               size: 20,
+              color: Colors.white,
             ),
         ],
       ),

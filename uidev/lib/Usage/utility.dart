@@ -38,11 +38,22 @@ String displayTimeLeft(DateTime start, DateTime end) {
 
 Color getColor(int priority) {
   if (priority == 0) {
-    return LightColors.kGreen;
+    return LightColors.gGreen;
   } else if (priority == 1) {
-    return LightColors.kBlue;
+    return LightColors.gBlue;
   } else if (priority == 2) {
-    return LightColors.kDarkYellow;
+    return LightColors.gOrange;
   } else
-    return LightColors.kRed;
+    return LightColors.gRed;
+}
+
+Color getColor2(int priority) {
+  if (priority == 0) {
+    return LightColors.gGreen2;
+  } else if (priority == 1) {
+    return LightColors.gBlue2;
+  } else if (priority == 2) {
+    return LightColors.gOrange2;
+  } else
+    return LightColors.gRed2;
 }
