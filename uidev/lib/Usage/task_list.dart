@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uidev/Usage/task.dart';
 import 'package:uidev/Usage/time_line.dart';
-import 'dart:io';
 
 class TaskList {
   String _id;
@@ -135,6 +134,23 @@ class TaskList {
     return allWork == 0 ?  0 :  workDone / allWork ;
   }
 
+  /* Compute something------------------------------------------ */
+  double getLoadFactor(DateTime d) {
+    // Compute 'load factor' = number_of_tasks / working_time_left
+    // working_time_left in minutes
+    if (_deadline.isBefore(d)) return 0;
+
+    int timeleft = _deadline.difference(d).inMinutes;
+
+    if (_tasks.length == 0) return 1;
+    return _tasks.length / timeleft;
+  }
+  void updateTaskWeight(double loadFactor) {
+    _tasks.forEach((task) {
+      task.weight = loadFactor * (task.mode.priority + 1);
+    });
+  }
+  //////////////////////////////////////////////////////////////////
 
   // A bunch of setter and getter functions
   String get id => _id;
@@ -147,6 +163,7 @@ class TaskList {
     return getProgressPercent();
   }
   List<Task> get tasks => _tasks;
+  int get length => _tasks.length;
 
   set deadline(DateTime _in) {
     _deadline = _in;
