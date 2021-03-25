@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/Usage/task.dart';
+import 'package:uidev/Usage/task_list.dart';
+
+/* Global declare variable*/
+Duration workingTimePerDay = new Duration(hours: 8);
+/************************* */
 
 String displayTimeLeft(DateTime start, DateTime end) {
   if (start.isAfter(end)) {
@@ -59,4 +65,45 @@ Color getColor2(int priority) {
     return LightColors.gOrange2;
   } else
     return LightColors.gRed2;
+}
+
+// Get expected working time of all todo task in date d
+Map<Task, int> expectWorkingTime(DateTime d) {
+  // Get all task list of that user
+  List<TaskList> allTaskLists;
+
+  // Get all Todo tasks in the day and totalLoadFactor
+  List<Task> todoTasks = [];
+  double totalWeight = 0;
+  allTaskLists.forEach((tasklist) {
+
+    // Update weight of tasks in that Date
+    tasklist.updateTaskWeight(tasklist.getLoadFactor(d));
+
+    List<Task> tasks = tasklist.getToDoTasks(d);
+    tasks.forEach((task) {
+      todoTasks.add(task);
+      totalWeight += task.weight;
+    });
+  });
+
+  Map<Task, int> result = {};
+  todoTasks.forEach((task) {
+    result[task] = (workingTimePerDay.inMinutes * task.weight / totalWeight).round();
+  });
+
+  return result;
+}
+
+// Compute working efficiency from real recorded time and computed time
+double computeWorkingEfficiency(Map<Task,int> real, Map<Task,int> expect, DateTime d) {
+  double efficiency = 0;
+  
+  real.forEach((task, worktime) {
+    if (worktime > 0) {
+      efficiency += (worktime - expect[task]) * task.weight;
+    }
+  });
+
+  return efficiency;
 }
