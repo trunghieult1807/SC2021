@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.black,
+      backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(
@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Form(
                         key: _formKey,
                         child: Column(children: <Widget>[
-                          email("Username", false, size),
+                          email("Email", false, size),
                           password("Password", true, size),
                         ]),
                       ),
@@ -360,36 +360,3 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class DrawClip extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height * 0.99);
-    path.cubicTo(size.width / 4, size.height, 3 * size.width / 4,
-        size.height / 1.5, size.width, size.height * 0.90);
-    path.lineTo(size.width, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
-  }
-}
-
-class DrawClip2 extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height);
-    path.cubicTo(size.width / 4, size.height, 3 * size.width / 4,
-        size.height / 1.4, size.width, size.height * 0.95);
-    path.lineTo(size.width, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
-  }
-}

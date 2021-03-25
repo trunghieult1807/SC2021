@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uidev/Theme/Color/light_colors.dart';
 
 
 class SwitchButton extends StatefulWidget {
@@ -6,7 +7,7 @@ class SwitchButton extends StatefulWidget {
   const SwitchButton(
       { Key key,
         this.arrays,
-        this.themeColor = const Color(0xFF62C28A),
+        this.themeColor = LightColors.primary,
         this.unselbgColor = Colors.white,
         this.selTextColor = Colors.white,
         this.unselTextColor =  const Color(0xFF929292),

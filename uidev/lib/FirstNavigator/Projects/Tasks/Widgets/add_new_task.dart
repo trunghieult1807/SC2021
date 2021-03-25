@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:uidev/Theme/BackButton/back_button.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Theme/SwitchButton/switch_button.dart';
 import 'package:uidev/Usage/task.dart';
@@ -60,161 +61,176 @@ class _AddNewTaskState extends State<AddNewTask> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Form(
-        key: _formKey,
+    final Size size = MediaQuery.of(context).size;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    final topPadding = MediaQuery.of(context).padding.top;
+    return Scaffold(
+      backgroundColor: LightColors.theme,
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 20.0,),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Title',
-              style: TextStyle(
-                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
-                    color: Colors.grey,
+          children: [
+            SizedBox(height: topPadding,),
+            MyBackButton(),
+            SizedBox(height: 50,),
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Title',
+                    style: TextStyle(
+                        fontFamily: 'theme', color: Colors.white, fontSize: 17),
                   ),
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: TextFormField(
-                initialValue: _title == null ? null : _title,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Named your task',
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _title = value;
-                },
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Description',
-              style: TextStyle(
-                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
-                    color: Colors.grey,
+                  SizedBox(
+                    height: 5,
                   ),
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: TextFormField(
-                initialValue: _desc == null ? null : _desc,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Describe your task',
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _desc = value;
-                },
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Mode',
-              style: TextStyle(
-                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: SwitchButton(
-                    arrays: ["Urgent", "Not \nUrgent"],
-                    unselbgColor: Colors.white,
-                    themeColor: Colors.grey,
-                    index: !widget.isEditMode
-                        ? 0
-                        : _mode.priority == 1 || _mode.priority == 3
-                            ? 0
-                            : 1,
-                    callback: (var index, String title) {
-                      index == 0 ? _mode.markUrgent() : _mode.unmarkUrgent();
-                      print(_mode.priority);
-                    },
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1.0,
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(12.0)),
+                    child: TextFormField(
+                      initialValue: _title == null ? null : _title,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding:
+                            EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                        hintText: 'Named your task',
+                        hintStyle: TextStyle(color: Colors.white54, fontFamily: 'theme',),
+                      ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _title = value;
+                      },
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: SwitchButton(
-                    arrays: ["Important", "Not \nImportant"],
-                    unselbgColor: Colors.white,
-                    themeColor: Colors.grey,
-                    index: !widget.isEditMode
-                        ? 0
-                        : _mode.priority == 2 || _mode.priority == 3
-                            ? 0
-                            : 1,
-                    callback: (var index, String title) {
-                      index == 0
-                          ? _mode.markImportant()
-                          : _mode.unmarkImportant();
-                      print(_mode.priority);
-                    },
+                  SizedBox(
+                    height: 20,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 40,),
-            Container(
-              alignment: Alignment.bottomRight,
-              child: FlatButton(
-                child: Text(
-                  !widget.isEditMode ? 'Create' : 'Edit',
-                  style: TextStyle(
-                      color: LightColors.primary,
-                      fontFamily: 'Var',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  _validateForm();
-                },
+                  Text(
+                    'Description',
+                    style: TextStyle(
+                        fontFamily: 'theme', color: Colors.white, fontSize: 17),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1.0,
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(12.0)),
+                    child: TextFormField(
+                      initialValue: _desc == null ? null : _desc,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding:
+                            EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                        hintText: 'Describe your task',
+                        hintStyle: TextStyle(color: Colors.white54, fontFamily: 'theme',),
+                      ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _desc = value;
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Mode',
+                    style: TextStyle(
+                        fontFamily: 'theme', color: Colors.white, fontSize: 17),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SwitchButton(
+                          arrays: ["Urgent", "Not \nUrgent"],
+                          unselbgColor: Colors.white,
+                          themeColor: LightColors.primary,
+                          index: !widget.isEditMode
+                              ? 0
+                              : _mode.priority == 1 || _mode.priority == 3
+                                  ? 0
+                                  : 1,
+                          callback: (var index, String title) {
+                            index == 0 ? _mode.markUrgent() : _mode.unmarkUrgent();
+                            print(_mode.priority);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        child: SwitchButton(
+                          arrays: ["Important", "Not \nImportant"],
+                          unselbgColor: Colors.white,
+                          themeColor: LightColors.primary,
+                          index: !widget.isEditMode
+                              ? 0
+                              : _mode.priority == 2 || _mode.priority == 3
+                                  ? 0
+                                  : 1,
+                          callback: (var index, String title) {
+                            index == 0
+                                ? _mode.markImportant()
+                                : _mode.unmarkImportant();
+                            print(_mode.priority);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 40,),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: FlatButton(
+                      child: Text(
+                        !widget.isEditMode ? 'Create' : 'Edit',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Var',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () {
+                        _validateForm();
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

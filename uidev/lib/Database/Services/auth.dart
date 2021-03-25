@@ -12,7 +12,7 @@ class AuthService {
 
   // auth change user stream
   Stream<UserModel> get user {
-    return _auth.authStateChanges()
+    return _auth.userChanges()
       .map(_userFromFirebaseUser);
   }
 
@@ -32,13 +32,14 @@ class AuthService {
   // register with email and password
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       User user = result.user;
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());
       return null;
-    } 
+    }
   }
 
   // sign out

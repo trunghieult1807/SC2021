@@ -22,8 +22,11 @@ class _PanelUIState extends State<PanelUI> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    final topPadding = MediaQuery.of(context).padding.top;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: LightColors.theme,
+      backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           0,
@@ -74,23 +77,28 @@ class _PanelUIState extends State<PanelUI> {
                       },
                     )
                         : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+
+
+                        SizedBox(height: 70,),
                         Container(
-                          height:
-                          MediaQuery.of(context).size.height - 450,
-                          child: Image.asset(
-                            'assets/waiting.png',
-                            fit: BoxFit.cover,
+                          width: size.width * 0.3,
+                          child: Image(
+                            image: AssetImage(
+                              'assets/3d/26.png',
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          height: 30,
-                        ),
+                        SizedBox(height: 70,),
                         Text(
-                          'No tasks added yet...',
-                          style: Theme.of(context).textTheme.title,
+                          "You have no task to do today!!!",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'theme',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ],
                     );

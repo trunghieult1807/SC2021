@@ -14,7 +14,7 @@ class _WelcomePageState extends State<WelcomePage> {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(

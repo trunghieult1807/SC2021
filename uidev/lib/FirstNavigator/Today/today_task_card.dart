@@ -1,16 +1,25 @@
-import 'dart:math';
+import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:outline_gradient_button/outline_gradient_button.dart';
 import 'package:uidev/FirstNavigator/DetailView/detail_view_provider.dart';
-import 'package:uidev/FirstNavigator/DetailView/detail_view_ui.dart';
 import 'package:uidev/FirstNavigator/Projects/Tasks/Widgets/add_new_task.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/Theme/SwitchButton/crazy_switch.dart';
+import 'package:uidev/Theme/glass_card.dart';
 import 'package:uidev/Usage/task.dart';
 import 'package:uidev/Usage/task_list.dart';
 import 'package:uidev/Usage/utility.dart';
+
+double _sigmaX = 10; // from 0-10
+double _sigmaY = 10; // from 0-10
+double _opacity = 0.1; // from 0-1.0
+double _width = 350;
+double _height = 300;
+double _blurWidth = _width / 2;
+double _blurHeight = _height / 2;
 
 class TodayTaskCard extends StatefulWidget {
   final Task task;
@@ -30,62 +39,49 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
 
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onLongPress: (){
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => AddNewTask(
-            taskList: widget.taskList,
-            task: widget.task,
-            isEditMode: true,
-          ),
-        );
-      },
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DatailViewProvider(
-              task: widget.task, taskList: widget.taskList,
+    final Size size = MediaQuery.of(context).size;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    final topPadding = MediaQuery.of(context).padding.top;
+    return Padding(
+      padding: EdgeInsets.only(bottom: 20),
+      child: GestureDetector(
+        onLongPress: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => AddNewTask(
+              taskList: widget.taskList,
+              task: widget.task,
+              isEditMode: true,
             ),
-          ),
-        );
-        // Navigator.push(
-        //   context,
-        //   PageRouteBuilder(
-        //     pageBuilder: (c, a1, a2) => DatailViewProvider(
-        //         task: widget.task, taskList: widget.taskList),
-        //     transitionsBuilder: (c, anim, a2, child) =>
-        //         FadeTransition(opacity: anim, child: child),
-        //     transitionDuration: Duration(milliseconds: 500),
-        //   ),
-        // );
-      },
-      child: Stack(
-        children: [
-          Card(
-            color: LightColors.theme2,
-            elevation: 3,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+          );
+        },
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DatailViewProvider(
+                task: widget.task,
+                taskList: widget.taskList,
+              ),
             ),
+          );
+        },
+        child: FrostedGlassBox(
+          height: 120,
+          width: size.width -40,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Container(
-              padding:
-                  EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 15),
-              height: 120,
-              width: MediaQuery.of(context).size.width - 40,
               child: Stack(
                 children: [
                   Align(
                     alignment: Alignment.topRight,
                     child: GestureDetector(
                       onTap: () {},
-                      child: Icon(
-                        Icons.more_vert,
-                        color: Colors.white,
-                      ),
+                      child: CrazySwitch(),
                     ),
                   ),
                   Stack(
@@ -94,21 +90,18 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          AnimatedContainer(
-                            height: 20,
-                            width: 20,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: widget.task.isDone
-                                  ? Border.all(
-                                      color: getColor(widget.task.mode.priority),
-                                      width: 10)
-                                  : Border.all(
-                                      color: getColor(widget.task.mode.priority),
-                                      width: 3),
+                          OutlineGradientButton(
+                            gradient: LinearGradient(
+                              colors: [Colors.purple, Colors.pink],
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
                             ),
-                            duration: Duration(milliseconds: 1200),
-                            curve: Curves.fastLinearToSlowEaseIn,
+                            strokeWidth: widget.task.isDone? 13 : 2,
+                            radius: Radius.circular(6),
+                            child: Container(
+                              height: 8,
+                              width: 8,
+                            ),
                           ),
                           SizedBox(
                             width: 20,
@@ -118,28 +111,31 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               Container(
-                                width: MediaQuery.of(context).size.width - 165,
+                                width:
+                                    MediaQuery.of(context).size.width - 180,
                                 child: Text(
                                   widget.task.title,
                                   overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  maxLines: 2,
                                   style: TextStyle(
                                     fontFamily: 'theme',
                                     decoration: widget.task.isDone
                                         ? TextDecoration.lineThrough
                                         : TextDecoration.none,
-                                    fontSize: 20.0,
+                                    fontSize: 18.0,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 10,),
                               Container(
-                                width: MediaQuery.of(context).size.width - 165,
+                                width:
+                                    MediaQuery.of(context).size.width - 180,
                                 child: Text(
                                   widget.task.desc,
                                   overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  maxLines: 2,
                                   style: TextStyle(
                                     fontFamily: 'theme',
                                     decoration: widget.task.isDone
@@ -151,47 +147,15 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                                   ),
                                 ),
                               ),
-                              //SizedBox(height: 5,),
-
                             ],
                           ),
                         ],
                       ),
                       Align(
                         alignment: Alignment.bottomLeft,
-                        //width: MediaQuery.of(context).size.width - 120,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            // Container(
-                            //   decoration: BoxDecoration(
-                            //     //color: getColor(widget.task.mode.priority),
-                            //     gradient: LinearGradient(
-                            //       colors: [
-                            //         getColor(widget.task.mode.priority),
-                            //         getColor2(widget.task.mode.priority),
-                            //       ],
-                            //     ),
-                            //     // color: widget.taskList.color.withOpacity(0.3),
-                            //     borderRadius: BorderRadius.circular(10),
-                            //   ),
-                            //   child: Padding(
-                            //     padding: const EdgeInsets.only(
-                            //         left: 8, right: 8, top: 5, bottom: 5),
-                            //     child: Text(
-                            //       widget.task.mode.getDescription(
-                            //           widget.task.mode.priority),
-                            //       maxLines: 1,
-                            //       overflow: TextOverflow.ellipsis,
-                            //       style: TextStyle(
-                            //         fontFamily: 'theme',
-                            //         fontSize: 10.0,
-                            //         color: Colors.white,
-                            //         fontWeight: FontWeight.w600,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                             Container(
                               decoration: BoxDecoration(
                                 color: LightColors.theme,
@@ -199,9 +163,10 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 8, right: 8, top:8, bottom:8),
+                                    left: 8, right: 8, top: 8, bottom: 8),
                                 child: Text(
-                                  displayTimeLeft(DateTime.now(), widget.taskList.deadline),
+                                  displayTimeLeft(DateTime.now(),
+                                      widget.taskList.deadline),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -222,7 +187,7 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

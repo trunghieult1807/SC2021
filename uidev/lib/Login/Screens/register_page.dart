@@ -39,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.black,
+      backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(
@@ -99,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Form(
                       key: _formKey,
                       child: Column(children: <Widget>[
-                        email("Username", false, size),
+                        email("Email", false, size),
                         password("Password", true, size),
                         confirmPassword("Confirm Password", true, size),
                       ]),

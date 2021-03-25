@@ -36,6 +36,9 @@ String displayTimeLeft(DateTime start, DateTime end) {
   return "${time} ${unit} left";
 }
 
+
+
+
 Color getColor(int priority) {
   if (priority == 0) {
     return LightColors.gGreen;

@@ -21,8 +21,9 @@ class _TaskListUIState extends State<TaskListUI> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     final topPadding = MediaQuery.of(context).padding.top;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: LightColors.theme,
+      backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
           20,
@@ -96,31 +97,76 @@ class _TaskListUIState extends State<TaskListUI> {
                               )
 
                                   : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height -
-                                              450,
-                                          child: Image.asset(
-                                              'assets/waiting.png',
-                                              fit: BoxFit.cover),
-                                        ),
-                                        SizedBox(
-                                          height: 30,
-                                        ),
-                                        Text(
-                                          'No tasks added yet...',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle1,
-                                        ),
-                                      ],
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: size.width * 1,
+                                    child: Image(
+                                      image: AssetImage(
+                                        'assets/3d/19.png',
+                                      ),
                                     ),
+                                  ),
+
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "Welcome 🔥🔥",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'theme',
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      Container(
+                                        width: size.width - 100,
+                                        child: Text(
+                                          "Add your first task and lets get started ",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white54,
+                                            fontFamily: 'theme',
+                                            fontSize: 20,
+                                            // fontWeight: FontWeight.w00,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 60,
+                                      ),
+                                      // GestureDetector(
+                                      //   onTap: () {},
+                                      //   child: Container(
+                                      //     height: 50,
+                                      //     width: 150,
+                                      //     decoration: BoxDecoration(
+                                      //       borderRadius: BorderRadius.circular(15),
+                                      //       gradient: LinearGradient(
+                                      //         colors: [
+                                      //           LightColors.primary,
+                                      //           LightColors.secondary1
+                                      //         ],
+                                      //         begin: Alignment.topLeft,
+                                      //         end: Alignment.bottomRight,
+                                      //       ),
+                                      //     ),
+                                      //     child: Center(
+                                      //       child: Text(
+                                      //         "Add a task",
+                                      //         style: TextStyle(
+                                      //           color: Colors.white,
+                                      //           fontFamily: 'theme',
+                                      //           fontSize: 20,
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         );

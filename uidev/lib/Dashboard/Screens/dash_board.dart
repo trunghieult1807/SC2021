@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:uidev/Theme/Color/light_colors.dart';
@@ -75,6 +77,31 @@ class _DashBoardPageState extends State<DashBoardPage> {
       backgroundColor: LightColors.theme,
       body: Stack(
         children: [
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: topPadding),
+                Container(
+                  height: (size.height-150),
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new ExactAssetImage('assets/3d/bg10.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                  child: BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.0)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Scaffold(
             backgroundColor: Colors.transparent,
             body: SingleChildScrollView(

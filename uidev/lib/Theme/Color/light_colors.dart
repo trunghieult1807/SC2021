@@ -23,8 +23,8 @@ class LightColors  {
 
 
   static const Color kDarkBlue = Color(0xFF0D253F);
-  static const Color primary = Color(0xff7d5ef1);
-  static const Color secondary1 = Color(0xffe279f5);
+  static const Color primary = Color(0xff008af0);
+  static const Color secondary1 = Color(0xffd871df);
   static const Color secondary2 = Color(0xFFFFEEFB);
 
   static const Color deepSpace = Color(0xFF000000);
@@ -35,8 +35,8 @@ class LightColors  {
 
   static const Color haze = Color(0xffE8EDF4);
   static const Color haze2 = Color(0xffF6F6F8);
-  static const theme = Color(0xff1d2127);
-  static const theme2 = Color(0xff272c38);
+  static const theme = Color(0xff0a1338);
+  static const theme2 = Color(0xff383f6e);
 
 
   static const Color gGreen = Color(0xff27c76f);

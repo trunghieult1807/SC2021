@@ -1,11 +1,13 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:uidev/FirstNavigator/Projects/Screens/add_tasklist_popup.dart';
 import 'package:uidev/FirstNavigator/nested_tab_bar.dart';
-import 'package:uidev/HomePage/Screens/add_tasklist_popup.dart';
 import 'package:uidev/Dashboard/Screens/dash_board.dart';
 import 'package:uidev/HomePage/home_page_provider.dart';
 import 'package:uidev/Profile/profile_page.dart';
+import 'package:uidev/SecondNavigator/noti_provider.dart';
 import 'package:uidev/SecondNavigator/noti_ui.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 
@@ -39,8 +41,8 @@ class _HomePageControllerState extends State<HomePageController> {
 
   List<Widget> _buildScreens() {
     return [
-      NestedTabBar(),
-      NotiUI(),
+      NestedTabBarPushNotification(),
+      NotiProvider(),
       DashBoardPage(),
       ProfilePage(),
     ];
@@ -48,38 +50,21 @@ class _HomePageControllerState extends State<HomePageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: LightColors.theme,
-      body: _buildScreens()[_bottomNavIndex],
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: LightColors.primary,
-        child: Icon(Icons.add),
-        onPressed: (){
-          showModalBottomSheet(
-            context: context,
-            builder: (_) => AddTaskListPopup(isEditMode: false),
-          );
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          // boxShadow: [BoxShadow(
-          //   color: Colors.grey.withOpacity(0.1),
-          //   blurRadius: 10,
-          //   offset: Offset(0,2),
-          //   spreadRadius: 5,
-          // )],
-          borderRadius: BorderRadius.circular(15),
-          gradient: LinearGradient(
-            colors: [LightColors.taitanum, LightColors.theme],
-            begin: Alignment.topLeft,
-            stops: [0, 0.6],
-            tileMode: TileMode.clamp,
-            end: Alignment.bottomRight,
-          ),
+        backgroundColor: LightColors.theme,
+        body: _buildScreens()[_bottomNavIndex],
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: LightColors.primary,
+          child: Icon(Icons.add),
+          onPressed: (){
+            showModalBottomSheet(
+              context: context,
+              builder: (_) => AddTaskListPopup(isEditMode: false),
+            );
+          },
         ),
-        child: AnimatedBottomNavigationBar(
-          backgroundColor: Colors.transparent,//LightColors.theme,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: AnimatedBottomNavigationBar(
+          backgroundColor: LightColors.theme2,
           elevation: 10,
           splashColor: Colors.white60,
           activeColor: Colors.white,
@@ -92,8 +77,7 @@ class _HomePageControllerState extends State<HomePageController> {
           rightCornerRadius: 10,
           onTap: (index) => setState(() => _bottomNavIndex = index),
         ),
-      ),
-    );
+      );
   }
 }
 

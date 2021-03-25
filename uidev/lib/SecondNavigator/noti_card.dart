@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/Usage/noti.dart';
 
 class NotiCard extends StatefulWidget {
-  final int notiMode;
-  final String title;
-  final String subtile;
+  final Noti noti;
 
-  NotiCard({
-    Key key,
-    @required this.notiMode,
-    @required this.title,
-    @required this.subtile,
-  }) : super(key: key);
+  NotiCard(this.noti);
+
 
   @override
   _NotiCardState createState() => _NotiCardState();
@@ -45,13 +40,13 @@ class _NotiCardState extends State<NotiCard> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: getNotiColor(widget.notiMode),
+                colors: getNotiColor(widget.noti.notiMode),
               ),
               borderRadius: BorderRadius.circular(10.0),
               //color: getNotiColor(widget.notiMode),
             ),
             child: Icon(
-              getNotiIcon(widget.notiMode),
+              getNotiIcon(widget.noti.notiMode),
               color: Colors.white,
               size: 25,
             ),
@@ -63,7 +58,7 @@ class _NotiCardState extends State<NotiCard> {
               Container(
                 width: MediaQuery.of(context).size.width - 130,
                 child: Text(
-                  widget.title,
+                  widget.noti.title,
                   maxLines: 1,
                   style: TextStyle(
                     color: Colors.white,
@@ -73,7 +68,7 @@ class _NotiCardState extends State<NotiCard> {
                 ),
               ),
               Text(
-                widget.subtile,
+                widget.noti.subtitle,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
