@@ -52,7 +52,8 @@ class _TodayTasksUIState extends State<TodayTasksUI> {
                             return Column(
                               children: [
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height * 0.3,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.3,
                                 ),
                                 Container(
                                   child: LoadingBouncingGrid.circle(
@@ -65,58 +66,65 @@ class _TodayTasksUIState extends State<TodayTasksUI> {
                                 ),
                               ],
                             );
-                          }
-                          List<Task> _tasks = [];
-                          List<TaskList> _taskList = [];
-                          taskList.forEach((taskList) {
-                            taskList.getToDoTasks(DateTime.now()).forEach((task) {
-                              _tasks.add(task);
-                              _taskList.add(taskList);
+                          } else {
+                            List<Task> _tasks = [];
+                            List<TaskList> _taskList = [];
+                            taskList.forEach((taskList) {
+                              taskList
+                                  .getToDoTasks(DateTime.now())
+                                  .forEach((task) {
+                                _tasks.add(task);
+                                _taskList.add(taskList);
+                              });
                             });
-                          });
 
-                          return _tasks.length > 0
-                              ? ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: _tasks.length,
-                                  itemBuilder: (context, index) {
-                                    print("then: ${taskList}");
-                                    return TodayTaskCard(
-                                      task: _tasks[index],
-                                      taskList: _taskList[index],
-                                    );
-                                  },
-                                )
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(height: 70,),
-                                    Container(
-                                      width: size.width * 0.3,
-                                      child: Image(
-                                        image: AssetImage(
-                                          'assets/3d/26.png',
-                                        ),
+                            return _tasks.length > 0
+                                ? ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: _tasks.length,
+                                    itemBuilder: (context, index) {
+                                      print("then: ${taskList}");
+                                      return TodayTaskCard(
+                                        task: _tasks[index],
+                                        taskList: _taskList[index],
+                                      );
+                                    },
+                                  )
+                                : Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        height: 70,
                                       ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 70,),
-                                        Text(
-                                          "You have no task to do today!!!",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'theme',
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
+                                      Container(
+                                        width: size.width * 0.3,
+                                        child: Image(
+                                          image: AssetImage(
+                                            'assets/3d/26.png',
                                           ),
                                         ),
-
-                                      ],
-                                    ),
-                                  ],
-                                );
+                                      ),
+                                      Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 70,
+                                          ),
+                                          Text(
+                                            "You have no task to do today!!!",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'theme',
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                          }
                         },
                       ),
                     ),

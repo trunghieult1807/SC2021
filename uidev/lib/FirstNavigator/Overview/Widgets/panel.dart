@@ -10,7 +10,8 @@ class PanelUI extends StatefulWidget {
   final TaskList taskList;
   final DateTime date;
 
-  PanelUI({Key key, @required this.taskList, @required this.date}) : super(key: key);
+  PanelUI({Key key, @required this.taskList, @required this.date})
+      : super(key: key);
 
   @override
   _PanelUIState createState() => _PanelUIState();
@@ -43,7 +44,9 @@ class _PanelUIState extends State<PanelUI> {
                     if (taskList == null) {
                       return Column(
                         children: [
-                          SizedBox(height: MediaQuery.of(context).size.height*0.3,),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                          ),
                           Container(
                             child: LoadingBouncingGrid.circle(
                               borderColor: LightColors.primary,
@@ -55,53 +58,56 @@ class _PanelUIState extends State<PanelUI> {
                           ),
                         ],
                       );
-                    }
-                    List<Task> _tasks = [];
-                    List<TaskList> _taskList = [];
-                    taskList.forEach((taskList) {
-                      taskList.getToDoTasks(widget.date).forEach((task) {
-                        _tasks.add(task);
-                        _taskList.add(taskList);
+                    } else {
+                      List<Task> _tasks = [];
+                      List<TaskList> _taskList = [];
+                      taskList.forEach((taskList) {
+                        taskList.getToDoTasks(widget.date).forEach((task) {
+                          _tasks.add(task);
+                          _taskList.add(taskList);
+                        });
                       });
-                    });
-                    return _tasks.length > 0
-                        ? ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: _tasks.length,
-                      itemBuilder: (context, index) {
-                        return PanelCard(
-                          task: _tasks[index],
-                          taskList: _taskList[index],
-                        );
-                      },
-                    )
-                        : Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-
-
-                        SizedBox(height: 70,),
-                        Container(
-                          width: size.width * 0.3,
-                          child: Image(
-                            image: AssetImage(
-                              'assets/3d/26.png',
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 70,),
-                        Text(
-                          "You have no task to do today!!!",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'theme',
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    );
+                      return _tasks.length > 0
+                          ? ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: _tasks.length,
+                              itemBuilder: (context, index) {
+                                return PanelCard(
+                                  task: _tasks[index],
+                                  taskList: _taskList[index],
+                                );
+                              },
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  height: 70,
+                                ),
+                                Container(
+                                  width: size.width * 0.3,
+                                  child: Image(
+                                    image: AssetImage(
+                                      'assets/3d/26.png',
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 70,
+                                ),
+                                Text(
+                                  "You have no task to do today!!!",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'theme',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            );
+                    }
                   },
                 ),
               ),

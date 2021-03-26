@@ -29,11 +29,14 @@ class _TaskListCardState extends State<TaskListCard> {
       padding: const EdgeInsets.only(bottom: 5),
       child: GestureDetector(
         onLongPress: (){
-          showModalBottomSheet(
-            context: context,
-            builder: (_) => AddTaskListPopup(
-              taskList: widget.taskList,
-              isEditMode: true,
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddTaskListPopup(
+                taskList: widget.taskList,
+                isEditMode: true,
+              ),
             ),
           );
         },

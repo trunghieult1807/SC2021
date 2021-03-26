@@ -4,6 +4,7 @@ import 'package:loading_animations/loading_animations.dart';
 import 'package:uidev/Login/Authenticate/authenticate.dart';
 import 'package:uidev/Login/Screens/display_name.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/global_variable.dart';
 import 'package:uidev/home_page_controller.dart';
 import 'package:uidev/Database/Models/user.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +20,22 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     if (user == null) {
-      print("tt");
       return Authenticate();
     } else {
       {
+        getData() async {
+
+          return await _db.collection("users").doc(user.uid).get();
+
+        }
+        getData().then((val) {
+
+          GlobalVariable.name = val.data()["displayName"];
+        });
         return new FutureBuilder<String>(
           future: FirebaseFirestore.instance
               .collection("users")

@@ -16,7 +16,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     final topPadding = MediaQuery.of(context).padding.top;
     var data = [
-      CompletedTask('Jan', 30, LightColors.primary),
+      CompletedTask('Jan', 100, LightColors.primary),
       CompletedTask('Feb', 42, LightColors.secondary1),
       CompletedTask('Mar', 54, LightColors.primary),
       CompletedTask('Apr', 20, LightColors.secondary1),
@@ -69,7 +69,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
     );
 
     var chartWidget = Padding(
-      padding: EdgeInsets.all(32.0),
+      padding: EdgeInsets.only(right: 32.0, left: 32.0, bottom: 32.0, top: 15.0,),
       child: SizedBox(height: 180.0, child: chart),
     );
 
@@ -183,22 +183,24 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
+
                                         Text(
-                                          '236',
+                                          'Your productivity today',
+                                          style: TextStyle(
+                                            fontFamily: 'theme',
+                                            color: Colors.white,
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                        SizedBox(height: 20,),
+                                        Text(
+                                          '236 %',
                                           style: TextStyle(
                                               fontFamily: 'theme',
                                               color: Colors.white,
                                               fontSize: 30.0,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Text(
-                                          'Completed Tasks',
-                                          style: TextStyle(
-                                            fontFamily: 'theme',
-                                            color: Colors.white,
-                                            fontSize: 14.0,
-                                          ),
-                                        )
                                       ],
                                     ),
                                     IconButton(

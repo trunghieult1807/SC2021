@@ -80,15 +80,6 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
           ),
           Consumer<List<TaskList>>(
             builder: (context, taskList, child) {
-              List<Task> _tasks = [];
-              taskList.forEach(
-                (taskList) {
-                  if (taskList.id == widget.taskList.id) {
-                    _tasks.addAll(taskList.tasks);
-                  }
-                },
-              );
-
               if (taskList == null) {
                 isComplete = false;
                 return Scaffold(
@@ -104,6 +95,14 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
                   ),
                 );
               } else {
+                List<Task> _tasks = [];
+                taskList.forEach(
+                      (taskList) {
+                    if (taskList.id == widget.taskList.id) {
+                      _tasks.addAll(taskList.tasks);
+                    }
+                  },
+                );
                 if (_tasks.length > 0) {
                   return Scaffold(
                       backgroundColor: Colors.transparent,

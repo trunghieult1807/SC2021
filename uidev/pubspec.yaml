@@ -117,6 +117,7 @@ flutter:
     - assets/product/
     - assets/images/
     - assets/mode/
+    - assets/logo/logo.png
     - assets/artwork/
     - assets/waiting.png
     - assets/sw.png

@@ -39,7 +39,6 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
 
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -49,12 +48,14 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
       padding: EdgeInsets.only(bottom: 20),
       child: GestureDetector(
         onLongPress: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (_) => AddNewTask(
-              taskList: widget.taskList,
-              task: widget.task,
-              isEditMode: true,
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddNewTask(
+                taskList: widget.taskList,
+                task: widget.task,
+                isEditMode: true,
+              ),
             ),
           );
         },
@@ -71,7 +72,7 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
         },
         child: FrostedGlassBox(
           height: 120,
-          width: size.width -40,
+          width: size.width - 40,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -96,7 +97,7 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                               begin: Alignment.topRight,
                               end: Alignment.bottomLeft,
                             ),
-                            strokeWidth: widget.task.isDone? 13 : 2,
+                            strokeWidth: widget.task.isDone ? 13 : 2,
                             radius: Radius.circular(6),
                             child: Container(
                               height: 8,
@@ -111,8 +112,7 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               Container(
-                                width:
-                                    MediaQuery.of(context).size.width - 180,
+                                width: MediaQuery.of(context).size.width - 180,
                                 child: Text(
                                   widget.task.title,
                                   overflow: TextOverflow.ellipsis,
@@ -128,10 +128,11 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Container(
-                                width:
-                                    MediaQuery.of(context).size.width - 180,
+                                width: MediaQuery.of(context).size.width - 180,
                                 child: Text(
                                   widget.task.desc,
                                   overflow: TextOverflow.ellipsis,
@@ -165,8 +166,8 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                                 padding: const EdgeInsets.only(
                                     left: 8, right: 8, top: 8, bottom: 8),
                                 child: Text(
-                                  displayTimeLeft(DateTime.now(),
-                                      widget.taskList.deadline),
+                                  displayTimeLeft(
+                                      DateTime.now(), widget.taskList.deadline),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(

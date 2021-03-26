@@ -49,17 +49,29 @@ class _HomePageControllerState extends State<HomePageController> {
   }
   @override
   Widget build(BuildContext context) {
+    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
     return Scaffold(
         backgroundColor: LightColors.theme,
         body: _buildScreens()[_bottomNavIndex],
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: LightColors.primary,
-          child: Icon(Icons.add),
+        floatingActionButton:keyboardIsOpened ? null : FloatingActionButton(
+          tooltip: "Fritter",
+          backgroundColor: LightColors.secondary1.withOpacity(0.6),
+          child: Container(
+            height: 50,
+            width: 50,
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                image: new ExactAssetImage('assets/logo/logo.png'),
+                fit: BoxFit.contain,
+              ),
+            ),
+            // child: Image.asset('assets/logo/logo.png',),
+          ),
           onPressed: (){
-            showModalBottomSheet(
-              context: context,
-              builder: (_) => AddTaskListPopup(isEditMode: false),
-            );
+            // showModalBottomSheet(
+            //   context: context,
+            //   builder: (_) => AddTaskListPopup(isEditMode: false),
+            // );
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

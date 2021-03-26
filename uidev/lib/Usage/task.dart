@@ -9,6 +9,8 @@ class Task {
   bool _isDone;
   int _duration;
   double _weight;
+  DateTime _start;
+  bool _tracking;
 
   Task(String id, String title, String desc,
       int mode)
@@ -62,10 +64,15 @@ class Task {
   String get title => _title;
   String get desc => _desc;
   bool get isDone => _isDone;
+  bool get tracking => _tracking;
+  DateTime get start => _start;
   int get duration => _duration;
   double get weight => _weight;
   set isDone(bool _in) => _isDone = _in;
   set weight(double _in) => _weight = _in;
+  set tracking(bool _in) => _tracking = _in;
+  set start(DateTime _in) => _start = _in;
+
 
   void notify() {
     if (!this.isDone) {

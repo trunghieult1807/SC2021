@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:uidev/Theme/BackButton/back_button.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Usage/task_list.dart';
 import 'package:uidev/Usage/task.dart';
@@ -57,250 +58,342 @@ class _AddTaskListPopupState extends State<AddTaskListPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Title',
-              style: TextStyle(
-                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              //padding: EdgeInsets.only(left: 14.0),
-              height: 50,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
-                    color: Colors.grey,
-                  ),
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: TextFormField(
-                initialValue: _title == null ? null : _title,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Named your project',
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _title = value;
-                },
+    final Size size = MediaQuery.of(context).size;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    final topPadding = MediaQuery.of(context).padding.top;
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
+      backgroundColor: LightColors.theme,
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 20.0,
+          right: 20.0,
+          top: 20.0,
+          bottom: 20.0,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: topPadding,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Subtitle',
-              style: TextStyle(
-                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              //padding: EdgeInsets.only(left: 14.0),
-              height: 50,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0,
-                    color: Colors.grey,
+              Stack(
+                children: [
+                  MyBackButton(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        !widget.isEditMode ? 'Create Project' : 'Edit Project',
+                        style: TextStyle(
+                          fontFamily: 'theme',
+                          color: Colors.white,
+                          fontSize: 23,
+                        ),
+                      ),
+                    ],
                   ),
-                  borderRadius: BorderRadius.circular(12.0)),
-              child: TextFormField(
-                initialValue: _desc == null ? null : _desc,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-                  hintText: 'Describe your project',
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _desc = value;
-                },
+                ],
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Deadline',
-              style: TextStyle(
-                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            GestureDetector(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return _buildDatePickerDialog(context);
-                    });
-              },
-              child: Container(
-                //padding: EdgeInsets.only(left: 14.0),
+              SizedBox(
                 height: 50,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0,
-                      color: Colors.grey,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Title',
+                      style: TextStyle(
+                          fontFamily: 'theme', color: Colors.white, fontSize: 17),
                     ),
-                    borderRadius: BorderRadius.circular(12.0)),
-                child: Stack(
-                  children: [
-                    TextFormField(
-                      autofocus: false,
-                      controller: _dateController,
-                      //TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline)),
-                      enabled: false,
-                      style: TextStyle(color: Colors.black),
-                      //initialValue: _deadline == null ? null : DateFormat('yyyy-MM-dd').format(_deadline),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        contentPadding: EdgeInsets.only(
-                            left: 15, bottom: 11, top: 11, right: 15),
-                        //hintText: DateFormat('yyyy-MM-dd').format(_deadline),
-                        hintStyle: TextStyle(color: Colors.black),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      //padding: EdgeInsets.only(left: 14.0),
+                      height: 50,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1.0,
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: TextFormField(
+                        initialValue: _title == null ? null : _title,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          contentPadding:
+                              EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                          hintText: 'Named your project',
+                          hintStyle: TextStyle(
+                            color: Colors.white54,
+                            fontFamily: 'theme',
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _title = value;
+                        },
                       ),
                     ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      'Subtitle',
+                      style: TextStyle(
+                          fontFamily: 'theme', color: Colors.white, fontSize: 17),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      //padding: EdgeInsets.only(left: 14.0),
+                      height: 50,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1.0,
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: TextFormField(
+                        initialValue: _desc == null ? null : _desc,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          contentPadding:
+                              EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                          hintText: 'Describe your project',
+                          hintStyle: TextStyle(
+                            color: Colors.white54,
+                            fontFamily: 'theme',
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _desc = value;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      'Deadline',
+                      style: TextStyle(
+                          fontFamily: 'theme', color: Colors.white, fontSize: 17),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return _buildDatePickerDialog(context);
+                            });
+                      },
+                      child: Container(
+                        //padding: EdgeInsets.only(left: 14.0),
+                        height: 50,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1.0,
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(12.0)),
+                        child: Stack(
+                          children: [
+                            TextFormField(
+                              autofocus: false,
+                              controller: _dateController,
+                              //TextEditingController(text: DateFormat('yyyy-MM-dd').format(_deadline)),
+                              enabled: false,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                              //initialValue: _deadline == null ? null : DateFormat('yyyy-MM-dd').format(_deadline),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                contentPadding: EdgeInsets.only(
+                                    left: 15, bottom: 11, top: 11, right: 15),
+                                //hintText: DateFormat('yyyy-MM-dd').format(_deadline),
+                                hintStyle: TextStyle(
+                                  color: Colors.white54,
+                                  fontFamily: 'theme',
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                FlatButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return _buildDatePickerDialog(context);
+                                        });
+                                  },
+                                  child: Icon(Icons.calendar_today, color: Colors.white,),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      'Color',
+                      style: TextStyle(
+                          fontFamily: 'theme', color: Colors.white, fontSize: 17),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        FlatButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return _buildDatePickerDialog(context);
-                                });
-                          },
-                          child: Icon(Icons.calendar_today),
+                        Stack(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(right: 10),
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: _color,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: LightColors.theme2,
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              ColorPicker(
+                                color: _color,
+                                onColorChanged: (Color color) =>
+                                    setState(() => _color = color),
+                                heading: Text(
+                                  'Select color',
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
+                                subheading: Text(
+                                  'Select color shade',
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
+                              ).showPickerDialog(
+                                context,
+                                constraints: const BoxConstraints(
+                                    minHeight: 460, minWidth: 300, maxWidth: 320),
+                              );
+                            },
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ],
                     ),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          alignment: Alignment.bottomRight,
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 2),
+                            borderRadius: BorderRadius.circular(20),
+                            color: LightColors.theme2,
+                          ),
+                          width: 120,
+                          child: Center(
+                            child: FlatButton(
+                              child: Text(
+                                !widget.isEditMode ? 'Create' : 'Edit',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Var',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                _validateForm();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    // Container(
+                    //   alignment: Alignment.bottomRight,
+                    //   child: FlatButton(
+                    //     child: Text(
+                    //       !widget.isEditMode ? 'Create' : 'Edit',
+                    //       style: TextStyle(
+                    //           color: LightColors.primary,
+                    //           fontFamily: 'Var',
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.bold),
+                    //     ),
+                    //     onPressed: () {
+                    //       _validateForm();
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Color',
-              style: TextStyle(
-                  fontFamily: 'theme', color: Colors.black, fontSize: 17),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: _color,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Icon(
-                        Icons.check,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 10),
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.grey.withOpacity(0.7),
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      ColorPicker(
-                        color: _color,
-                        onColorChanged: (Color color) =>
-                            setState(() => _color = color),
-                        heading: Text(
-                          'Select color',
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                        subheading: Text(
-                          'Select color shade',
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                      ).showPickerDialog(
-                        context,
-                        constraints: const BoxConstraints(
-                            minHeight: 460, minWidth: 300, maxWidth: 320),
-                      );
-                    },
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              alignment: Alignment.bottomRight,
-              child: FlatButton(
-                child: Text(
-                  !widget.isEditMode ? 'Create' : 'Edit',
-                  style: TextStyle(
-                      color: LightColors.primary,
-                      fontFamily: 'Var',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                onPressed: () {
-                  _validateForm();
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

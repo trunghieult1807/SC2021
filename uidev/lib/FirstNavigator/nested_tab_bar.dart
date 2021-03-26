@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:uidev/FirstNavigator/Overview/Screens/calendar_page.dart';
+import 'package:uidev/FirstNavigator/Projects/Screens/add_tasklist_popup.dart';
 import 'package:uidev/FirstNavigator/Projects/home_page_provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/FirstNavigator/Today/today_tasks_provider.dart';
@@ -131,6 +132,7 @@ class _NestedTabBarState extends State<NestedTabBar>
                       children: <Widget>[
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             SizedBox(
                               height: 10,
@@ -139,19 +141,19 @@ class _NestedTabBarState extends State<NestedTabBar>
                               'Hi ${GlobalVariable.name}!',
                               style: TextStyle(
                                 fontFamily: 'theme',
-                                fontSize: 18.0,
+                                fontSize: 15.0,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white.withOpacity(0.7),
                               ),
                             ),
                             SizedBox(
-                              height: 15,
+                              height: 35,
                             ),
                             Text(
                               'Check your',
                               style: TextStyle(
                                 fontFamily: 'theme',
-                                fontSize: 21.0,
+                                fontSize: 17.0,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               ),
@@ -160,7 +162,7 @@ class _NestedTabBarState extends State<NestedTabBar>
                               'Upcoming tasks',
                               style: TextStyle(
                                 fontFamily: 'theme',
-                                fontSize: 25.0,
+                                fontSize: 20.0,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
@@ -170,25 +172,71 @@ class _NestedTabBarState extends State<NestedTabBar>
                             ),
                           ],
                         ),
-                        Container(
-                          //backgroundColor: LightColors.kBlue,
-                          height: 35.0,
-                          width: 35.0,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: ExactAssetImage('assets/profile.png'),
+                        Column(
+                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              height: 10,
                             ),
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                              colors: [
-                                LightColors.primary,
-                                LightColors.secondary1,
-                                //widget.taskList.color.withOpacity(0.7)
-                              ],
+                            Container(
+                              //backgroundColor: LightColors.kBlue,
+                              height: 35.0,
+                              width: 35.0,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: ExactAssetImage('assets/profile.png'),
+                                ),
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [
+                                    LightColors.primary,
+                                    LightColors.secondary1,
+                                    //widget.taskList.color.withOpacity(0.7)
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(17),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AddTaskListPopup(
+                                      isEditMode: false,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                height:40,
+                                width:110,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: LightColors.primary,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.add, color: Colors.white, size: 17,),
+                                    Text(
+                                    " Add project",
+                                    style: TextStyle(
+                                      fontFamily: 'theme',
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  ),],
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ],
                     ),
@@ -290,7 +338,16 @@ class _NestedTabBarState extends State<NestedTabBar>
             duration: Duration(seconds: 5),
           );
         }
-        if (message["data"]["notiMode"] == "1") {
+        else if (message["data"]["notiMode"] == "1") {
+          showSimpleNotification(
+            Text(_notificationInfo.title),
+            leading: NotificationBadge1(totalNotifications: 1),
+            subtitle: Text(_notificationInfo.body),
+            background: LightColors.theme2,
+            duration: Duration(seconds: 5),
+          );
+        }
+        else {
           showSimpleNotification(
             Text(_notificationInfo.title),
             leading: NotificationBadge1(totalNotifications: 1),

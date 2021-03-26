@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Database/services/auth.dart';
+import 'package:uidev/global_variable.dart';
 
 String uid;
 
@@ -17,6 +20,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   String _email;
@@ -108,13 +112,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     FlatButton(
                       onPressed: () async {
-                        print("Pressed");
                         _validate();
                         if (_formKey.currentState.validate()) {
-                          print("b");
+
                           setState(() => loading = true);
                           dynamic result = await _auth
                               .signInWithEmailAndPassword(_email, _password);
+
                           if (result == null) {
                             print("aa");
                             setState(() {

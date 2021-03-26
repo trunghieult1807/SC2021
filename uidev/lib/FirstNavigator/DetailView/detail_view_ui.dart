@@ -131,311 +131,352 @@ class _DetailViewUIState extends State<DetailViewUI> {
           ),
           Consumer<List<TaskList>>(
             builder: (context, taskList, child) {
-              var task;
-              taskList
-                  .where((element) => element.id == widget.taskList.id)
-                  .toList()[0]
-                  .tasks
-                  .forEach((element) {
-                if (element.id == widget.task.id) {
-                  task = element;
-                  time = element.duration;
-                }
-              });
-              return Scaffold(
-                backgroundColor: Colors.transparent,
-                body: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: topPadding + 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              MyBackButton(),
-                              Icon(
-                                Icons.bookmark_outlined,
-                                color: getColor(widget.task.mode.priority),
-                                size: 30,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Text(
-                            "Your handling time",
-                            style: TextStyle(
-                              fontFamily: 'theme',
-                              color: Colors.white54,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: [
-                              Text(
-                                "${(time / 60).round()}",
-                                style: TextStyle(
-                                  fontFamily: 'theme',
-                                  color: Colors.white,
-                                  fontSize: 60,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Text(
-                                "Mins".toString(),
-                                style: TextStyle(
-                                  fontFamily: 'theme',
-                                  color: Colors.white54,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 20,),
-                          OutlineGradientButton(
-                            gradient: LinearGradient(
-                              colors: [Colors.purple.withOpacity(0.5), Colors.pink.withOpacity(0.5)],
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                            ),
-                            strokeWidth:  2,
-                            radius: Radius.circular(6),
-                            child: Container(
-                              height: size.width/2 - 80,
-                              width: size.width/2,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.assistant_photo_rounded, color: Colors.white,),
-                                      // Container(
-                                      //   width: size.width/2,
-                                      //   child: Text(
-                                      //     "Objective: ",
-                                      //     overflow: TextOverflow.ellipsis,
-                                      //     maxLines: 2,
-                                      //     style: TextStyle(
-                                      //       fontFamily: 'theme',
-                                      //       color: Colors.white,
-                                      //       fontSize: 15,
-                                      //       fontWeight: FontWeight.w800,
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      Text(": ", style: TextStyle(
-                                        fontFamily: 'theme',
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600,
-                                      ),),
-                                      Container(
-                                        width: size.width/2 - 40,
-                                        child: Text(
-                                          "${widget.task.title}",
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 3,
-                                          style: TextStyle(
-                                            fontFamily: 'theme',
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.create, color: Colors.white,),
-                                      Text(": ", style: TextStyle(
-                                        fontFamily: 'theme',
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600,
-                                      ),),
-                                      // Text(
-                                      //   "Description: ",
-                                      //   style: TextStyle(
-                                      //     fontFamily: 'theme',
-                                      //     color: Colors.white,
-                                      //     fontSize: 15,
-                                      //     fontWeight: FontWeight.w800,
-                                      //   ),
-                                      // ),
-                                      Container(
-                                        width: size.width/2 - 40,
-                                        child: Text(
-                                          "${widget.task.desc}",
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 3,
-                                          style: TextStyle(
-                                            fontFamily: 'theme',
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                        ],
+              if (taskList == null) {
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                    ),
+                    Container(
+                      child: LoadingBouncingGrid.circle(
+                        borderColor: LightColors.primary,
+                        borderSize: 3.0,
+                        size: 30.0,
+                        backgroundColor: LightColors.theme,
+                        duration: Duration(milliseconds: 500),
                       ),
-                      Column(
-                        children: [
-                          (taskList == null)
-                              ? Container(
-                                  height: MediaQuery.of(context).size.height,
-                                  child: LoadingBouncingGrid.circle(
-                                    borderColor: LightColors.primary,
-                                    borderSize: 3.0,
-                                    size: 30.0,
-                                    backgroundColor: LightColors.theme,
-                                    duration: Duration(milliseconds: 500),
+                    ),
+                  ],
+                );
+              } else {
+                var task;
+                taskList
+                    .where((element) => element.id == widget.taskList.id)
+                    .toList()[0]
+                    .tasks
+                    .forEach((element) {
+                  if (element.id == widget.task.id) {
+                    task = element;
+                    time = element.duration;
+                  }
+                });
+                return Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: topPadding,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                MyBackButton(),
+                                Icon(
+                                  Icons.bookmark_outlined,
+                                  color: getColor(widget.task.mode.priority),
+                                  size: 30,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Text(
+                              "Your handling time",
+                              style: TextStyle(
+                                fontFamily: 'theme',
+                                color: Colors.white54,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Text(
+                                  "${(time / 60).round()}",
+                                  style: TextStyle(
+                                    fontFamily: 'theme',
+                                    color: Colors.white,
+                                    fontSize: 60,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                )
-                              : Center(
-                                  child: ProgressButton.icon(
-                                    textStyle: TextStyle(
-                                        fontFamily: 'theme', color: Colors.white),
-                                    iconedButtons: {
-                                      ButtonState.idle: IconedButton(
-                                        text: "Not Done",
-                                        icon: Icon(
-                                          Icons.close,
+                                ),
+                                Text(
+                                  "Mins".toString(),
+                                  style: TextStyle(
+                                    fontFamily: 'theme',
+                                    color: Colors.white54,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            OutlineGradientButton(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.purple.withOpacity(0.5),
+                                  Colors.pink.withOpacity(0.5)
+                                ],
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                              ),
+                              strokeWidth: 2,
+                              radius: Radius.circular(6),
+                              child: Container(
+                                height: size.width / 2 - 80,
+                                width: size.width / 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.assistant_photo_rounded,
                                           color: Colors.white,
                                         ),
-                                        color: LightColors.primary,
-                                      ),
-                                      ButtonState.loading: IconedButton(
-                                        text: "Loading",
-                                        color: Colors.deepPurple.shade700,
-                                      ),
-                                      ButtonState.fail: IconedButton(
-                                        text: "Failed",
-                                        icon: Icon(
-                                          Icons.cancel,
+                                        // Container(
+                                        //   width: size.width/2,
+                                        //   child: Text(
+                                        //     "Objective: ",
+                                        //     overflow: TextOverflow.ellipsis,
+                                        //     maxLines: 2,
+                                        //     style: TextStyle(
+                                        //       fontFamily: 'theme',
+                                        //       color: Colors.white,
+                                        //       fontSize: 15,
+                                        //       fontWeight: FontWeight.w800,
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                        Text(
+                                          ": ",
+                                          style: TextStyle(
+                                            fontFamily: 'theme',
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: size.width / 2 - 40,
+                                          child: Text(
+                                            "${widget.task.title}",
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 3,
+                                            style: TextStyle(
+                                              fontFamily: 'theme',
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.create,
                                           color: Colors.white,
                                         ),
-                                        color: LightColors.gRed,
-                                      ),
-                                      ButtonState.success: IconedButton(
-                                        text: "Done",
-                                        icon: Icon(
-                                          Icons.check_circle,
-                                          color: Colors.white,
+                                        Text(
+                                          ": ",
+                                          style: TextStyle(
+                                            fontFamily: 'theme',
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
-                                        color: LightColors.secondary1,
-                                      )
-                                    },
-                                    onPressed: () {
-                                      final newTask = Task.store(
-                                        widget.task.id,
-                                        widget.task.title,
-                                        widget.task.desc,
-                                        widget.task.mode,
-                                        !task.isDone,
-                                        widget.task.duration,
-                                      );
-                                      getData() async {
-                                        return await firestoreInstance
-                                            .collection("users")
-                                            .doc(firebaseUser.uid)
-                                            .collection("taskList")
-                                            .doc(widget.taskList.id)
-                                            .get();
-                                      }
+                                        // Text(
+                                        //   "Description: ",
+                                        //   style: TextStyle(
+                                        //     fontFamily: 'theme',
+                                        //     color: Colors.white,
+                                        //     fontSize: 15,
+                                        //     fontWeight: FontWeight.w800,
+                                        //   ),
+                                        // ),
+                                        Container(
+                                          width: size.width / 2 - 40,
+                                          child: Text(
+                                            "${widget.task.desc}",
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 3,
+                                            style: TextStyle(
+                                              fontFamily: 'theme',
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            (taskList == null)
+                                ? Container(
+                                    height: MediaQuery.of(context).size.height,
+                                    child: LoadingBouncingGrid.circle(
+                                      borderColor: LightColors.primary,
+                                      borderSize: 3.0,
+                                      size: 30.0,
+                                      backgroundColor: LightColors.theme,
+                                      duration: Duration(milliseconds: 500),
+                                    ),
+                                  )
+                                : Center(
+                                    child: ProgressButton.icon(
+                                      textStyle: TextStyle(
+                                          fontFamily: 'theme',
+                                          color: Colors.white),
+                                      iconedButtons: {
+                                        ButtonState.idle: IconedButton(
+                                          text: "Not Done",
+                                          icon: Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                          ),
+                                          color: LightColors.primary,
+                                        ),
+                                        ButtonState.loading: IconedButton(
+                                          text: "Loading",
+                                          color: Colors.deepPurple.shade700,
+                                        ),
+                                        ButtonState.fail: IconedButton(
+                                          text: "Failed",
+                                          icon: Icon(
+                                            Icons.cancel,
+                                            color: Colors.white,
+                                          ),
+                                          color: LightColors.gRed,
+                                        ),
+                                        ButtonState.success: IconedButton(
+                                          text: "Done",
+                                          icon: Icon(
+                                            Icons.check_circle,
+                                            color: Colors.white,
+                                          ),
+                                          color: LightColors.secondary1,
+                                        )
+                                      },
+                                      onPressed: () {
+                                        final newTask = Task.store(
+                                          widget.task.id,
+                                          widget.task.title,
+                                          widget.task.desc,
+                                          widget.task.mode,
+                                          !task.isDone,
+                                          widget.task.duration,
+                                        );
+                                        getData() async {
+                                          return await firestoreInstance
+                                              .collection("users")
+                                              .doc(firebaseUser.uid)
+                                              .collection("taskList")
+                                              .doc(widget.taskList.id)
+                                              .get();
+                                        }
 
-                                      getData().then((val) {
-                                        firestoreInstance
-                                            .collection("users")
-                                            .doc(firebaseUser.uid)
-                                            .collection("taskList")
-                                            .doc(widget.taskList.id)
-                                            .update({'tasks': []});
-                                        for (int n = 0;
-                                            n < val.data()["tasks"].length;
-                                            n = n + 1) {
-                                          if (Task.fromMap(val.data()["tasks"][n])
-                                                  .id ==
-                                              widget.task.id) {
-                                            firestoreInstance
-                                                .collection("users")
-                                                .doc(firebaseUser.uid)
-                                                .collection("taskList")
-                                                .doc(widget.taskList.id)
-                                                .update({
-                                              'tasks': FieldValue.arrayUnion(
-                                                  [newTask.toMap()])
+                                        getData().then((val) {
+                                          firestoreInstance
+                                              .collection("users")
+                                              .doc(firebaseUser.uid)
+                                              .collection("taskList")
+                                              .doc(widget.taskList.id)
+                                              .update({'tasks': []});
+                                          for (int n = 0;
+                                              n < val.data()["tasks"].length;
+                                              n = n + 1) {
+                                            if (Task.fromMap(
+                                                        val.data()["tasks"][n])
+                                                    .id ==
+                                                widget.task.id) {
+                                              firestoreInstance
+                                                  .collection("users")
+                                                  .doc(firebaseUser.uid)
+                                                  .collection("taskList")
+                                                  .doc(widget.taskList.id)
+                                                  .update({
+                                                'tasks': FieldValue.arrayUnion(
+                                                    [newTask.toMap()])
+                                              });
+                                            } else {
+                                              firestoreInstance
+                                                  .collection("users")
+                                                  .doc(firebaseUser.uid)
+                                                  .collection("taskList")
+                                                  .doc(widget.taskList.id)
+                                                  .update({
+                                                'tasks': FieldValue.arrayUnion([
+                                                  Task.fromMap(val
+                                                          .data()["tasks"][n])
+                                                      .toMap()
+                                                ])
+                                              });
+                                              //tasks.add(Task.fromMap(val.data()["tasks"][n]));
+                                            }
+                                          }
+                                        });
+                                        setState(() {
+                                          if (task.isDone) {
+                                            stateOnlyText = ButtonState.loading;
+                                            Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 1000), () {
+                                              setState(() {
+                                                stateOnlyText =
+                                                    ButtonState.idle;
+                                              });
                                             });
                                           } else {
-                                            firestoreInstance
-                                                .collection("users")
-                                                .doc(firebaseUser.uid)
-                                                .collection("taskList")
-                                                .doc(widget.taskList.id)
-                                                .update({
-                                              'tasks': FieldValue.arrayUnion([
-                                                Task.fromMap(
-                                                        val.data()["tasks"][n])
-                                                    .toMap()
-                                              ])
+                                            stateOnlyText = ButtonState.loading;
+                                            Future.delayed(
+                                                const Duration(
+                                                    milliseconds: 1000), () {
+                                              setState(() {
+                                                stateOnlyText =
+                                                    ButtonState.success;
+                                              });
                                             });
-                                            //tasks.add(Task.fromMap(val.data()["tasks"][n]));
                                           }
-                                        }
-                                      });
-                                      setState(() {
-                                        if (task.isDone) {
-                                          stateOnlyText = ButtonState.loading;
-                                          Future.delayed(
-                                              const Duration(milliseconds: 1000),
-                                              () {
-                                            setState(() {
-                                              stateOnlyText = ButtonState.idle;
-                                            });
-                                          });
-                                        } else {
-                                          stateOnlyText = ButtonState.loading;
-                                          Future.delayed(
-                                              const Duration(milliseconds: 1000),
-                                              () {
-                                            setState(() {
-                                              stateOnlyText = ButtonState.success;
-                                            });
-                                          });
-                                        }
-                                      });
-                                    },
-                                    state: stateOnlyText,
+                                        });
+                                      },
+                                      state: stateOnlyText,
+                                    ),
                                   ),
-                                ),
-                          SizedBox(height: bottomPadding + 50,),
-                        ],
-                      ),
-                    ],
+                            SizedBox(
+                              height: bottomPadding + 50,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
+                );
+              }
             },
           ),
         ],

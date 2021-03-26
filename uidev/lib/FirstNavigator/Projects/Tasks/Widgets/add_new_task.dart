@@ -65,14 +65,42 @@ class _AddNewTaskState extends State<AddNewTask> {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       backgroundColor: LightColors.theme,
       body: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 20.0,),
+        padding: const EdgeInsets.only(
+          left: 20.0,
+          right: 20.0,
+          top: 20.0,
+          bottom: 20.0,
+        ),
         child: Column(
           children: [
-            SizedBox(height: topPadding,),
-            MyBackButton(),
-            SizedBox(height: 50,),
+            SizedBox(
+              height: topPadding,
+            ),
+            Stack(
+              children: [
+                MyBackButton(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      !widget.isEditMode ? 'Create Task' : 'Edit Task',
+                      style: TextStyle(
+                        fontFamily: 'theme',
+                        color: Colors.white,
+                        fontSize: 23,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 50,
+            ),
             Form(
               key: _formKey,
               child: Column(
@@ -81,10 +109,13 @@ class _AddNewTaskState extends State<AddNewTask> {
                   Text(
                     'Title',
                     style: TextStyle(
-                        fontFamily: 'theme', color: Colors.white, fontSize: 17),
+                      fontFamily: 'theme',
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
                   Container(
                     height: 50,
@@ -96,16 +127,23 @@ class _AddNewTaskState extends State<AddNewTask> {
                         borderRadius: BorderRadius.circular(12.0)),
                     child: TextFormField(
                       initialValue: _title == null ? null : _title,
+                      cursorColor: Colors.white54,
+                      style: TextStyle(
+                          color: Colors.white,
+                      ),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        contentPadding:
-                            EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
                         hintText: 'Named your task',
-                        hintStyle: TextStyle(color: Colors.white54, fontFamily: 'theme',),
+                        hintStyle: TextStyle(
+                          color: Colors.white54,
+                          fontFamily: 'theme',
+                        ),
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -119,7 +157,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Text(
                     'Description',
@@ -127,7 +165,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                         fontFamily: 'theme', color: Colors.white, fontSize: 17),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
                   Container(
                     height: 50,
@@ -139,16 +177,23 @@ class _AddNewTaskState extends State<AddNewTask> {
                         borderRadius: BorderRadius.circular(12.0)),
                     child: TextFormField(
                       initialValue: _desc == null ? null : _desc,
+                      cursorColor: Colors.white54,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         focusedBorder: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        contentPadding:
-                            EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 11, top: 11, right: 15),
                         hintText: 'Describe your task',
-                        hintStyle: TextStyle(color: Colors.white54, fontFamily: 'theme',),
+                        hintStyle: TextStyle(
+                          color: Colors.white54,
+                          fontFamily: 'theme',
+                        ),
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -162,7 +207,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Text(
                     'Mode',
@@ -177,27 +222,33 @@ class _AddNewTaskState extends State<AddNewTask> {
                       Expanded(
                         child: SwitchButton(
                           arrays: ["Urgent", "Not \nUrgent"],
-                          unselbgColor: Colors.white,
-                          themeColor: LightColors.primary,
+                          unselTextColor: Colors.white54,
+                          selTextColor: Colors.white,
+                          unselbgColor: Colors.transparent,
+                          themeColor: LightColors.theme2,
                           index: !widget.isEditMode
                               ? 0
                               : _mode.priority == 1 || _mode.priority == 3
                                   ? 0
                                   : 1,
                           callback: (var index, String title) {
-                            index == 0 ? _mode.markUrgent() : _mode.unmarkUrgent();
+                            index == 0
+                                ? _mode.markUrgent()
+                                : _mode.unmarkUrgent();
                             print(_mode.priority);
                           },
                         ),
                       ),
                       SizedBox(
-                        width: 20,
+                        width: 25,
                       ),
                       Expanded(
                         child: SwitchButton(
                           arrays: ["Important", "Not \nImportant"],
-                          unselbgColor: Colors.white,
-                          themeColor: LightColors.primary,
+                          unselTextColor: Colors.white54,
+                          selTextColor: Colors.white,
+                          unselbgColor: Colors.transparent,
+                          themeColor: LightColors.theme2,
                           index: !widget.isEditMode
                               ? 0
                               : _mode.priority == 2 || _mode.priority == 3
@@ -213,22 +264,37 @@ class _AddNewTaskState extends State<AddNewTask> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 40,),
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    child: FlatButton(
-                      child: Text(
-                        !widget.isEditMode ? 'Create' : 'Edit',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Var',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        alignment: Alignment.bottomRight,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2),
+                          borderRadius: BorderRadius.circular(20),
+                          color: LightColors.theme2,
+                        ),
+                        width: 120,
+                        child: Center(
+                          child: FlatButton(
+                            child: Text(
+                              !widget.isEditMode ? 'Create' : 'Edit',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Var',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              _validateForm();
+                            },
+                          ),
+                        ),
                       ),
-                      onPressed: () {
-                        _validateForm();
-                      },
-                    ),
+                    ],
                   ),
                 ],
               ),
