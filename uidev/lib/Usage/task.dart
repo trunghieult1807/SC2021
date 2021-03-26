@@ -8,6 +8,7 @@ class Task {
   TaskMode _mode;
   bool _isDone;
   int _duration;
+  int _expectTime;
   double _weight;
   DateTime _start;
   bool _tracking;
@@ -79,15 +80,16 @@ class Task {
   bool get tracking => _tracking;
   DateTime get start => _start;
   int get duration => _duration;
+  int get expectTime => _expectTime;
   double get weight => _weight;
   set isDone(bool _in) => _isDone = _in;
   set weight(double _in) => _weight = _in;
   set tracking(bool _in) => _tracking = _in;
-
   set start(DateTime _in) => _start = _in;
 
   bool get hehe => _hehe;
   set hehe(bool _in) => _hehe = _in;
+  set expectTime(int _in) => _expectTime = _in;
 
   void notify() {
     if (!this.isDone) {

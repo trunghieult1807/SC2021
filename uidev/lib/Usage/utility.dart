@@ -68,7 +68,7 @@ Color getColor2(int priority) {
 }
 
 // Get expected working time of all todo task in date d
-Map<Task, int> expectWorkingTime(DateTime d) {
+void expectWorkingTime(DateTime d) {
   // Get all task list of that user
   List<TaskList> allTaskLists;
 
@@ -87,23 +87,23 @@ Map<Task, int> expectWorkingTime(DateTime d) {
     });
   });
 
-  Map<Task, int> result = {};
   todoTasks.forEach((task) {
-    result[task] = (workingTimePerDay.inMinutes * task.weight / totalWeight).round();
+    task.expectTime = (workingTimePerDay.inMinutes * task.weight / totalWeight).round();
   });
-
-  return result;
 }
 
-// Compute working efficiency from real recorded time and computed time
-double computeWorkingEfficiency(Map<Task,int> real, Map<Task,int> expect, DateTime d) {
+// Compute working efficiency in a day
+double computeWorkingEfficiency(List<Task> tasksToCompute) {
   double efficiency = 0;
-  
-  real.forEach((task, worktime) {
-    if (worktime > 0) {
-      efficiency += (worktime - expect[task]) * task.weight;
+
+  tasksToCompute.forEach((task) {
+    if (task.duration > 0) {
+      efficiency += (task.duration - task.expectTime) * task.weight;
     }
   });
+
+  // @TODO: Store efficiency per day for each user
+  // **YOUR CODE HERE**
 
   return efficiency;
 }
