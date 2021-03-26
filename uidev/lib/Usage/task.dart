@@ -11,33 +11,41 @@ class Task {
   double _weight;
   DateTime _start;
   bool _tracking;
+  static bool _hehe = false;
 
   Task(String id, String title, String desc,
-      int mode)
+      int mode, DateTime start, bool tracking)
       : _id = id,
         _title = title,
         _desc = desc,
         _mode = TaskMode.setPriority(mode),
-        _isDone = false;
+        _isDone = false,
+        _start = start,
+        _tracking = tracking;
+
 
 
   Task.retrieve(String id, String title, String desc,
-       int mode, bool isDone, int duration)
+       int mode, bool isDone, int duration, DateTime start, bool tracking)
       : _id = id,
         _title = title,
         _desc = desc,
         _mode = TaskMode.setPriority(mode),
         _isDone = isDone,
-        _duration = duration;
+        _duration = duration,
+        _start = start,
+        _tracking = tracking;
 
   Task.store(String id, String title, String desc,
-      TaskMode mode, bool isDone, int duration)
+      TaskMode mode, bool isDone, int duration, DateTime start, bool tracking)
       : _id = id,
         _title = title,
         _desc = desc,
         _mode = mode,
         _isDone = isDone,
-        _duration = duration;
+        _duration = duration,
+        _start = start,
+        _tracking = tracking;
 
 
 
@@ -48,6 +56,8 @@ class Task {
     "mode": this.mode.toJson(),
     "isDone": this.isDone,
     "duration": this.duration,
+    "start": this._start,
+    "tracking": this._tracking,
   };
 
   Task.fromMap(Map<dynamic, dynamic> map)
@@ -56,7 +66,9 @@ class Task {
         _desc = map["desc"],
         _mode = TaskMode.fromJson(map["mode"]),
         _isDone = map["isDone"],
-        _duration = map["duration"];
+        _duration = map["duration"],
+        _start = map["start"],
+        _tracking = map["tracking"];
 
 
   TaskMode get mode => _mode;
@@ -71,8 +83,11 @@ class Task {
   set isDone(bool _in) => _isDone = _in;
   set weight(double _in) => _weight = _in;
   set tracking(bool _in) => _tracking = _in;
+
   set start(DateTime _in) => _start = _in;
 
+  bool get hehe => _hehe;
+  set hehe(bool _in) => _hehe = _in;
 
   void notify() {
     if (!this.isDone) {

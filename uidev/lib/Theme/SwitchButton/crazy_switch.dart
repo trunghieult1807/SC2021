@@ -1,14 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/Usage/task.dart';
+import 'package:uidev/Usage/task_list.dart';
 
 class CrazySwitch extends StatefulWidget {
+  final Task task;
+  final TaskList taskList;
+
+  CrazySwitch(this.task, this.taskList);
+
   @override
   _CrazySwitchState createState() => _CrazySwitchState();
 }
 
 class _CrazySwitchState extends State<CrazySwitch>
     with SingleTickerProviderStateMixin {
-  bool isChecked = false;
+  bool isChecked;
   Duration _duration = Duration(milliseconds: 370);
   Animation<Alignment> _animation;
   AnimationController _animationController;
@@ -16,7 +25,7 @@ class _CrazySwitchState extends State<CrazySwitch>
   @override
   void initState() {
     super.initState();
-
+    isChecked = widget.task.isDone;
     _animationController =
         AnimationController(vsync: this, duration: _duration);
 
@@ -38,11 +47,14 @@ class _CrazySwitchState extends State<CrazySwitch>
 
   @override
   Widget build(BuildContext context) {
+    var firebaseUser = FirebaseAuth.instance.currentUser;
+    final firestoreInstance = FirebaseFirestore.instance;
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
         return GestureDetector(
           onTap: () {
+
             setState(() {
               if (_animationController.isCompleted) {
                 _animationController.reverse();
@@ -53,7 +65,8 @@ class _CrazySwitchState extends State<CrazySwitch>
               isChecked = !isChecked;
             });
           },
-          child: Container(
+          child:
+          Container(
             width: 30,
             height: 20,
             padding: EdgeInsets.fromLTRB(2, 2, 2, 2),

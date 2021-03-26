@@ -31,51 +31,61 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
     final topPadding = MediaQuery.of(context).padding.top;
     bool isComplete = false;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: topPadding),
-                Container(
-                  height: (size.height-150),
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new ExactAssetImage('assets/3d/bg10.png'),
-                      fit: BoxFit.fitHeight,
+            body: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: topPadding),
+                  Container(
+                    height: (size.height-150),
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        image: new ExactAssetImage('assets/3d/bg10.png'),
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                    child: BackdropFilter(
+                      filter: new ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                      child: new Container(
+                        decoration: new BoxDecoration(
+                            color: Colors.white.withOpacity(0.0)),
+                      ),
                     ),
                   ),
-                  child: BackdropFilter(
-                    filter: new ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
-                    child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white.withOpacity(0.0)),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
-            body: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 10,),
-                Container(
-                  height: (size.height-140),
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new ExactAssetImage('assets/3d/bg8.png'),
-                      fit: BoxFit.contain,
+            body: SingleChildScrollView(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 10,),
+                  Container(
+                    height: (size.height-140),
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        image: new ExactAssetImage('assets/3d/bg8.png'),
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Consumer<List<TaskList>>(
@@ -187,133 +197,137 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
                       );
                 } else {
                   return Scaffold(
+                    resizeToAvoidBottomInset: false,
+                    resizeToAvoidBottomPadding: false,
                     backgroundColor: Colors.transparent,
-                    body: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: topPadding + 10,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20.0),
-                              child: MyBackButton(),
-                            ),
-                            Container(
-                              width: size.width * 1,
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/3d/19.png',
+                    body: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: topPadding + 10,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: MyBackButton(),
+                              ),
+                              Container(
+                                width: size.width * 1,
+                                child: Image(
+                                  image: AssetImage(
+                                    'assets/3d/19.png',
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "Welcome 🔥🔥",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'theme',
-                                fontSize: 30,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Container(
-                              width: size.width - 100,
-                              child: Text(
-                                "Add your first task and lets get started ",
-                                textAlign: TextAlign.center,
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                "Welcome 🔥🔥",
                                 style: TextStyle(
-                                  color: Colors.white54,
+                                  color: Colors.white,
                                   fontFamily: 'theme',
-                                  fontSize: 20,
-                                  // fontWeight: FontWeight.w00,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 60,
-                            ),
-                            OpenContainer(
-                              openColor: Colors.transparent,
-                              closedColor: Colors.transparent,
-                              transitionDuration: Duration(milliseconds: 1000),
-                              transitionType: ContainerTransitionType.fade,
-                              closedElevation: 0.0,
-                              openElevation: 4.0,
-                              closedBuilder: (BuildContext c, VoidCallback action) =>
-                                  Container(
-                                    height: 50,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          LightColors.primary,
-                                          LightColors.secondary1
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
+                              Container(
+                                width: size.width - 100,
+                                child: Text(
+                                  "Add your first task and lets get started ",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white54,
+                                    fontFamily: 'theme',
+                                    fontSize: 20,
+                                    // fontWeight: FontWeight.w00,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 60,
+                              ),
+                              OpenContainer(
+                                openColor: Colors.transparent,
+                                closedColor: Colors.transparent,
+                                transitionDuration: Duration(milliseconds: 1000),
+                                transitionType: ContainerTransitionType.fade,
+                                closedElevation: 0.0,
+                                openElevation: 4.0,
+                                closedBuilder: (BuildContext c, VoidCallback action) =>
+                                    Container(
+                                      height: 50,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            LightColors.primary,
+                                            LightColors.secondary1
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
                                       ),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Add a task",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'theme',
-                                          fontSize: 20,
+                                      child: Center(
+                                        child: Text(
+                                          "Add a task",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'theme',
+                                            fontSize: 20,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                              openBuilder: (BuildContext c, VoidCallback action) =>
-                                  AddNewTask(
-                                      taskList: widget.taskList, isEditMode: false),
-                              tappable: true,
-                            ),
-                            // GestureDetector(
-                            //   onTap: () => showModalBottomSheet(
-                            //     context: context,
-                            //     builder: (_) => AddNewTask(
-                            //         taskList: widget.taskList,
-                            //         isEditMode: false),
-                            //   ),
-                            //   child: Container(
-                            //     height: 50,
-                            //     width: 150,
-                            //     decoration: BoxDecoration(
-                            //       borderRadius: BorderRadius.circular(15),
-                            //       gradient: LinearGradient(
-                            //         colors: [
-                            //           LightColors.primary,
-                            //           LightColors.secondary1
-                            //         ],
-                            //         begin: Alignment.topLeft,
-                            //         end: Alignment.bottomRight,
-                            //       ),
-                            //     ),
-                            //     child: Center(
-                            //       child: Text(
-                            //         "Add a task",
-                            //         style: TextStyle(
-                            //           color: Colors.white,
-                            //           fontFamily: 'theme',
-                            //           fontSize: 20,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            SizedBox(
-                              height: bottomPadding + 50,
-                            ),
-                          ],
-                        ),
-                      ],
+                                openBuilder: (BuildContext c, VoidCallback action) =>
+                                    AddNewTask(
+                                        taskList: widget.taskList, isEditMode: false),
+                                tappable: true,
+                              ),
+                              // GestureDetector(
+                              //   onTap: () => showModalBottomSheet(
+                              //     context: context,
+                              //     builder: (_) => AddNewTask(
+                              //         taskList: widget.taskList,
+                              //         isEditMode: false),
+                              //   ),
+                              //   child: Container(
+                              //     height: 50,
+                              //     width: 150,
+                              //     decoration: BoxDecoration(
+                              //       borderRadius: BorderRadius.circular(15),
+                              //       gradient: LinearGradient(
+                              //         colors: [
+                              //           LightColors.primary,
+                              //           LightColors.secondary1
+                              //         ],
+                              //         begin: Alignment.topLeft,
+                              //         end: Alignment.bottomRight,
+                              //       ),
+                              //     ),
+                              //     child: Center(
+                              //       child: Text(
+                              //         "Add a task",
+                              //         style: TextStyle(
+                              //           color: Colors.white,
+                              //           fontFamily: 'theme',
+                              //           fontSize: 20,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              SizedBox(
+                                height: bottomPadding + 50,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 }

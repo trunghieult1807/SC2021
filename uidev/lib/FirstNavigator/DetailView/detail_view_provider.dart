@@ -19,11 +19,28 @@ class DatailViewProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<String> myFuture() async{
+      db.streamTaskList(user);
+      return 'true';
+    }
     return StreamProvider<List<TaskList>>(
       create: (_) {
         return db.streamTaskList(user);
       } ,
-      child: DetailViewUI(taskList: taskList, task: task,),
+      child:
+      FutureBuilder<String>(
+        future: myFuture(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.hasData) {
+            return DetailViewUI(taskList: taskList, task: task,);
+          } else if (snapshot.hasError) {
+            return Text('');
+          } else {
+            return Text('');
+          }
+
+        },
+      ),
     );
   }
 }

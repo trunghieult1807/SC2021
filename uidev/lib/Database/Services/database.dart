@@ -76,62 +76,6 @@ class DatabaseService {
         .map(_userInfoFromSnapshot);
   }
 
-  //
-  // List<Task> _tasksFromSnapshot(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) {
-  //     return Task(
-  //       doc.data()["id"],
-  //       doc.data()["title"],
-  //       doc.data()["desc"],
-  //       doc.data()['tasks'].map<Task>((item) {
-  //         return Task.fromMap(item);
-  //       }).toList(),
-  //       doc.data()["createdDate"].toDate(),
-  //       doc.data()["deadline"].toDate(),
-  //       Color(
-  //         int.parse(doc.data()["color"].split('(0x')[1].split(')')[0],
-  //             radix: 16),
-  //       ),
-  //     );
-  //   }).toList();
-  // }
-
-  // Stream<List<Task>> streamTasks(User user, TaskList taskList) {
-  //   return _db
-  //       .collection('users')
-  //       .doc(user.uid)
-  //       .collection('taskList')
-  //       .doc(taskList.id).get().then((value) => value.data()["tasks"])
-  //       .snapshots()
-  //       .map(_tasksFromSnapshot);
-  // }
-
-
-
-
-
-  List<Task> _allTaskListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return Task.retrieve(
-        doc.data()["id"],
-        doc.data()["title"],
-        doc.data()["desc"],
-        doc.data()["mode"],
-        doc.data()["isDone"],
-        doc.data()["duration"],
-      );
-    }).toList();
-  }
-
-  Stream<List<Task>> streamAllTask(User user) {
-    return _db
-        .collection("users")
-        .doc(user.uid)
-        .collection("allTaskList")
-        .orderBy('createdDate', descending: false)
-        .snapshots()
-        .map(_allTaskListFromSnapshot);
-  }
 }
 
 

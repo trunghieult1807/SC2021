@@ -10,10 +10,6 @@ import 'package:outline_gradient_button/outline_gradient_button.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/FirstNavigator/DetailView/Clock/analog_clock.dart';
-import 'package:uidev/FirstNavigator/DetailView/Clock/model.dart';
-import 'package:uidev/FirstNavigator/DetailView/Tracker/tracker.dart';
-import 'package:uidev/FirstNavigator/DetailView/Tracker/tracker_provider.dart';
 import 'package:uidev/Theme/BackButton/back_button.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'dart:core';
@@ -41,11 +37,99 @@ class _DetailViewUIState extends State<DetailViewUI> {
   final audioCache = AudioCache();
   ButtonState stateOnlyText;
   int time = 0;
+  bool _isDone;
+  bool _isLoading = false;
 
   @override
   void initState() {
     stateOnlyText = widget.task.isDone ? ButtonState.success : ButtonState.idle;
+    _isDone = widget.task.isDone;
+
     super.initState();
+  }
+
+  void magic() {
+    if (_isLoading == false) {
+      _isLoading = true;
+      _isDone = !_isDone;
+      print(_isDone);
+      final newTask = Task.store(
+        widget.task.id,
+        widget.task.title,
+        widget.task.desc,
+        widget.task.mode,
+        _isDone,
+        widget.task.duration,
+        widget.task.start,
+        widget.task.tracking,
+      );
+
+      getData() async {
+        return await firestoreInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .collection("taskList")
+            .doc(widget.taskList.id)
+            .get();
+      }
+
+      Future.delayed(Duration(milliseconds: 1000), () {
+        getData().then((val) {
+          List<Task> local = List<Task>();
+          for (int n = 0; n < val.data()["tasks"].length; n = n + 1) {
+            if (Task.fromMap(val.data()["tasks"][n]).id == widget.task.id) {
+              firestoreInstance
+                  .collection("users")
+                  .doc(firebaseUser.uid)
+                  .collection("taskList")
+                  .doc(widget.taskList.id)
+                  .update({
+                'tasks': FieldValue.arrayUnion([newTask.toMap()])
+              });
+              local.add(newTask);
+            } else {
+              local.add(Task.fromMap(val.data()["tasks"][n]));
+            }
+          }
+          firestoreInstance
+              .collection("users")
+              .doc(firebaseUser.uid)
+              .collection("taskList")
+              .doc(widget.taskList.id)
+              .update({'tasks': []});
+          for (int n = 0; n < local.length; n = n + 1) {
+            firestoreInstance
+                .collection("users")
+                .doc(firebaseUser.uid)
+                .collection("taskList")
+                .doc(widget.taskList.id)
+                .update({
+              'tasks': FieldValue.arrayUnion([local[n].toMap()])
+            });
+          }
+          Future.delayed(Duration(milliseconds: 1500), () {
+            _isLoading = false;
+          });
+        });
+      });
+    }
+    setState(() {
+      if (!_isDone) {
+        stateOnlyText = ButtonState.loading;
+        Future.delayed(const Duration(milliseconds: 1500), () {
+          setState(() {
+            stateOnlyText = ButtonState.idle;
+          });
+        });
+      } else {
+        stateOnlyText = ButtonState.loading;
+        Future.delayed(const Duration(milliseconds: 1500), () {
+          setState(() {
+            stateOnlyText = ButtonState.success;
+          });
+        });
+      }
+    });
   }
 
   @override
@@ -53,11 +137,16 @@ class _DetailViewUIState extends State<DetailViewUI> {
     final Size size = MediaQuery.of(context).size;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     final topPadding = MediaQuery.of(context).padding.top;
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -83,6 +172,8 @@ class _DetailViewUIState extends State<DetailViewUI> {
             ),
           ),
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
@@ -104,6 +195,8 @@ class _DetailViewUIState extends State<DetailViewUI> {
             ),
           ),
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: Column(
               children: [
@@ -149,17 +242,17 @@ class _DetailViewUIState extends State<DetailViewUI> {
                   ],
                 );
               } else {
-                var task;
-                taskList
-                    .where((element) => element.id == widget.taskList.id)
-                    .toList()[0]
-                    .tasks
-                    .forEach((element) {
-                  if (element.id == widget.task.id) {
-                    task = element;
-                    time = element.duration;
-                  }
-                });
+                // var task;
+                // taskList
+                //     .where((element) => element.id == widget.taskList.id)
+                //     .toList()[0]
+                //     .tasks
+                //     .forEach((element) {
+                //   if (element.id == widget.task.id) {
+                //     task = element;
+                //     time = element.duration;
+                //   }
+                // });
                 return Scaffold(
                   backgroundColor: Colors.transparent,
                   body: Padding(
@@ -249,20 +342,6 @@ class _DetailViewUIState extends State<DetailViewUI> {
                                           Icons.assistant_photo_rounded,
                                           color: Colors.white,
                                         ),
-                                        // Container(
-                                        //   width: size.width/2,
-                                        //   child: Text(
-                                        //     "Objective: ",
-                                        //     overflow: TextOverflow.ellipsis,
-                                        //     maxLines: 2,
-                                        //     style: TextStyle(
-                                        //       fontFamily: 'theme',
-                                        //       color: Colors.white,
-                                        //       fontSize: 15,
-                                        //       fontWeight: FontWeight.w800,
-                                        //     ),
-                                        //   ),
-                                        // ),
                                         Text(
                                           ": ",
                                           style: TextStyle(
@@ -303,15 +382,6 @@ class _DetailViewUIState extends State<DetailViewUI> {
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                        // Text(
-                                        //   "Description: ",
-                                        //   style: TextStyle(
-                                        //     fontFamily: 'theme',
-                                        //     color: Colors.white,
-                                        //     fontSize: 15,
-                                        //     fontWeight: FontWeight.w800,
-                                        //   ),
-                                        // ),
                                         Container(
                                           width: size.width / 2 - 40,
                                           child: Text(
@@ -383,86 +453,7 @@ class _DetailViewUIState extends State<DetailViewUI> {
                                         )
                                       },
                                       onPressed: () {
-                                        final newTask = Task.store(
-                                          widget.task.id,
-                                          widget.task.title,
-                                          widget.task.desc,
-                                          widget.task.mode,
-                                          !task.isDone,
-                                          widget.task.duration,
-                                        );
-                                        getData() async {
-                                          return await firestoreInstance
-                                              .collection("users")
-                                              .doc(firebaseUser.uid)
-                                              .collection("taskList")
-                                              .doc(widget.taskList.id)
-                                              .get();
-                                        }
-
-                                        getData().then((val) {
-                                          firestoreInstance
-                                              .collection("users")
-                                              .doc(firebaseUser.uid)
-                                              .collection("taskList")
-                                              .doc(widget.taskList.id)
-                                              .update({'tasks': []});
-                                          for (int n = 0;
-                                              n < val.data()["tasks"].length;
-                                              n = n + 1) {
-                                            if (Task.fromMap(
-                                                        val.data()["tasks"][n])
-                                                    .id ==
-                                                widget.task.id) {
-                                              firestoreInstance
-                                                  .collection("users")
-                                                  .doc(firebaseUser.uid)
-                                                  .collection("taskList")
-                                                  .doc(widget.taskList.id)
-                                                  .update({
-                                                'tasks': FieldValue.arrayUnion(
-                                                    [newTask.toMap()])
-                                              });
-                                            } else {
-                                              firestoreInstance
-                                                  .collection("users")
-                                                  .doc(firebaseUser.uid)
-                                                  .collection("taskList")
-                                                  .doc(widget.taskList.id)
-                                                  .update({
-                                                'tasks': FieldValue.arrayUnion([
-                                                  Task.fromMap(val
-                                                          .data()["tasks"][n])
-                                                      .toMap()
-                                                ])
-                                              });
-                                              //tasks.add(Task.fromMap(val.data()["tasks"][n]));
-                                            }
-                                          }
-                                        });
-                                        setState(() {
-                                          if (task.isDone) {
-                                            stateOnlyText = ButtonState.loading;
-                                            Future.delayed(
-                                                const Duration(
-                                                    milliseconds: 1000), () {
-                                              setState(() {
-                                                stateOnlyText =
-                                                    ButtonState.idle;
-                                              });
-                                            });
-                                          } else {
-                                            stateOnlyText = ButtonState.loading;
-                                            Future.delayed(
-                                                const Duration(
-                                                    milliseconds: 1000), () {
-                                              setState(() {
-                                                stateOnlyText =
-                                                    ButtonState.success;
-                                              });
-                                            });
-                                          }
-                                        });
+                                        _isLoading ? null : magic();
                                       },
                                       state: stateOnlyText,
                                     ),

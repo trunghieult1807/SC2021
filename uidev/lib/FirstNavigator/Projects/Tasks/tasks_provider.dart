@@ -18,11 +18,31 @@ class TasksProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<String> myFuture() async{
+      db.streamTaskList(user);
+      return 'true';
+    }
+
     return StreamProvider<List<TaskList>>(
       create: (_) {
         return db.streamTaskList(user);
       } ,
-      child: ProjectTasksUI(taskList: taskList),
+      // child: ProjectTasksUI(taskList: taskList),
+      child:
+      FutureBuilder<String>(
+        future: myFuture(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.hasData) {
+            return ProjectTasksUI(taskList: taskList);
+          } else if (snapshot.hasError) {
+            return Text('');
+          } else {
+            return Text('');
+          }
+
+        },
+      ),
+
     );
   }
 

@@ -106,6 +106,8 @@ class _TrackerState extends State<Tracker> {
       widget.task.mode,
       isDone,
       duration + buff,
+      widget.task.start,
+      widget.task.tracking,
     );
     getData() async {
       return await firestoreInstance

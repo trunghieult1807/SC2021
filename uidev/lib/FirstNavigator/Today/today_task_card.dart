@@ -8,18 +8,12 @@ import 'package:uidev/FirstNavigator/DetailView/detail_view_provider.dart';
 import 'package:uidev/FirstNavigator/Projects/Tasks/Widgets/add_new_task.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Theme/SwitchButton/crazy_switch.dart';
+import 'package:uidev/Theme/SwitchButton/crazy_switch_provider.dart';
 import 'package:uidev/Theme/glass_card.dart';
 import 'package:uidev/Usage/task.dart';
 import 'package:uidev/Usage/task_list.dart';
 import 'package:uidev/Usage/utility.dart';
 
-double _sigmaX = 10; // from 0-10
-double _sigmaY = 10; // from 0-10
-double _opacity = 0.1; // from 0-1.0
-double _width = 350;
-double _height = 300;
-double _blurWidth = _width / 2;
-double _blurHeight = _height / 2;
 
 class TodayTaskCard extends StatefulWidget {
   final Task task;
@@ -38,6 +32,77 @@ class TodayTaskCard extends StatefulWidget {
 class _TodayTaskCardState extends State<TodayTaskCard> {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
+  bool _isLoading = false;
+  bool _tracking = false;
+  void magic() {
+    if (_isLoading == false) {
+      _isLoading = true;
+      _tracking = !_tracking;
+      final newTask = Task.store(
+        widget.task.id,
+        widget.task.title,
+        widget.task.desc,
+        widget.task.mode,
+        widget.task.isDone,
+        widget.task.duration,
+        widget.task.start,
+        _tracking,
+      );
+
+      getData() async {
+        return await firestoreInstance
+            .collection("users")
+            .doc(firebaseUser.uid)
+            .collection("taskList")
+            .doc(widget.taskList.id)
+            .get();
+      }
+
+      Future.delayed(Duration(milliseconds: 1000), () {
+        getData().then((val) {
+          List<Task> local = List<Task>();
+          for (int n = 0; n < val.data()["tasks"].length; n = n + 1) {
+            if (Task.fromMap(val.data()["tasks"][n]).id == widget.task.id) {
+              firestoreInstance
+                  .collection("users")
+                  .doc(firebaseUser.uid)
+                  .collection("taskList")
+                  .doc(widget.taskList.id)
+                  .update({
+                'tasks': FieldValue.arrayUnion([newTask.toMap()])
+              });
+              local.add(newTask);
+            } else {
+              local.add(Task.fromMap(val.data()["tasks"][n]));
+            }
+          }
+          firestoreInstance
+              .collection("users")
+              .doc(firebaseUser.uid)
+              .collection("taskList")
+              .doc(widget.taskList.id)
+              .update({'tasks': []});
+          for (int n = 0; n < local.length; n = n + 1) {
+            firestoreInstance
+                .collection("users")
+                .doc(firebaseUser.uid)
+                .collection("taskList")
+                .doc(widget.taskList.id)
+                .update({
+              'tasks': FieldValue.arrayUnion([local[n].toMap()])
+            });
+          }
+          Future.delayed(Duration(milliseconds: 1500), () {
+            _isLoading = false;
+          });
+        });
+      });
+    }
+  }
+  void initState() {
+    _tracking = widget.task.tracking;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +147,7 @@ class _TodayTaskCardState extends State<TodayTaskCard> {
                     alignment: Alignment.topRight,
                     child: GestureDetector(
                       onTap: () {},
-                      child: CrazySwitch(),
+                      child: CrazySwitchProvider(task: widget.task, taskList: widget.taskList),
                     ),
                   ),
                   Stack(

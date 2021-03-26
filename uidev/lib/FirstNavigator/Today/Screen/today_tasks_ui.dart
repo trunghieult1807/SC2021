@@ -84,7 +84,6 @@ class _TodayTasksUIState extends State<TodayTasksUI> {
                                     shrinkWrap: true,
                                     itemCount: _tasks.length,
                                     itemBuilder: (context, index) {
-                                      print("then: ${taskList}");
                                       return TodayTaskCard(
                                         task: _tasks[index],
                                         taskList: _taskList[index],

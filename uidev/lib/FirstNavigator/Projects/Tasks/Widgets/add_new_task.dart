@@ -34,6 +34,8 @@ class _AddNewTaskState extends State<AddNewTask> {
   bool _isDone;
   TaskList _taskList;
   int _duration = 0;
+  DateTime _start;
+  bool _tracking = false;
 
   final _formKey = GlobalKey<FormState>();
   var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -52,6 +54,8 @@ class _AddNewTaskState extends State<AddNewTask> {
       _desc = widget.task.desc;
       _isDone = widget.task.isDone;
       _duration = widget.task.duration;
+      _start = widget.task.start;
+      _tracking = widget.task.tracking;
     } else {
       _mode.markImportant();
       _mode.markUrgent();
@@ -316,6 +320,8 @@ class _AddNewTaskState extends State<AddNewTask> {
           _mode,
           _isDone,
           _duration,
+          _start,
+          _tracking,
         );
         print('aa: ${_mode.priority}');
         firestoreInstance
@@ -334,6 +340,8 @@ class _AddNewTaskState extends State<AddNewTask> {
           _mode,
           _isDone,
           _duration,
+          _start,
+          _tracking,
         );
         getData() async {
           return await firestoreInstance
