@@ -8,6 +8,7 @@ class Task {
   TaskMode _mode;
   bool _isDone;
   int _duration;
+  int _expectTime;
   double _weight;
 
   Task(String id, String title, String desc,
@@ -63,9 +64,11 @@ class Task {
   String get desc => _desc;
   bool get isDone => _isDone;
   int get duration => _duration;
+  int get expectTime => _expectTime;
   double get weight => _weight;
   set isDone(bool _in) => _isDone = _in;
   set weight(double _in) => _weight = _in;
+  set expectTime(int _in) => _expectTime = _in;
 
   void notify() {
     if (!this.isDone) {
