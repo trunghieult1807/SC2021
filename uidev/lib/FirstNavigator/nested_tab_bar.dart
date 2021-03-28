@@ -12,8 +12,14 @@ import 'package:uidev/FirstNavigator/Projects/home_page_provider.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/FirstNavigator/Today/today_tasks_provider.dart';
 import 'package:uidev/Usage/push_notification.dart';
+import 'package:uidev/Usage/task.dart';
+import 'package:uidev/Usage/task_list.dart';
+import 'package:uidev/Usage/utility.dart';
 import 'package:uidev/global_variable.dart';
 import 'package:uidev/Theme/noti_badge.dart';
+import 'package:schedule_controller/schedule_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uidev/global_variable.dart';
 
 PushNotification _notificationInfo;
 
@@ -36,20 +42,83 @@ class NestedTabBar extends StatefulWidget {
 
 class _NestedTabBarState extends State<NestedTabBar>
     with TickerProviderStateMixin {
-
-  final User user = FirebaseAuth.instance.currentUser;
-  final FirebaseFirestore db = FirebaseFirestore.instance;
-
   TabController _nestedTabController;
   FirebaseMessaging _messaging = FirebaseMessaging();
   bool selected = false;
+
+  ScheduleController controller;
+
+  Future get(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.get(key);
+  }
+
+  Future save(String key, String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(key, value);
+  }
 
   @override
   void initState() {
     super.initState();
     _nestedTabController = new TabController(length: 3, vsync: this);
-
     registerNotification();
+    controller = ScheduleController([
+      Schedule(
+        timeOutRunOnce: true,
+        timing: [0.0],
+        readFn: () async {
+          // taskList = await getAllTaskList();
+          // return;
+          return await get('sc');
+          // return "true";
+        },
+        writeFn: (String data) async {
+          debugPrint(data);
+          await save('sc', data);
+        },
+        callback: () async {
+          print("s1");
+          getAllTaskListBegin();
+          Future.delayed(Duration(milliseconds: 3000), () {
+            expectWorkingTime(DateTime.now(), GlobalVariable.allTaskListBegin);
+          });
+
+        },
+      ),
+      Schedule(
+        timeOutRunOnce: true,
+        timing: [22.0],
+        readFn: () async {
+          return await get('sc');
+          // return "true";
+        },
+        writeFn: (String data) async {
+          debugPrint(data);
+
+          await save('sc', data);
+        },
+        callback: () async {
+          print("s2");
+          List<String> idList = [];
+          getAllTaskListEnd();
+          GlobalVariable.todayTasksBegin.forEach((element) {
+            idList.add(element.id);
+          });
+          getTodoTaskEnd(GlobalVariable.allTaskListEnd, idList);
+          Future.delayed(Duration(milliseconds: 3000), () {
+            expectWorkingTime(DateTime.now(), GlobalVariable.allTaskListEnd);
+          });
+          GlobalVariable.todayEfficiency =
+              computeWorkingEfficiency(GlobalVariable.todayTasksBegin, GlobalVariable.todayTasksEnd);
+          print(GlobalVariable.todayEfficiency);
+          debugPrint('sc');
+          //print(getAllTaskList());
+          //
+        },
+      ),
+    ]);
+    controller.run();
   }
 
   @override
@@ -61,13 +130,16 @@ class _NestedTabBarState extends State<NestedTabBar>
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final bottomPadding = MediaQuery.of(context).padding.bottom;
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -93,27 +165,33 @@ class _NestedTabBarState extends State<NestedTabBar>
             ),
           ),
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
-            body: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: (size.height - 140),
-                  decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                      image: new ExactAssetImage('assets/3d/bg8.png'),
-                      fit: BoxFit.contain,
+            body: SingleChildScrollView(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: (size.height - 140),
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        image: new ExactAssetImage('assets/3d/bg8.png'),
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: Column(
@@ -203,7 +281,7 @@ class _NestedTabBarState extends State<NestedTabBar>
                               height: 30,
                             ),
                             GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -214,8 +292,8 @@ class _NestedTabBarState extends State<NestedTabBar>
                                 );
                               },
                               child: Container(
-                                height:40,
-                                width:110,
+                                height: 40,
+                                width: 110,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: LightColors.primary,
@@ -223,16 +301,21 @@ class _NestedTabBarState extends State<NestedTabBar>
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.add, color: Colors.white, size: 17,),
-                                    Text(
-                                    " Add project",
-                                    style: TextStyle(
-                                      fontFamily: 'theme',
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w500,
+                                    Icon(
+                                      Icons.add,
                                       color: Colors.white,
+                                      size: 17,
                                     ),
-                                  ),],
+                                    Text(
+                                      " Add project",
+                                      style: TextStyle(
+                                        fontFamily: 'theme',
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             )
@@ -307,7 +390,7 @@ class _NestedTabBarState extends State<NestedTabBar>
   }
 
   void registerNotification() async {
-    await Firebase.initializeApp();
+    // await Firebase.initializeApp();
 
     await _messaging.requestNotificationPermissions(
       IosNotificationSettings(
@@ -331,23 +414,50 @@ class _NestedTabBarState extends State<NestedTabBar>
         // id = 1: Schedule
         if (message["data"]["notiMode"] == "0") {
           showSimpleNotification(
-            Text(_notificationInfo.title),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 13,
+                ),
+                Text(
+                  "Fritter",
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 15,
+                    fontFamily: 'theme',
+                  ),
+                ),
+              ],
+            ),
             leading: NotificationBadge1(),
             subtitle: NotificationBadge0Provider(),
             background: LightColors.theme2,
             duration: Duration(seconds: 5),
           );
-        }
-        else if (message["data"]["notiMode"] == "1") {
+        } else if (message["data"]["notiMode"] == "1") {
           showSimpleNotification(
-            Text(_notificationInfo.title),
-            leading: NotificationBadge1(totalNotifications: 1),
-            subtitle: Text(_notificationInfo.body),
+            Text(
+              _notificationInfo.title,
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 15,
+                fontFamily: 'theme',
+              ),
+            ),
+            leading: NotificationBadge1(),
+            subtitle: Text(
+              _notificationInfo.body,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'theme',
+              ),
+            ),
             background: LightColors.theme2,
             duration: Duration(seconds: 5),
           );
-        }
-        else {
+        } else {
           showSimpleNotification(
             Text(_notificationInfo.title),
             leading: NotificationBadge1(totalNotifications: 1),
@@ -357,7 +467,7 @@ class _NestedTabBarState extends State<NestedTabBar>
           );
         }
       },
-      onBackgroundMessage: _firebaseMessagingBackgroundHandler,
+      // onBackgroundMessage: _firebaseMessagingBackgroundHandler,
       onLaunch: (message) async {
         print('onLaunch: $message');
         PushNotification notification = PushNotification.fromJson(message);

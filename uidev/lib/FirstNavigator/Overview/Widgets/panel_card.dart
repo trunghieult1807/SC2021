@@ -62,14 +62,28 @@ class _PanelCardState extends State<PanelCard> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              width: 15,
+              width: 5,
+            ),
+            Container(height: 90, width: 6,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(3),
+                gradient: LinearGradient(
+                  colors: getColor(widget.task.mode.priority),//[LightColors.gRed, LightColors.gRed2],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+
+                )
+              ),
+              ),
+            SizedBox(
+              width: 20,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Container(
-                  width: MediaQuery.of(context).size.width - 95,
+                  width: MediaQuery.of(context).size.width - 110,
                   child: Padding(
                     padding: const EdgeInsets.only(right: 60),
                     child: Text(
@@ -86,7 +100,7 @@ class _PanelCardState extends State<PanelCard> {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width - 95,
+                  width: MediaQuery.of(context).size.width - 110,
                   child: Padding(
                     padding: const EdgeInsets.only(right: 60),
                     child: Text(
@@ -103,7 +117,7 @@ class _PanelCardState extends State<PanelCard> {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width - 185,
+                  width: MediaQuery.of(context).size.width - 110,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

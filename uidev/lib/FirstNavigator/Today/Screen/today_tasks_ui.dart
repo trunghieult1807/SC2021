@@ -28,11 +28,16 @@ class _TodayTasksUIState extends State<TodayTasksUI> {
     final Size size = MediaQuery.of(context).size;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     final topPadding = MediaQuery.of(context).padding.top;
+    List<TaskList> _taskList = List<TaskList>();
+    List<Task> _tasks = List<Task>();
+    int k = 0;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             // backgroundColor: LightColors.theme,
             body: Padding(
@@ -67,16 +72,34 @@ class _TodayTasksUIState extends State<TodayTasksUI> {
                               ],
                             );
                           } else {
-                            List<Task> _tasks = [];
-                            List<TaskList> _taskList = [];
-                            taskList.forEach((taskList) {
-                              taskList
-                                  .getToDoTasks(DateTime.now())
-                                  .forEach((task) {
-                                _tasks.add(task);
-                                _taskList.add(taskList);
+                            // List<Task> _tasks = [];
+                            // List<TaskList> _taskList = [];
+                            if (k == 0) {
+                              _tasks = List<Task>();
+                              _taskList = List<TaskList>();
+                              taskList.forEach((taskList) {
+                                taskList
+                                    .getToDoTasks(DateTime.now())
+                                    .forEach((task) {
+                                  _tasks.add(task);
+                                  _taskList.add(taskList);
+                                });
                               });
-                            });
+                              k = k + 1;
+                            } else {
+                              Future.delayed(Duration(milliseconds: 1500), () {
+                                _tasks = List<Task>();
+                                _taskList = List<TaskList>();
+                                taskList.forEach((taskList) {
+                                  taskList
+                                      .getToDoTasks(DateTime.now())
+                                      .forEach((task) {
+                                    _tasks.add(task);
+                                    _taskList.add(taskList);
+                                  });
+                                });
+                              });
+                            }
 
                             return _tasks.length > 0
                                 ? ListView.builder(

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -50,26 +52,22 @@ class _LoginPageState extends State<LoginPage> {
             resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.transparent,
             body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: topPadding,
-                ),
+                SizedBox(height: topPadding),
                 Container(
-                  height: (size.height - topPadding) * 0.48,
-                  child: Image(
-                    image: AssetImage(
-                      'assets/3d/wel2.png',
+                  height: (size.height - 150),
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new ExactAssetImage('assets/3d/bg10.png'),
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
-                ),
-                Expanded(
-                  child: SizedBox(),
-                ),
-                Container(
-                  height: (size.height - topPadding) * 0.48,
-                  child: Image(
-                    image: AssetImage(
-                      'assets/3d/log.png',
+                  child: BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.0)),
                     ),
                   ),
                 ),

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:animations/animations.dart';
@@ -25,11 +24,22 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
   bool selected = false;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     final topPadding = MediaQuery.of(context).padding.top;
-    bool isComplete = false;
+
+    TaskList _taskList;
+    // ignore: deprecated_member_use
+    List<Task> _tasks = List<Task>();
+    // ignore: deprecated_member_use
+    List<Task> _tasks2 = List<Task>();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
@@ -46,7 +56,7 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
                 children: [
                   SizedBox(height: topPadding),
                   Container(
-                    height: (size.height-150),
+                    height: (size.height - 150),
                     decoration: new BoxDecoration(
                       image: new DecorationImage(
                         image: new ExactAssetImage('assets/3d/bg10.png'),
@@ -71,12 +81,13 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
             backgroundColor: Colors.transparent,
             body: SingleChildScrollView(
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Container(
-                    height: (size.height-140),
+                    height: (size.height - 140),
                     decoration: new BoxDecoration(
                       image: new DecorationImage(
                         image: new ExactAssetImage('assets/3d/bg8.png'),
@@ -91,7 +102,6 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
           Consumer<List<TaskList>>(
             builder: (context, taskList, child) {
               if (taskList == null) {
-                isComplete = false;
                 return Scaffold(
                   backgroundColor: Colors.transparent,
                   body: Center(
@@ -105,229 +115,180 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
                   ),
                 );
               } else {
-                List<Task> _tasks = [];
-                taskList.forEach(
-                      (taskList) {
-                    if (taskList.id == widget.taskList.id) {
-                      _tasks.addAll(taskList.tasks);
-                    }
-                  },
-                );
-                if (_tasks.length > 0) {
+                bool _isLoading = true;
+                // ignore: deprecated_member_use
+                _tasks = List<Task>();
+                for (int i = 0; i < taskList.length; i = i + 1) {
+                  if (taskList[i].id == widget.taskList.id) {
+                    _taskList = taskList[i];
+                    break;
+                  }
+                }
+                for (int i = 0; i < _taskList.tasks.length; i = i + 1) {
+                  _tasks.add(_taskList.tasks[i]);
+                  if (i == _taskList.tasks.length - 1) {
+                    _isLoading = false;
+                  }
+                }
+                if (!_isLoading) {
+                  _tasks2 = _tasks;
+                }
+                if (_tasks2.length > 0) {
                   return Scaffold(
-                      backgroundColor: Colors.transparent,
-                      body: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            20,
-                            0,
-                            20,
-                            0,
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: topPadding + 10,
-                              ),
-                              MyBackButton(),
-                              ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: _tasks.length,
-                                itemBuilder: (context, index) {
-                                  return TodayTaskCard(
-                                    task: _tasks[index],
-                                    taskList: widget.taskList,
-                                  );
-                                },
-                              ),
-                              SizedBox(
-                                height: bottomPadding + 20,
-                              ),
-                            ],
-                          ),
+                    backgroundColor: Colors.transparent,
+                    body: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          20,
+                          0,
+                          20,
+                          0,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: topPadding + 10,
+                            ),
+                            MyBackButton(),
+                            ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: _tasks2.length,
+                              itemBuilder: (context, index) {
+                                return TodayTaskCard(
+                                  task: _tasks2[index],
+                                  taskList: widget.taskList,
+                                );
+                              },
+                            ),
+                            SizedBox(
+                              height: bottomPadding + 20,
+                            ),
+                          ],
                         ),
                       ),
-                      floatingActionButton: OpenContainer(
-                        openColor: Colors.transparent,
-                        closedColor: Colors.transparent,
-                        transitionDuration: Duration(milliseconds: 1000),
-                        transitionType: ContainerTransitionType.fade,
-                        closedElevation: 0.0,
-                        openElevation: 4.0,
-                        closedBuilder: (BuildContext c, VoidCallback action) =>
-                            FloatingActionButton(backgroundColor: LightColors.theme2,child: Icon(Icons.add)),
-                        openBuilder: (BuildContext c, VoidCallback action) =>
-                            AddNewTask(
-                                taskList: widget.taskList, isEditMode: false),
-                        tappable: true,
+                    ),
+                    floatingActionButton: OpenContainer(
+                      openColor: Colors.transparent,
+                      closedColor: Colors.transparent,
+                      transitionDuration: Duration(milliseconds: 1000),
+                      transitionType: ContainerTransitionType.fade,
+                      closedElevation: 0.0,
+                      openElevation: 4.0,
+                      closedBuilder: (BuildContext c, VoidCallback action) =>
+                          FloatingActionButton(
+                        backgroundColor: LightColors.theme2,
+                        child: Icon(Icons.add),
                       ),
-                      // FloatingActionButton(
-                      //   elevation: 5,
-                      //   backgroundColor: LightColors.primary,
-                      //   child:
-                      //   OpenContainer(
-                      //     transitionType: ContainerTransitionType.fadeThrough,
-                      //     closedColor: Theme.of(context).cardColor,
-                      //     closedElevation: 0.0,
-                      //     openElevation: 4.0,
-                      //     transitionDuration: Duration(milliseconds: 1500),
-                      //     openBuilder: (BuildContext context, VoidCallback _) =>  AddNewTask(taskList: widget.taskList, isEditMode: false),
-                      //     closedBuilder: (BuildContext _, VoidCallback openContainer) {
-                      //       return ListTile(
-                      //         leading: Icon(Icons.album),
-                      //         title: Text("ITEM NAME"),
-                      //       );
-                      //     },
-                      //   ),
-                      //   // Icon(Icons.add),
-                      //   // onPressed: () {
-                      //   //
-                      //   //   Navigator.push(
-                      //   //     context,
-                      //   //     MaterialPageRoute(
-                      //   //       builder: (context) => AddNewTask(
-                      //   //           taskList: widget.taskList, isEditMode: false,
-                      //   //       ),
-                      //   //     ),
-                      //   //   );
-                      //   // },
-                      //   tooltip: 'Add a new task!',
-                      // ),
-                      );
+                      openBuilder: (BuildContext c, VoidCallback action) {
+                        return AddNewTask(
+                            taskList: widget.taskList, isEditMode: false);
+                      },
+                      tappable: true,
+                    ),
+                  );
                 } else {
                   return Scaffold(
                     resizeToAvoidBottomInset: false,
                     resizeToAvoidBottomPadding: false,
                     backgroundColor: Colors.transparent,
-                    body: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              SizedBox(
-                                height: topPadding + 10,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20.0),
-                                child: MyBackButton(),
-                              ),
-                              Container(
-                                width: size.width * 1,
-                                child: Image(
-                                  image: AssetImage(
-                                    'assets/3d/19.png',
-                                  ),
+                    body: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: topPadding + 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: MyBackButton(),
+                            ),
+                            Container(
+                              height: size.height / 2,
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/3d/19.png',
                                 ),
                               ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                "Welcome 🔥🔥",
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Welcome 🔥🔥",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'theme',
+                                fontSize: 30,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Container(
+                              width: size.width - 100,
+                              child: Text(
+                                "Add your first task and lets get started ",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.white54,
                                   fontFamily: 'theme',
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  // fontWeight: FontWeight.w00,
                                 ),
                               ),
-                              Container(
-                                width: size.width - 100,
-                                child: Text(
-                                  "Add your first task and lets get started ",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white54,
-                                    fontFamily: 'theme',
-                                    fontSize: 20,
-                                    // fontWeight: FontWeight.w00,
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            OpenContainer(
+                              openColor: Colors.transparent,
+                              closedColor: Colors.transparent,
+                              transitionDuration: Duration(milliseconds: 1000),
+                              transitionType: ContainerTransitionType.fade,
+                              closedElevation: 0.0,
+                              openElevation: 4.0,
+                              closedBuilder:
+                                  (BuildContext c, VoidCallback action) =>
+                                      Container(
+                                height: 50,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      LightColors.primary,
+                                      LightColors.secondary1
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Add a task",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'theme',
+                                      fontSize: 20,
+                                    ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 60,
-                              ),
-                              OpenContainer(
-                                openColor: Colors.transparent,
-                                closedColor: Colors.transparent,
-                                transitionDuration: Duration(milliseconds: 1000),
-                                transitionType: ContainerTransitionType.fade,
-                                closedElevation: 0.0,
-                                openElevation: 4.0,
-                                closedBuilder: (BuildContext c, VoidCallback action) =>
-                                    Container(
-                                      height: 50,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            LightColors.primary,
-                                            LightColors.secondary1
-                                          ],
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Add a task",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'theme',
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                openBuilder: (BuildContext c, VoidCallback action) =>
-                                    AddNewTask(
-                                        taskList: widget.taskList, isEditMode: false),
-                                tappable: true,
-                              ),
-                              // GestureDetector(
-                              //   onTap: () => showModalBottomSheet(
-                              //     context: context,
-                              //     builder: (_) => AddNewTask(
-                              //         taskList: widget.taskList,
-                              //         isEditMode: false),
-                              //   ),
-                              //   child: Container(
-                              //     height: 50,
-                              //     width: 150,
-                              //     decoration: BoxDecoration(
-                              //       borderRadius: BorderRadius.circular(15),
-                              //       gradient: LinearGradient(
-                              //         colors: [
-                              //           LightColors.primary,
-                              //           LightColors.secondary1
-                              //         ],
-                              //         begin: Alignment.topLeft,
-                              //         end: Alignment.bottomRight,
-                              //       ),
-                              //     ),
-                              //     child: Center(
-                              //       child: Text(
-                              //         "Add a task",
-                              //         style: TextStyle(
-                              //           color: Colors.white,
-                              //           fontFamily: 'theme',
-                              //           fontSize: 20,
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              SizedBox(
-                                height: bottomPadding + 50,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                              openBuilder:
+                                  (BuildContext c, VoidCallback action) {
+                                return AddNewTask(
+                                    taskList: widget.taskList,
+                                    isEditMode: false);
+                              },
+                              tappable: true,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   );
                 }
@@ -337,20 +298,5 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
         ],
       ),
     );
-    // floatingActionButton: isEmpty
-    //     ? SizedBox()
-    //     : FloatingActionButton(
-    //         elevation: 5,
-    //         backgroundColor: LightColors.primary,
-    //         child: Icon(Icons.add),
-    //         onPressed: () {
-    //           showModalBottomSheet(
-    //             context: context,
-    //             builder: (_) =>
-    //                 AddNewTask(taskList: widget.taskList, isEditMode: false),
-    //           );
-    //         },
-    //         tooltip: 'Add a new task!',
-    //       ),
   }
 }

@@ -16,7 +16,6 @@ class NotificationBadge0Provider extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<List<TaskList>>(
       create: (_) {
-        print("here: ${db.streamTaskList(user)}");
         return db.streamTaskList(user);
       },
       child: NotificationBadge0(),
@@ -43,16 +42,13 @@ class NotificationBadge0 extends StatelessWidget {
         width: 40.0,
         height: 40.0,
         decoration: new BoxDecoration(
-          color: LightColors.theme,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'You have $number_of_task tasks to do today',
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: Text(
+            'You have $number_of_task tasks to do today',
+            style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'theme',),
           ),
         ),
       );
@@ -68,18 +64,17 @@ class NotificationBadge1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40.0,
-      height: 40.0,
       decoration: new BoxDecoration(
-        color: LightColors.theme,
+        color: LightColors.logo,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            '$totalNotifications',
-            style: TextStyle(color: Colors.white, fontSize: 20),
+      child: Container(
+        width: 40.0,
+        height: 40.0,
+        decoration: new BoxDecoration(
+          image: new DecorationImage(
+            image: new ExactAssetImage('assets/logo/logo.png'),
+            fit: BoxFit.cover,
           ),
         ),
       ),

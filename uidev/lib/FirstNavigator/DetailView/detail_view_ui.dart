@@ -36,7 +36,6 @@ class _DetailViewUIState extends State<DetailViewUI> {
   final firestoreInstance = FirebaseFirestore.instance;
   final audioCache = AudioCache();
   ButtonState stateOnlyText;
-  int time = 0;
   bool _isDone;
   bool _isLoading = false;
 
@@ -52,7 +51,7 @@ class _DetailViewUIState extends State<DetailViewUI> {
     if (_isLoading == false) {
       _isLoading = true;
       _isDone = !_isDone;
-      print(_isDone);
+      widget.task.isDone = !widget.task.isDone;
       final newTask = Task.store(
         widget.task.id,
         widget.task.title,
@@ -78,14 +77,14 @@ class _DetailViewUIState extends State<DetailViewUI> {
           List<Task> local = List<Task>();
           for (int n = 0; n < val.data()["tasks"].length; n = n + 1) {
             if (Task.fromMap(val.data()["tasks"][n]).id == widget.task.id) {
-              firestoreInstance
-                  .collection("users")
-                  .doc(firebaseUser.uid)
-                  .collection("taskList")
-                  .doc(widget.taskList.id)
-                  .update({
-                'tasks': FieldValue.arrayUnion([newTask.toMap()])
-              });
+              // firestoreInstance
+              //     .collection("users")
+              //     .doc(firebaseUser.uid)
+              //     .collection("taskList")
+              //     .doc(widget.taskList.id)
+              //     .update({
+              //   'tasks': FieldValue.arrayUnion([newTask.toMap()])
+              // });
               local.add(newTask);
             } else {
               local.add(Task.fromMap(val.data()["tasks"][n]));
@@ -273,7 +272,7 @@ class _DetailViewUIState extends State<DetailViewUI> {
                                 MyBackButton(),
                                 Icon(
                                   Icons.bookmark_outlined,
-                                  color: getColor(widget.task.mode.priority),
+                                  color: getColor(widget.task.mode.priority)[0],
                                   size: 30,
                                 ),
                               ],
@@ -295,7 +294,7 @@ class _DetailViewUIState extends State<DetailViewUI> {
                               textBaseline: TextBaseline.alphabetic,
                               children: [
                                 Text(
-                                  "${(time / 60).round()}",
+                                  "${(widget.task.duration / 60).round()}",
                                   style: TextStyle(
                                     fontFamily: 'theme',
                                     color: Colors.white,
@@ -304,7 +303,7 @@ class _DetailViewUIState extends State<DetailViewUI> {
                                   ),
                                 ),
                                 Text(
-                                  "Mins".toString(),
+                                  "  Mins".toString(),
                                   style: TextStyle(
                                     fontFamily: 'theme',
                                     color: Colors.white54,
@@ -317,89 +316,77 @@ class _DetailViewUIState extends State<DetailViewUI> {
                             SizedBox(
                               height: 20,
                             ),
-                            OutlineGradientButton(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.purple.withOpacity(0.5),
-                                  Colors.pink.withOpacity(0.5)
+                            Container(
+                              height: size.width / 2 - 80,
+                              width: size.width / 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.assistant_photo_rounded,
+                                        color: Colors.white,
+                                      ),
+                                      Text(
+                                        ": ",
+                                        style: TextStyle(
+                                          fontFamily: 'theme',
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Container(
+                                        width: size.width / 2 - 40,
+                                        child: Text(
+                                          "${widget.task.title}",
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          style: TextStyle(
+                                            fontFamily: 'theme',
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.create,
+                                        color: Colors.white,
+                                      ),
+                                      Text(
+                                        ": ",
+                                        style: TextStyle(
+                                          fontFamily: 'theme',
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Container(
+                                        width: size.width / 2 - 40,
+                                        child: Text(
+                                          "${widget.task.desc}",
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          style: TextStyle(
+                                            fontFamily: 'theme',
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
-                                begin: Alignment.topRight,
-                                end: Alignment.bottomLeft,
-                              ),
-                              strokeWidth: 2,
-                              radius: Radius.circular(6),
-                              child: Container(
-                                height: size.width / 2 - 80,
-                                width: size.width / 2,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.assistant_photo_rounded,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          ": ",
-                                          style: TextStyle(
-                                            fontFamily: 'theme',
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: size.width / 2 - 40,
-                                          child: Text(
-                                            "${widget.task.title}",
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 3,
-                                            style: TextStyle(
-                                              fontFamily: 'theme',
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.create,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          ": ",
-                                          style: TextStyle(
-                                            fontFamily: 'theme',
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: size.width / 2 - 40,
-                                          child: Text(
-                                            "${widget.task.desc}",
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 3,
-                                            style: TextStyle(
-                                              fontFamily: 'theme',
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
                               ),
                             ),
                           ],

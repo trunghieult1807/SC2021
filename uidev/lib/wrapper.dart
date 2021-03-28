@@ -43,7 +43,6 @@ class _WrapperState extends State<Wrapper> {
               .get()
               .then((value) {
             if (value.data()["displayName"] != null) {
-              print("name: ${value.data()["displayName"]}");
               return value.data()["displayName"];
             } else
               return null;

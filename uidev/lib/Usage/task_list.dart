@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:uidev/Usage/task.dart';
 import 'package:uidev/Usage/time_line.dart';
 
+class ListTask{
+  List<Task> listExercise;
+
+  ListTask({this.listExercise});
+
+  ListTask.fromJson(List<dynamic> data){
+    data.map(
+            (e) => e = Task.fromMap(e)).toList();
+
+  }
+}
+
 class TaskList {
   String _id;
   String _title;
@@ -22,6 +34,21 @@ class TaskList {
         _deadline = deadline,
         _color = color,
         _timeline = Timeline(createdDate, deadline);
+
+
+
+  TaskList.fromMap(Map<dynamic, dynamic> map)
+      : _id = map["id"],
+        _title = map["title"],
+        _desc = map["desc"],
+        _tasks = map["tasks"].map((e) {
+          print("a$e");
+          print("${Task.fromMap(e)}");
+          // return Task.fromMap(e);
+        }),
+        _createdDate = map["createdDate"],
+        _deadline = map["deadline"],
+        _color = map["color"];
 
   List<Task> getImportantUrgentTasks() {
     // Get tasks which are important and urgent
@@ -59,11 +86,20 @@ class TaskList {
     });
     return tasks;
   }
-  
+
+  List<Task> getTaskByID(List<String> idList) {
+    List<Task> tasks = [];
+    _tasks.forEach((task) {
+      if(idList.contains(task.id)){
+        tasks.add(task);
+      }
+    });
+    return tasks;
+  }
+
   // Get Tasks for to-do list
   List<Task> getToDoTasks(DateTime date) {
     if (date.isBefore(_createdDate) || date.isAfter(_deadline)) {
-      print("TaskList.getToDoTasks: invalid input date");
       return [];
       //exit(-1);
     }
@@ -89,7 +125,6 @@ class TaskList {
     // Get tasks for the 'date'
     List<Task> todoTasks = [];
     if (date.isBefore(_timeline.phase1)) {
-      print(date.toString());
       if (important_urgent.length > 0)
         todoTasks.addAll(important_urgent);
       else if (important.length > 0)

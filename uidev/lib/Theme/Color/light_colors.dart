@@ -50,5 +50,5 @@ class LightColors  {
 
   static const gBlue = Color(0xff0396ff);
   static const gBlue2 = Color(0xffabdcff);
-
+  static const logo = Color(0xff1e2a4f);
 }

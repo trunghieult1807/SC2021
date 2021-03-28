@@ -1,8 +1,10 @@
 import 'dart:ui';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:uidev/global_variable.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override
@@ -183,7 +185,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-
                                         Text(
                                           'Your productivity today',
                                           style: TextStyle(
@@ -194,7 +195,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         ),
                                         SizedBox(height: 20,),
                                         Text(
-                                          '236 %',
+                                          '${(GlobalVariable.todayEfficiency == null? 1.0:GlobalVariable.todayEfficiency * 100).toPrecision(2)} %',
                                           style: TextStyle(
                                               fontFamily: 'theme',
                                               color: Colors.white,
@@ -358,4 +359,10 @@ class CompletedTask {
   CompletedTask(this.month, this.clicks, Color color)
       : this.color = new charts.Color(
             r: color.red, g: color.green, b: color.blue, a: color.alpha);
+}
+extension Precision on double {
+  double toPrecision(int fractionDigits) {
+    var mod = pow(10, fractionDigits.toDouble()).toDouble();
+    return ((this * mod).round().toDouble() / mod);
+  }
 }

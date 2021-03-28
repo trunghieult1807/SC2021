@@ -3,6 +3,7 @@
    <application
 
         android:label="uidev"
+        android:name=".Application"
         android:icon="@mipmap/ic_launcher">
 
         <activity

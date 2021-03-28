@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:uidev/Onboarding/Screens/page1.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
@@ -17,6 +19,34 @@ class _WelcomePageState extends State<WelcomePage> {
       backgroundColor: LightColors.theme,
       body: Stack(
         children: [
+
+          Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
+            backgroundColor: Colors.transparent,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: topPadding),
+                Container(
+                  height: (size.height - 150),
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new ExactAssetImage('assets/3d/bg10.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                  child: BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.0)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Scaffold(
             backgroundColor: Colors.transparent,
             body: Center(
@@ -34,15 +64,6 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                   ),
                   SizedBox(height: 30,),
-                  Container(
-                    width: size.width * 0.9,
-                    child: Image(
-                      image: AssetImage(
-                        'assets/3d/wel2.png',
-                      ),
-                    ),
-                  ),
-
                 ],
               ),
             ),

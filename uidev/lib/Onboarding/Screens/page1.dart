@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:uidev/Theme/Color/light_colors.dart';
 import 'package:uidev/Onboarding/Widgets/checkbox.dart';
@@ -17,6 +19,33 @@ class Page1 extends StatelessWidget {
       body: Stack(
         children: [
           Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
+            backgroundColor: Colors.transparent,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: topPadding),
+                Container(
+                  height: (size.height - 150),
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: new ExactAssetImage('assets/3d/bg10.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                  child: BackdropFilter(
+                    filter: new ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                    child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white.withOpacity(0.0)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Scaffold(
             backgroundColor: Colors.transparent,
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,16 +57,6 @@ class Page1 extends StatelessWidget {
                     child: Image(
                       image: AssetImage(
                         'assets/3d/1.png',
-                      ),
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    height: (size.height - topPadding) * 0.48,
-                    child: Image(
-                      image: AssetImage(
-                        'assets/3d/wel2.png',
                       ),
                     ),
                   ),

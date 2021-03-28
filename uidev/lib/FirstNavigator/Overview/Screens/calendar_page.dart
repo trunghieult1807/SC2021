@@ -54,7 +54,6 @@ class _CalendarPageState extends State<CalendarPage> {
                   setState(
                     () {
                       _selectedValue = date;
-                      print(_selectedValue);
                       formatedTime = getMonth(_selectedValue);
                     },
                   );

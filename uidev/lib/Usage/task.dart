@@ -12,7 +12,6 @@ class Task {
   double _weight;
   DateTime _start;
   bool _tracking;
-  static bool _hehe = false;
 
   Task(String id, String title, String desc,
       int mode, DateTime start, bool tracking)
@@ -68,7 +67,7 @@ class Task {
         _mode = TaskMode.fromJson(map["mode"]),
         _isDone = map["isDone"],
         _duration = map["duration"],
-        _start = map["start"],
+        _start = map["start"] == null ? null: map["start"].toDate(),
         _tracking = map["tracking"];
 
 
@@ -87,8 +86,6 @@ class Task {
   set tracking(bool _in) => _tracking = _in;
   set start(DateTime _in) => _start = _in;
 
-  bool get hehe => _hehe;
-  set hehe(bool _in) => _hehe = _in;
   set expectTime(int _in) => _expectTime = _in;
 
   void notify() {
