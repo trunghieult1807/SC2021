@@ -1,3 +1,4 @@
+![Screenshot_1616987789_google-pixel5-sortasage-portrait](https://user-images.githubusercontent.com/54405155/112783950-aa26a000-907a-11eb-86b3-e7fa77d0b221.png)
 FRITTER
 About our app
 Fritter simply motivates people to work more efficiently, manage their personal tasks better and prevent procrastination thanks to recommendation of appropriate amount of working time. Along with that can help users keep concentration on tasks they are working on in a fixed time period that Fritter suggests due to users' working habits.
@@ -9,7 +10,8 @@ First of all, you have to download our Fritter.apk (or app-release.apk) to your 
 After that, make sure your device allows app from outside the Playstore to be installed.
 Install the app, and enjoy!
 For admin to add activity
-https://github.com/trunghieult1807/SC2021/tree/main
+https://github.com/trunghieul![Screenshot_1616988059_google-pixel5-sortasage-portrait](https://user-images.githubusercontent.com/54405155/112783966-af83ea80-907a-11eb-8d7b-cd2a3dff1eee.png)
+t1807/SC2021/tree/main
 First Use
 If you are a new user to our app, you have to sign up for an account (it’s free). There are a few steps in our signup. When creating an account, it is a must that your password is at least 6 characters. Additionally, you have to use an appropriate email address to complete the sign up.
 
