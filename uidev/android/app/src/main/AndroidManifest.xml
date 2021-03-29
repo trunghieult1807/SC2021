@@ -2,7 +2,7 @@
     package="com.example.uidev">
    <application
 
-        android:label="uidev"
+        android:label="Fritter"
         android:name=".Application"
         android:icon="@mipmap/ic_launcher">
 

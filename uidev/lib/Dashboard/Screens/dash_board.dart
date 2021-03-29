@@ -195,7 +195,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         ),
                                         SizedBox(height: 20,),
                                         Text(
-                                          '${(GlobalVariable.todayEfficiency == null? 1.0:GlobalVariable.todayEfficiency * 100).toPrecision(2)} %',
+                                          '${(GlobalVariable.todayEfficiency == null? 100.0:GlobalVariable.todayEfficiency * 100).toPrecision(2)} %',
                                           style: TextStyle(
                                               fontFamily: 'theme',
                                               color: Colors.white,
@@ -244,7 +244,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                     child: Padding(
                                       padding: EdgeInsets.all(15.0),
                                       child: Text(
-                                        'PPL',
+                                        'PROJ',
                                         style: TextStyle(
                                             fontFamily: 'theme',
                                             color: Colors.purple,
@@ -260,7 +260,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          'Edit OKR',
+                                          'Data Mining',
                                           style: TextStyle(
                                               fontFamily: 'theme',
                                               color: Colors.white,
@@ -296,7 +296,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                     child: Padding(
                                       padding: EdgeInsets.all(15.0),
                                       child: Text(
-                                        'DSA',
+                                        'TASK',
                                         style: TextStyle(
                                             fontFamily: 'theme',
                                             color: Colors.orange,
@@ -312,7 +312,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          'Key result',
+                                          'ITS',
                                           style: TextStyle(
                                               fontFamily: 'theme',
                                               color: Colors.white,

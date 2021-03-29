@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:audioplayers/audio_cache.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,7 +33,6 @@ class DetailViewUI extends StatefulWidget {
 class _DetailViewUIState extends State<DetailViewUI> {
   var firebaseUser = FirebaseAuth.instance.currentUser;
   final firestoreInstance = FirebaseFirestore.instance;
-  final audioCache = AudioCache();
   ButtonState stateOnlyText;
   bool _isDone;
   bool _isLoading = false;
@@ -77,14 +75,7 @@ class _DetailViewUIState extends State<DetailViewUI> {
           List<Task> local = List<Task>();
           for (int n = 0; n < val.data()["tasks"].length; n = n + 1) {
             if (Task.fromMap(val.data()["tasks"][n]).id == widget.task.id) {
-              // firestoreInstance
-              //     .collection("users")
-              //     .doc(firebaseUser.uid)
-              //     .collection("taskList")
-              //     .doc(widget.taskList.id)
-              //     .update({
-              //   'tasks': FieldValue.arrayUnion([newTask.toMap()])
-              // });
+
               local.add(newTask);
             } else {
               local.add(Task.fromMap(val.data()["tasks"][n]));
