@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Onboarding/Widgets/checkbox.dart';
-import 'package:uidev/Onboarding/Screens/page2.dart';
-import 'package:uidev/Theme/background.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Onboarding/Widgets/checkbox.dart';
+import 'package:sc2021/Onboarding/Screens/page2.dart';
+import 'package:sc2021/Theme/background.dart';
 
 
 class Page1 extends StatelessWidget {
@@ -20,7 +20,7 @@ class Page1 extends StatelessWidget {
         children: [
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,

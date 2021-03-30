@@ -1,4 +1,4 @@
-import 'package:uidev/Database/Models/user.dart';
+import 'package:sc2021/Database/Models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {

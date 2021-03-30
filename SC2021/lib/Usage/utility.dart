@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
-import 'package:uidev/global_variable.dart';
-import 'package:uidev/global_variable.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
+import 'package:sc2021/global_variable.dart';
+import 'package:sc2021/global_variable.dart';
 
 final User user = FirebaseAuth.instance.currentUser;
 final FirebaseFirestore db = FirebaseFirestore.instance;

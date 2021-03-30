@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/Database/Services/database.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/Database/Services/database.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class NotificationBadge0Provider extends StatelessWidget {
   final User user = FirebaseAuth.instance.currentUser;

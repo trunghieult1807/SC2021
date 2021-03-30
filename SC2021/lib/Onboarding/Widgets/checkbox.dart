@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Onboarding/Widgets/icon.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Onboarding/Widgets/icon.dart';
 
 ///Widget that draw a beautiful checkbox rounded. Provided with animation if wanted
 class RoundCheckBox extends StatefulWidget {

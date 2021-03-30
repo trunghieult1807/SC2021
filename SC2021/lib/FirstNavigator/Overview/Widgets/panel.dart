@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/FirstNavigator/Overview/Widgets/panel_card.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/FirstNavigator/Overview/Widgets/panel_card.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class PanelUI extends StatefulWidget {
   final TaskList taskList;

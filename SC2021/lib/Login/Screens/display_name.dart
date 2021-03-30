@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/global_variable.dart';
-import 'package:uidev/home_page_controller.dart';
-import 'package:uidev/wrapper.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/global_variable.dart';
+import 'package:sc2021/home_page_controller.dart';
+import 'package:sc2021/wrapper.dart';
 
 class DisplayName extends StatefulWidget {
   @override
@@ -29,13 +29,13 @@ class _DisplayNameState extends State<DisplayName> {
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+
       backgroundColor: Colors.black,
       body: Stack(
         children: [
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               children: [
@@ -67,7 +67,7 @@ class _DisplayNameState extends State<DisplayName> {
           Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

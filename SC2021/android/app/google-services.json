@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1095980001935:android:264657bc660e6774c19efa",
         "android_client_info": {
-          "package_name": "com.example.uidev"
+          "package_name": "com.dsc.sc2021"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "1095980001935-p61dihpfantnkc5pegumjoq2ote1st4r.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.sc2021"
+                "bundle_id": "com.dsc.sc2021"
               }
             }
           ]

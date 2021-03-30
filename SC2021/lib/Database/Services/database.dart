@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uidev/Usage/noti.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/Usage/noti.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class DatabaseService {
   final String uid;

@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:uidev/Onboarding/Screens/page1.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:sc2021/Onboarding/Screens/page1.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -22,7 +22,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,

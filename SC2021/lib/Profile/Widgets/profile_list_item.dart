@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
 
 class ProfileListItem extends StatelessWidget {
   final IconData icon;

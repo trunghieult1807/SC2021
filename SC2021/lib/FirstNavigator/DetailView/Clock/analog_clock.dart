@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:uidev/FirstNavigator/DetailView/Clock/model.dart';
+import 'package:sc2021/FirstNavigator/DetailView/Clock/model.dart';
 import 'package:vector_math/vector_math_64.dart' show radians;
 import 'custom_hand.dart';
 import 'stud.dart';

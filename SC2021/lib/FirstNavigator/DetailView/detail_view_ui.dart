@@ -9,12 +9,12 @@ import 'package:outline_gradient_button/outline_gradient_button.dart';
 import 'package:progress_state_button/iconed_button.dart';
 import 'package:progress_state_button/progress_button.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/Theme/BackButton/back_button.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/BackButton/back_button.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
 import 'dart:core';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
-import 'package:uidev/Usage/utility.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
+import 'package:sc2021/Usage/utility.dart';
 
 class DetailViewUI extends StatefulWidget {
   final Task task;
@@ -130,13 +130,13 @@ class _DetailViewUIState extends State<DetailViewUI> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+
       backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +163,7 @@ class _DetailViewUIState extends State<DetailViewUI> {
           ),
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
@@ -186,7 +186,7 @@ class _DetailViewUIState extends State<DetailViewUI> {
           ),
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               children: [
@@ -285,7 +285,7 @@ class _DetailViewUIState extends State<DetailViewUI> {
                               textBaseline: TextBaseline.alphabetic,
                               children: [
                                 Text(
-                                  "${(widget.task.duration / 60).round()}",
+                                  "${(widget.task.duration).round()}",
                                   style: TextStyle(
                                     fontFamily: 'theme',
                                     color: Colors.white,

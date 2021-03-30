@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:uidev/Theme/BackButton/back_button.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Usage/task_list.dart';
-import 'package:uidev/Usage/task.dart';
+import 'package:sc2021/Theme/BackButton/back_button.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Usage/task_list.dart';
+import 'package:sc2021/Usage/task.dart';
 import 'package:uuid/uuid.dart';
 
 class AddTaskListPopup extends StatefulWidget {
@@ -63,7 +63,7 @@ class _AddTaskListPopupState extends State<AddTaskListPopup> {
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+
       backgroundColor: LightColors.theme,
       body: Padding(
         padding: const EdgeInsets.only(

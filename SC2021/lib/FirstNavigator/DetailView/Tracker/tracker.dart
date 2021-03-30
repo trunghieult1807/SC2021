@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/FirstNavigator/DetailView/Tracker/stop_watch_timer.dart';
+import 'package:sc2021/FirstNavigator/DetailView/Tracker/stop_watch_timer.dart';
 import 'dart:core';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class Tracker extends StatefulWidget {
   final Task task;

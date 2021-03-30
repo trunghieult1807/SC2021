@@ -5,12 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Database/Models/user.dart';
-import 'package:uidev/Welcome/Screens/welcome.dart';
-import 'package:uidev/global_variable.dart';
-import 'package:uidev/wrapper.dart';
-import 'package:uidev/Database/Services/auth.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Database/Models/user.dart';
+import 'package:sc2021/Welcome/Screens/welcome.dart';
+import 'package:sc2021/global_variable.dart';
+import 'package:sc2021/wrapper.dart';
+import 'package:sc2021/Database/Services/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {

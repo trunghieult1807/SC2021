@@ -4,12 +4,12 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/FirstNavigator/Projects/Tasks/Widgets/add_new_task.dart';
-import 'package:uidev/Theme/BackButton/back_button.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/FirstNavigator/Today/today_task_card.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/FirstNavigator/Projects/Tasks/Widgets/add_new_task.dart';
+import 'package:sc2021/Theme/BackButton/back_button.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/FirstNavigator/Today/today_task_card.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class ProjectTasksUI extends StatefulWidget {
   final TaskList taskList;
@@ -42,13 +42,13 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+
       backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: SingleChildScrollView(
               child: Column(
@@ -77,7 +77,7 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
           ),
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: SingleChildScrollView(
               child: Column(
@@ -190,7 +190,7 @@ class _ProjectTasksUIState extends State<ProjectTasksUI> {
                 } else {
                   return Scaffold(
                     resizeToAvoidBottomInset: false,
-                    resizeToAvoidBottomPadding: false,
+
                     backgroundColor: Colors.transparent,
                     body: Column(
                       mainAxisAlignment: MainAxisAlignment.start,

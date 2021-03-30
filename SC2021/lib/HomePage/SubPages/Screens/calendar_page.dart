@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/HomePage/SubPages/Calendar/horizontal_calendar.dart';
-import 'package:uidev/HomePage/SubPages/Data/dates_list.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/HomePage/SubPages/Widgets/task_container.dart';
-import 'package:uidev/Theme/BackButton/back_button.dart';
+import 'package:sc2021/HomePage/SubPages/Calendar/horizontal_calendar.dart';
+import 'package:sc2021/HomePage/SubPages/Data/dates_list.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/HomePage/SubPages/Widgets/task_container.dart';
+import 'package:sc2021/Theme/BackButton/back_button.dart';
 import 'package:intl/intl.dart';
 
 class CalendarPage extends StatefulWidget {

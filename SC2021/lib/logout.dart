@@ -1,4 +1,4 @@
-import 'package:uidev/Database/services/auth.dart';
+import 'package:sc2021/Database/services/auth.dart';
 import 'package:flutter/material.dart';
 
 class Logout extends StatelessWidget {

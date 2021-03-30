@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uidev/Login/Widgets/custom_dialog.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Database/services/auth.dart';
+import 'package:sc2021/Login/Widgets/custom_dialog.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Database/services/auth.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function toggleView;
@@ -40,13 +40,13 @@ class _RegisterPageState extends State<RegisterPage> {
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+
       backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Scaffold(
             backgroundColor: Colors.transparent,
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             body: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

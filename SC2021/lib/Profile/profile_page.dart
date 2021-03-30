@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:uidev/Database/Services/auth.dart';
-import 'package:uidev/Profile/Widgets/profile_list_item.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/global_variable.dart';
+import 'package:sc2021/Database/Services/auth.dart';
+import 'package:sc2021/Profile/Widgets/profile_list_item.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/global_variable.dart';
 
 class ProfilePage extends StatelessWidget {
   final AuthService _auth = AuthService();

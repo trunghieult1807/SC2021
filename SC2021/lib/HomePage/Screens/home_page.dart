@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/HomePage/SubPages/Screens/calendar_page.dart';
-import 'package:uidev/HomePage/Widgets/tasklist_card.dart';
-import 'package:uidev/HomePage/Widgets/task_column.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Theme/SwitchButton/switch_button.dart';
-import 'package:uidev/Theme/top_container.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/HomePage/SubPages/Screens/calendar_page.dart';
+import 'package:sc2021/HomePage/Widgets/tasklist_card.dart';
+import 'package:sc2021/HomePage/Widgets/task_column.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/SwitchButton/switch_button.dart';
+import 'package:sc2021/Theme/top_container.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class HomePage extends StatefulWidget {
   @override

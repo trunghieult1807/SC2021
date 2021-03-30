@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:uidev/Onboarding/Screens/definition_controller.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Theme/background.dart';
+import 'package:sc2021/Onboarding/Screens/definition_controller.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/background.dart';
 
 class Page2 extends StatelessWidget {
   @override
@@ -17,7 +17,7 @@ class Page2 extends StatelessWidget {
         children: [
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:uidev/FirstNavigator/Projects/Tasks/Screens/project_tasks_ui.dart';
-import 'package:uidev/Theme/BackButton/back_button.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Theme/SwitchButton/switch_button.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
-import 'package:uidev/Usage/task_mode.dart';
+import 'package:sc2021/FirstNavigator/Projects/Tasks/Screens/project_tasks_ui.dart';
+import 'package:sc2021/Theme/BackButton/back_button.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/SwitchButton/switch_button.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
+import 'package:sc2021/Usage/task_mode.dart';
 import 'package:uuid/uuid.dart';
 
 class AddNewTask extends StatefulWidget {
@@ -71,7 +71,7 @@ class _AddNewTaskState extends State<AddNewTask> {
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+
       backgroundColor: LightColors.theme,
       body: SingleChildScrollView(
         child: Padding(

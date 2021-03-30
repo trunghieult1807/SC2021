@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:uidev/HomePage/Screens/add_tasklist_popup.dart';
-import 'package:uidev/FirstNavigator/Projects/Tasks/tasks_provider.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/HomePage/Screens/add_tasklist_popup.dart';
+import 'package:sc2021/FirstNavigator/Projects/Tasks/tasks_provider.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class TaskListCard extends StatefulWidget {
   final TaskList taskList;

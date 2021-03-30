@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/FirstNavigator/Overview/Calendar/horizontal_calendar.dart';
-import 'package:uidev/FirstNavigator/Overview/Widgets/panel_provider.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:sc2021/FirstNavigator/Overview/Calendar/horizontal_calendar.dart';
+import 'package:sc2021/FirstNavigator/Overview/Widgets/panel_provider.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
 import 'package:intl/intl.dart';
 
 class CalendarPage extends StatefulWidget {

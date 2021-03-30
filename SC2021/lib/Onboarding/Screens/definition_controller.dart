@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Theme/background.dart';
-import 'package:uidev/wrapper.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/background.dart';
+import 'package:sc2021/wrapper.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -47,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,

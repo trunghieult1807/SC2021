@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:uidev/FirstNavigator/Projects/Screens/add_tasklist_popup.dart';
-import 'package:uidev/FirstNavigator/Projects/Tasks/tasks_provider.dart';
-import 'package:uidev/FirstNavigator/Projects/Widgets/gradient_indicator.dart'
+import 'package:sc2021/FirstNavigator/Projects/Screens/add_tasklist_popup.dart';
+import 'package:sc2021/FirstNavigator/Projects/Tasks/tasks_provider.dart';
+import 'package:sc2021/FirstNavigator/Projects/Widgets/gradient_indicator.dart'
     as indicator;
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class TaskListCard extends StatefulWidget {
   final TaskList taskList;

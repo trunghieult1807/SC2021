@@ -3,8 +3,8 @@ import 'package:date_picker_timeline/extra/color.dart';
 import 'package:date_picker_timeline/gestures/tap.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:uidev/FirstNavigator/Overview/Calendar/style.dart';
-import 'package:uidev/HomePage/SubPages/Calendar/date_widget_custom.dart';
+import 'package:sc2021/FirstNavigator/Overview/Calendar/style.dart';
+import 'package:sc2021/HomePage/SubPages/Calendar/date_widget_custom.dart';
 
 // ignore: must_be_immutable
 class DatePickerCustom extends StatefulWidget {

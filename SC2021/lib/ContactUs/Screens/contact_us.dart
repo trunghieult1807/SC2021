@@ -1,7 +1,7 @@
-import 'package:uidev/ContactUs/Widgets/contact_us_lib.dart';
+import 'package:sc2021/ContactUs/Widgets/contact_us_lib.dart';
 import 'package:flutter/material.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Theme/BackButton/back_button.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/BackButton/back_button.dart';
 
 class ContactUsPage extends StatelessWidget {
   @override

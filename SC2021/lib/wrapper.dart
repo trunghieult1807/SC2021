@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:loading_animations/loading_animations.dart';
-import 'package:uidev/Login/Authenticate/authenticate.dart';
-import 'package:uidev/Login/Screens/display_name.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/global_variable.dart';
-import 'package:uidev/home_page_controller.dart';
-import 'package:uidev/Database/Models/user.dart';
+import 'package:sc2021/Login/Authenticate/authenticate.dart';
+import 'package:sc2021/Login/Screens/display_name.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/global_variable.dart';
+import 'package:sc2021/home_page_controller.dart';
+import 'package:sc2021/Database/Models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

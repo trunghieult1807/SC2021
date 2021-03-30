@@ -4,11 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:uidev/FirstNavigator/DetailView/detail_view_provider.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
-import 'package:uidev/Usage/utility.dart';
+import 'package:sc2021/FirstNavigator/DetailView/detail_view_provider.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
+import 'package:sc2021/Usage/utility.dart';
 
 class PanelCard extends StatefulWidget {
   final Task task;

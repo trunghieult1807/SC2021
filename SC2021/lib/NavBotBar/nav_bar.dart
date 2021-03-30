@@ -1,7 +1,7 @@
 library spincircle_bottom_bar;
 
 import 'package:flutter/material.dart';
-import 'package:uidev/NavBotBar/modal.dart';
+import 'package:sc2021/NavBotBar/modal.dart';
 
 class SpinCircleBottomBarHolder extends StatelessWidget {
   final SCBottomBarDetails bottomNavigationBar;

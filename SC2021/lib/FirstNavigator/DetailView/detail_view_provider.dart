@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/Database/Services/database.dart';
-import 'package:uidev/FirstNavigator/DetailView/detail_view_ui.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/Database/Services/database.dart';
+import 'package:sc2021/FirstNavigator/DetailView/detail_view_ui.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 
 class DatailViewProvider extends StatelessWidget {

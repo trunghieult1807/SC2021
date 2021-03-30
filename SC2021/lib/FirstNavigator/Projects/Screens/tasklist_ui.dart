@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/FirstNavigator/Projects/Widgets/tasklist_card.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/FirstNavigator/Projects/Widgets/tasklist_card.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class TaskListUI extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _TaskListUIState extends State<TaskListUI> {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Padding(

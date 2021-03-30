@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Theme/BackButton/back_button.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/BackButton/back_button.dart';
 
 class SettingsPage extends StatefulWidget {
   //static final String path = "lib/src/pages/settings/settings1.dart";

@@ -6,20 +6,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:uidev/FirstNavigator/Overview/Screens/calendar_page.dart';
-import 'package:uidev/FirstNavigator/Projects/Screens/add_tasklist_popup.dart';
-import 'package:uidev/FirstNavigator/Projects/home_page_provider.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/FirstNavigator/Today/today_tasks_provider.dart';
-import 'package:uidev/Usage/push_notification.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/task_list.dart';
-import 'package:uidev/Usage/utility.dart';
-import 'package:uidev/global_variable.dart';
-import 'package:uidev/Theme/noti_badge.dart';
+import 'package:sc2021/FirstNavigator/Overview/Screens/calendar_page.dart';
+import 'package:sc2021/FirstNavigator/Projects/Screens/add_tasklist_popup.dart';
+import 'package:sc2021/FirstNavigator/Projects/home_page_provider.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/FirstNavigator/Today/today_tasks_provider.dart';
+import 'package:sc2021/Usage/push_notification.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/task_list.dart';
+import 'package:sc2021/Usage/utility.dart';
+import 'package:sc2021/global_variable.dart';
+import 'package:sc2021/Theme/noti_badge.dart';
 import 'package:schedule_controller/schedule_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uidev/global_variable.dart';
+import 'package:sc2021/global_variable.dart';
 
 PushNotification _notificationInfo;
 
@@ -133,13 +133,13 @@ class _NestedTabBarState extends State<NestedTabBar>
     final topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      resizeToAvoidBottomPadding: false,
+
       backgroundColor: LightColors.theme,
       body: Stack(
         children: [
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -166,7 +166,7 @@ class _NestedTabBarState extends State<NestedTabBar>
           ),
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: SingleChildScrollView(
               child: Column(
@@ -191,7 +191,7 @@ class _NestedTabBarState extends State<NestedTabBar>
           ),
           Scaffold(
             resizeToAvoidBottomInset: false,
-            resizeToAvoidBottomPadding: false,
+
             backgroundColor: Colors.transparent,
             body: SafeArea(
               child: Column(

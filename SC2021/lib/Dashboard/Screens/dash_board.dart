@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/global_variable.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/global_variable.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override

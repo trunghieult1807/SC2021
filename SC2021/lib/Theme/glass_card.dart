@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
 import 'package:outline_gradient_button/outline_gradient_button.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
 
 class FrostedGlassBox extends StatelessWidget {
   final double width, height;

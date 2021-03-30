@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Usage/task.dart';
-import 'package:uidev/Usage/time_line.dart';
+import 'package:sc2021/Usage/task.dart';
+import 'package:sc2021/Usage/time_line.dart';
 
 class ListTask{
   List<Task> listExercise;

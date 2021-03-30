@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
 
 class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[

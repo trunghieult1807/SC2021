@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:uidev/home_page_controller.dart';
+import 'package:sc2021/home_page_controller.dart';
 
 class Item {
   Item({this.itemId});

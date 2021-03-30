@@ -1,5 +1,5 @@
-import 'package:uidev/Usage/task_mode.dart';
-import 'package:uidev/Usage/task_timer.dart';
+import 'package:sc2021/Usage/task_mode.dart';
+import 'package:sc2021/Usage/task_timer.dart';
 
 class Noti {
   int _notiMode;

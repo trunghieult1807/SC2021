@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
-import 'package:uidev/Theme/BackButton/back_button.dart';
+import 'package:sc2021/Theme/BackButton/back_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 ///Class for adding contact details/profile details as a complete new page in your flutter app.

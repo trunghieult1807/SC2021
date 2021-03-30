@@ -1,13 +1,13 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/material.dart';
-// import 'package:uidev/FirstNavigator/DetailView/detail_view_provider.dart';
-// import 'package:uidev/FirstNavigator/Projects/Tasks/Widgets/add_new_task.dart';
+// import 'package:sc2021/FirstNavigator/DetailView/detail_view_provider.dart';
+// import 'package:sc2021/FirstNavigator/Projects/Tasks/Widgets/add_new_task.dart';
 // import 'package:flutter/services.dart';
-// import 'package:uidev/FirstNavigator/DetailView/detail_view_ui.dart';
-// import 'package:uidev/Usage/task.dart';
-// import 'package:uidev/Usage/task_list.dart';
-// import 'package:uidev/Usage/utility.dart';
+// import 'package:sc2021/FirstNavigator/DetailView/detail_view_ui.dart';
+// import 'package:sc2021/Usage/task.dart';
+// import 'package:sc2021/Usage/task_list.dart';
+// import 'package:sc2021/Usage/utility.dart';
 // import 'package:audioplayers/audio_cache.dart';
 // import 'package:audioplayers/audioplayers.dart';
 //

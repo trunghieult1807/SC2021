@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:provider/provider.dart';
-import 'package:uidev/SecondNavigator/noti_card.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
-import 'package:uidev/Usage/noti.dart';
-import 'package:uidev/Usage/task_list.dart';
+import 'package:sc2021/SecondNavigator/noti_card.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
+import 'package:sc2021/Usage/noti.dart';
+import 'package:sc2021/Usage/task_list.dart';
 
 class NotiUI extends StatefulWidget {
   // final TaskList taskList;
@@ -143,35 +143,7 @@ class _NotiUIState extends State<NotiUI> {
                                 );
                               },
                             )
-                                : Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(height: 70,),
-                                Container(
-                                  width: size.width * 0.3,
-                                  child: Image(
-                                    image: AssetImage(
-                                      'assets/3d/26.png',
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    SizedBox(height: 70,),
-                                    Text(
-                                      "You have no task to do today!!!",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'theme',
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-
-                                  ],
-                                ),
-                              ],
-                            );
+                                : SizedBox();
                             // return Column(
                             //   children: [
                             //     NotiCard(

@@ -2,14 +2,14 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:uidev/FirstNavigator/Projects/Screens/add_tasklist_popup.dart';
-import 'package:uidev/FirstNavigator/nested_tab_bar.dart';
-import 'package:uidev/Dashboard/Screens/dash_board.dart';
-import 'package:uidev/HomePage/home_page_provider.dart';
-import 'package:uidev/Profile/profile_page.dart';
-import 'package:uidev/SecondNavigator/noti_provider.dart';
-import 'package:uidev/SecondNavigator/noti_ui.dart';
-import 'package:uidev/Theme/Color/light_colors.dart';
+import 'package:sc2021/FirstNavigator/Projects/Screens/add_tasklist_popup.dart';
+import 'package:sc2021/FirstNavigator/nested_tab_bar.dart';
+import 'package:sc2021/Dashboard/Screens/dash_board.dart';
+import 'package:sc2021/HomePage/home_page_provider.dart';
+import 'package:sc2021/Profile/profile_page.dart';
+import 'package:sc2021/SecondNavigator/noti_provider.dart';
+import 'package:sc2021/SecondNavigator/noti_ui.dart';
+import 'package:sc2021/Theme/Color/light_colors.dart';
 
 class HomePageController extends StatefulWidget {
   final BuildContext menuScreenContext;
@@ -97,11 +97,11 @@ class _HomePageControllerState extends State<HomePageController> {
 
 // import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
-// import 'package:uidev/Dashboard/Screens/dash_board.dart';
-// import 'package:uidev/HomePage/home_page_provider.dart';
-// import 'package:uidev/Theme/Color/light_colors.dart';
-// import 'package:uidev/NavBotBar/nav_bar.dart';
-// import 'package:uidev/logout.dart';
+// import 'package:sc2021/Dashboard/Screens/dash_board.dart';
+// import 'package:sc2021/HomePage/home_page_provider.dart';
+// import 'package:sc2021/Theme/Color/light_colors.dart';
+// import 'package:sc2021/NavBotBar/nav_bar.dart';
+// import 'package:sc2021/logout.dart';
 // import 'Profile/profile_page.dart';
 // import 'NavBotBar/modal.dart';
 //

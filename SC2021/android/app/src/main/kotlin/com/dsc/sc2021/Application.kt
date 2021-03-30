@@ -1,4 +1,4 @@
-package com.example.uidev
+package com.dsc.sc2021
 
 import io.flutter.app.FlutterApplication
 import io.flutter.plugin.common.PluginRegistry
