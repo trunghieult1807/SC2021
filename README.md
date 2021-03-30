@@ -1,3 +1,4 @@
+![alt text](https://github.com/trunghieult1807/SC2021/blob/main/SC2021/assets/mode/5.png)
 ![Screenshot_1616987789_google-pixel5-sortasage-portrait](https://user-images.githubusercontent.com/54405155/112783950-aa26a000-907a-11eb-86b3-e7fa77d0b221.png)
 FRITTER
 About our app
