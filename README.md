@@ -1,6 +1,6 @@
 # Fritter
 
-This website is used for management activity info for the shareapy admin.
+Your messy work will be gone.
 
 ## Getting Started
 
