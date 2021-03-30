@@ -4,66 +4,56 @@ This website is used for management activity info for the shareapy admin.
 
 ## Getting Started
 
+
 These instructions will get you a copy of the project up and running on your local machine for development. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-Please get into below link for checking the prerequisites of angular
+Please get into below link for checking the prerequisites of flutter
 
 ```
- https://angular.io/guide/setup-local
+ https://flutter.dev/docs/get-started/install
 ```
 
-### Installing
+## How to Use 
 
-To install the web into the local environment, please follow those below steps and run them on your terminal/window console.
+**Step 1:**
 
-Install the node_modules dependencies
-
-```
-npm run install
-```
-
-Run the angular serve command
+Download or clone this repo by using the link below:
 
 ```
-ng serve
+ https://github.com/trunghieult1807/SC2021
 ```
 
-If your terminal/window console show the text below, it means that you have successfully built the website locally.
+**Step 2:**
+
+Go to project root and execute the following command in console to get the required dependencies: 
 
 ```
-Compiled successfully.
+ flutter pub get 
 ```
 
-If you want to change the firebase database to your own, please change the firebase config of the file src/environments/environment.ts
+**Step 3:**
 
-## Deployment
-
-To self-hosting into your own firebase, please read and follow the instructions of Firebase hosting
+Build the flutter app
 
 ```
-  https://firebase.google.com/docs/hosting
+ flutter build 
 ```
 
-To build the production version for deploying, please run this command in terminal/window console:
+**Step 4:**
+
+Run the flutter app
 
 ```
-  ng build --prod
+ flutter run 
 ```
 
-To deploy bundle into firebase, if you have configured, run this command:
+## Service Used 
 
-```
-  firebase deploy
-```
-
-## Built With
-
-- [Angular](https://angular.io/) - The web framework used.
-- [NPM](https://www.npmjs.com/) - Dependency Management.
-- [Node.js](https://nodejs.org/) - The web framework.
-- [Angular Material](https://material.angular.io/) - The base UI components.
+- [Firebase Authentication](https://firebase.google.com/) - Managing users.
+- [Firebase FireStore](https://firebase.google.com/) - Database.
+- [Firebase Cloud Messaging](https://firebase.google.com/) - Scheduling notiffication.
 
 ## Contributing
 
@@ -71,9 +61,6 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Authors
 
-- **Shareapy Team** - [BarleyVN](mailto:barleyvietnam@gmail.com)
+- **Fritter Team** - [Fritter](mailto:hieu.letrunghieu@hcmut.edu.vn)
 
-## Acknowledgments
 
-- This project is used for helping admins of the Shareapy project.
-- For more information about the Shareapy project, please contact with us by the email above.
