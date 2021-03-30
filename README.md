@@ -17,6 +17,8 @@ Please get into below link for checking the prerequisites of flutter
 
 ## How to Use 
 
+You can download the app from here using Android device: [link](https://drive.google.com/file/d/1WmAnd6Vg4GPqE-QRBDsKz36NPl_nzNO8/view?usp=sharing)
+
 **Step 1:**
 
 Download or clone this repo by using the link below:
